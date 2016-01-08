@@ -22,3 +22,5 @@ react
 jhartma:cjsx
 coffeescript
 http
+semantic:ui
+flemay:less-autoprefixer

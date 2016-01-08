@@ -1,4 +1,7 @@
 @App = React.createClass
 
   render: ->
-    <h1>Hello World</h1>
+    <div>
+      <NavigationMenu></NavigationMenu>
+      <h1>Hello World</h1>
+    </div>
