@@ -24,3 +24,6 @@ coffeescript
 http
 semantic:ui
 flemay:less-autoprefixer
+markoshust:material-ui
+kadira:react-layout
+kadira:flow-router

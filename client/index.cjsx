@@ -1,2 +1,2 @@
-Meteor.startup ->
-  ReactDOM.render <App />, document.getElementById 'render-target'
+# Meteor.startup ->
+#   ReactDOM.render <App />, document.getElementById 'render-target'

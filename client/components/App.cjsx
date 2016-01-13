@@ -1,7 +1,54 @@
+{ AppBar, LeftNav, MenuItem, FontIcon, Styles} = mui
+{ Colors } = Styles
+
 @App = React.createClass
+
+  getInitialState: ->
+    open: false
+
+  onTitleTouchTap: ->
+    @setState open: not @state.open
+  onLeftIconButtonTouchTap: ->
+    @setState open: not @state.open
+
+  goToRoute: (route) -> ->
+    FlowRouter.go route
+
 
   render: ->
     <div>
-      <NavigationMenu></NavigationMenu>
-      <h1>Hello World</h1>
+      <AppBar
+        title="Quality Time"
+        iconClassNameRight="muidocs-icon-navigation-expand-more"
+        onTitleTouchTap={@onTitleTouchTap}
+        onLeftIconButtonTouchTap={@onLeftIconButtonTouchTap}
+      />
+      <LeftNav ref='leftnav' width={250} open={@state.open} >
+        <AppBar
+          title="Quality Time"
+          onTitleTouchTap={@onTitleTouchTap}
+          onLeftIconButtonTouchTap={@onLeftIconButtonTouchTap}
+        />
+
+        <MenuItem
+          leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>settings_input_component</FontIcon>}
+          onTouchTap={@goToRoute '/sources'}>
+          Sources
+        </MenuItem>
+        <MenuItem
+          leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>description</FontIcon>}
+          onTouchTap={@goToRoute '/subjects'}>
+        Subjects
+        </MenuItem>
+        <MenuItem
+          leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>gavel</FontIcon>}
+          onTouchTap={@goToRoute '/metrics'}>
+          Metrics
+        </MenuItem>
+      </LeftNav>
+
+      <div style={textAlign:'center'}>
+        {@props.content}
+      </div>
+
     </div>
