@@ -1,17 +1,26 @@
 { AppBar, LeftNav, MenuItem, FontIcon, Styles} = mui
-{ Colors } = Styles
+{ ThemeManager, Colors } = Styles
 
-@App = React.createClass
+console.log ThemeManager
+
+@MainLayout = React.createClass
 
   getInitialState: ->
     open: false
+  # 
+  # childContextTypes:
+  #   muiTheme: React.PropTypes.object
+  #
+  # getChildContext: ->
+  #   muiTheme: ThemeManager.getMuiTheme()
 
   onTitleTouchTap: ->
     @setState open: not @state.open
   onLeftIconButtonTouchTap: ->
     @setState open: not @state.open
 
-  goToRoute: (route) -> ->
+  goToRoute: (route) -> =>
+    @setState open: not @state.open
     FlowRouter.go route
 
 
@@ -47,8 +56,8 @@
         </MenuItem>
       </LeftNav>
 
-      <div style={textAlign:'center'}>
-        {@props.content}
-      </div>
+      <main>
+        {@props.content()}
+      </main>
 
     </div>
