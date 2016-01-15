@@ -2,7 +2,7 @@
 { GridList, GridTile} = mui
 
 
-@SupportedSourcesList = React.createClass
+@SourceTypesList = React.createClass
 
   onRowSelection: ->
     console.log 'onRowSelection'

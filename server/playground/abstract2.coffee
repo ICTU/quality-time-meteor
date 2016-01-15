@@ -57,13 +57,20 @@ class PercentageSkipped_Metric
     total: totalUnitTestsCount()
     skipped: skippedUnitTestsCount()
 
+class TotalUnitTests_Metric
+  properties: ['totalUnitTestsCount', 'skippedUnitTestsCount']
+  measure: ({totalUnitTestsCount}) ->
+    percentageSkipped: (skippedUnitTestsCount() / totalUnitTestsCount()) * 100
+    total: totalUnitTestsCount()
+    skipped: skippedUnitTestsCount()
+
 
 #dataSources = [JenkinsDS, SonarDS, JunitDS, HtmlTestReportDS]
 # console.log 'DataSources supporting LOC_Metric', supportedDataSources(LOC_Metric, dataSources)
 # console.log 'DataSources supporting UnitTestCoverage', supportedDataSources(UnitTestCoverage, dataSources)
 # console.log 'DataSources supporting FailedTestsMetric', supportedDataSources(FailedTestsMetric, dataSources)
 #
- 
+
 console.log 'FailedTests_Metric',         (measure new FailedTests_Metric(), new Jenkins(RApp()) )
 console.log 'PercentageSkipped_Metric',   (measure new PercentageSkipped_Metric(), new Jenkins(RApp()) )
 
