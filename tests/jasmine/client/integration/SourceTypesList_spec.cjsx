@@ -11,7 +11,7 @@ render = (comp) ->
 simulateClickOn = (el) ->
   React.addons.TestUtils.Simulate.click el[0]
 
-describe 'SupportedSourcesList', ->
+describe 'SourceTypesList', ->
 
   sources = []
 
@@ -27,17 +27,17 @@ describe 'SupportedSourcesList', ->
     ]
 
   it 'should display a message when there is no data', ->
-    component = render <SupportedSourcesList sources={[]} />
+    component = render <SourceTypesList sources={[]} />
     expect(component.props.children).toEqual <span>No data</span>
 
   it 'should display a tile for each source', ->
-    component = render <SupportedSourcesList sources={sources} />
+    component = render <SourceTypesList sources={sources} />
     expect(component.props.children.length).toEqual 2
 
   describe 'Tiles', ->
 
     it 'should display source details', ->
-      component = render <SupportedSourcesList sources={sources} />
+      component = render <SourceTypesList sources={sources} />
 
       expect(component.props.children).toEqual([
         <GridTile
