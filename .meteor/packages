@@ -27,3 +27,4 @@ kadira:react-layout
 kadira:flow-router
 sanjo:jasmine
 velocity:html-reporter
+velocity:console-reporter
