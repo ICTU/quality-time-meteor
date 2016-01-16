@@ -70,8 +70,8 @@ class TotalUnitTests_Metric
 # console.log 'DataSources supporting UnitTestCoverage', supportedDataSources(UnitTestCoverage, dataSources)
 # console.log 'DataSources supporting FailedTestsMetric', supportedDataSources(FailedTestsMetric, dataSources)
 #
-
-console.log 'FailedTests_Metric',         (measure new FailedTests_Metric(), new Jenkins(RApp()) )
-console.log 'PercentageSkipped_Metric',   (measure new PercentageSkipped_Metric(), new Jenkins(RApp()) )
-
-console.log '====================================='
+# 
+# console.log 'FailedTests_Metric',         (measure new FailedTests_Metric(), new Jenkins(RApp()) )
+# console.log 'PercentageSkipped_Metric',   (measure new PercentageSkipped_Metric(), new Jenkins(RApp()) )
+#
+# console.log '====================================='
