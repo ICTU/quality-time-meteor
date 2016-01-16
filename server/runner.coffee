@@ -37,6 +37,6 @@ runner = ->
   measureAndRegister TotalUnitTests, Jenkins, subject
   measureAndRegister PassedUnitTests, Jenkins, subject
 
-Meteor.startup ->
-  runner()
+# Meteor.startup ->
+#   runner()
   # Meteor.setInterval runner, 3000
