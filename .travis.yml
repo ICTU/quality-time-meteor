@@ -7,3 +7,4 @@ install:
   - "meteor update"
 script:
   - "meteor --test --once"
+  
