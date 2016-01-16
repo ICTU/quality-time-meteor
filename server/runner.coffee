@@ -17,16 +17,26 @@ measure = (metric, datasources...) ->
 
 
 RApp = ->
+  name: 'Referendum Applicatie'
   jenkins:
     url: 'http://www.jenkins.kiesraad.ictu/'
     jobName: 'RApp'
 
+measureAndRegister = (metricClass, sourceClass, subject) ->
+  calculation = (measure new metricClass(), new sourceClass(subject) )()
+  Measurements.insert
+    timestamp: new Date()
+    forSubject: subject.name
+    ofMetric: metricClass.name
+    value: Q.exec calculation
+    calculation: Q.toJSON calculation
+
 runner = ->
-  x = (measure new TotalUnitTests(), new Jenkins(RApp()) )()
-  console.log 'TotalUnitTests',  {value: Q.exec(x), explain: Q.explain(x)}
+  subject = RApp()
 
-  x = (measure new PassedUnitTests(), new Jenkins(RApp()) )()
-  console.log 'PassedUnitTests', {value: Q.exec(x), explain: Q.explain(x)}
+  measureAndRegister TotalUnitTests, Jenkins, subject
+  measureAndRegister PassedUnitTests, Jenkins, subject
 
-runner()
-Meteor.setInterval runner, 3000
+Meteor.startup ->
+  runner()
+  # Meteor.setInterval runner, 3000
