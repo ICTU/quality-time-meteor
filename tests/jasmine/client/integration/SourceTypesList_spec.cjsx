@@ -11,7 +11,7 @@ render = (comp) ->
 simulateClickOn = (el) ->
   React.addons.TestUtils.Simulate.click el[0]
 
-describe 'SourceTypesList', ->
+describe 'SourceTypesList1', ->
 
   sources = []
 
