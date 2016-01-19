@@ -1,11 +1,18 @@
 @Q = Q = {}
 
+unsupportedOperation = (operation) ->
+  throw new Error "Unsupported operation: #{operation}"
+unsupportedNodeType = (nodeType) ->
+  throw new Error "Unsupported node type: #{nodeType}"
+unsupportedValueType = (valueType) ->
+  throw new Error "Unsupported value type: #{valueType}"
+
 Q.val = (name, val) ->
   node = type: 'val', name: name, value: val
   switch type = typeof val
     when 'number' then num node
     when 'boolean' then bool node
-    else throw "Unsupported value type: #{type}"
+    else unsupportedValueType type
 
 Q.if = (val) ->
   type: 'if'
@@ -55,18 +62,18 @@ Q.exec = exec = (qObject) ->
       when 'add'            then exec(arg1) + exec(arg2)
       when 'multiply'       then exec(arg1) * exec(arg2)
       when 'equals'         then exec(arg1) is exec(arg2)
-      else                  throw "Unsupported operation: #{operation}"
+      else                  unsupportedOperation operation
   interpretUnary = ({operation, arg}) ->
     switch operation
-      when 'not'            then !exec(arg)
-      else                  throw "Unsupported operation: #{operation}"
+      when 'not'            then not exec(arg)
+      else                  unsupportedOperation operation
 
   node = qObject.node or qObject
   switch node.type
     when 'binaryOperation'  then interpretBinary node
     when 'unaryOperation'   then interpretUnary node
     when 'val'              then node.value
-    else                    throw "Unsupported node type: #{node.type}"
+    else                    unsupportedNodeType node.type
 
 Q.explain = explain = (qObject) ->
   explainBinary = ({operation, arg1, arg2}) ->
@@ -74,18 +81,18 @@ Q.explain = explain = (qObject) ->
       when 'subtract'       then "#{explain(arg1)} - #{explain(arg2)}"
       when 'add'            then "#{explain(arg1)} + #{explain(arg2)}"
       when 'multiply'       then "#{explain(arg1)} * #{explain(arg2)}"
-      else throw "Unsupported operation: #{operation}"
+      else                  unsupportedOperation operation
   explainUnary = ({operation, arg}) ->
     switch operation
       when 'not'            then "not(#{exec(arg)})"
-      else                  throw "Unsupported operation: #{operation}"
+      else                  throw unsupportedOperation operation
 
   node = qObject.node or qObject
   switch node.type
     when 'binaryOperation'  then explainBinary node
     when 'unaryOperation'   then explainUnary node
     when 'val'              then "#{node.name}(#{node.value})"
-    else                    throw "Unsupported node type: #{node.type}"
+    else                    unsupportedNodeType node.type
 
 # q = Q.val('x', true).not().equals(Q.val('y', true))
 #
