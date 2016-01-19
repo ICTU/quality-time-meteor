@@ -4,10 +4,12 @@ Q.explain = explain = (qObject) ->
       when 'subtract'       then "#{explain(arg1)} - #{explain(arg2)}"
       when 'add'            then "#{explain(arg1)} + #{explain(arg2)}"
       when 'multiply'       then "#{explain(arg1)} * #{explain(arg2)}"
+      when 'divide'         then "#{explain(arg1)} / #{explain(arg2)}"
+      when 'equals'         then "#{explain(arg1)} equals #{explain(arg2)}"
       else                  unsupportedOperation operation
   explainUnary = ({operation, arg}) ->
     switch operation
-      when 'not'            then "not(#{exec(arg)})"
+      when 'not'            then "not(#{explain(arg)})"
       else                  throw unsupportedOperation operation
 
   node = qObject.node or qObject
