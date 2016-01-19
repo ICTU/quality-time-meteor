@@ -2,9 +2,29 @@ describe 'QDSL', ->
   describe 'Execution', ->
     describe 'numeric', ->
 
+      v1 = Q.val 'v1', 10
+
       it 'supports subtraction', ->
-        val = Q.val('v1', 10).subtract('v2', 8)
-        console.log val
+        expect( Q.exec v1.subtract('v2', 8) ).toBe 2
+      it 'supports addition', ->
+        expect( Q.exec v1.add('v2', 8) ).toBe 18
+      it 'supports multiplication', ->
+        expect( Q.exec v1.multiply('v2', 8) ).toBe 80
+      it 'supports division', ->
+        expect( Q.exec v1.divide('v2', 8) ).toBe 1.25
+      it 'supports equality', ->
+        expect( Q.exec v1.equals('v2', 10) ).toBe true
+        expect( Q.exec v1.equals('v2', 2) ).toBe false
+
+    describe 'bool', ->
+
+      v1 = Q.val 'v1', true
+
+      it 'supports negation', ->
+        expect( Q.exec v1.not() ).toBe false
+      it 'supports equality', ->
+        expect( Q.exec v1.equals('v2', false) ).toBe false
+        expect( Q.exec v1.equals('v2', true) ).toBe true
 
 
 # q = Q.val('x', true).not().equals(Q.val('y', true))
