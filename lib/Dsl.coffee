@@ -90,7 +90,8 @@ Q.explain = explain = (qObject) ->
 # q = Q.val('x', true).not().equals(Q.val('y', true))
 #
 # # q = Q.val('totalCount', 10).subtract(Q.val('failCount', 2))
-# # .subtract(Q.val('skipCount', 1)).add(Q.val('addCount', 3)).multiply(Q.val('multi', 4))
+# # .subtract(Q.val('skipCount', 1))
+# .add(Q.val('addCount', 3)).multiply(Q.val('multi', 4))
 # console.log 'DSL Object', q
 # console.log 'JSON AST', Q.toJSON q
 # console.log 'Executed', Q.exec q
