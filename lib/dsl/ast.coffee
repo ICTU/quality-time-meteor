@@ -1,7 +1,3 @@
-unsupportedOperation = (operation) ->
-  throw new Error "Unsupported operation: #{operation}"
-unsupportedNodeType = (nodeType) ->
-  throw new Error "Unsupported node type: #{nodeType}"
 unsupportedValueType = (valueType) ->
   throw new Error "Unsupported value type: #{valueType}"
 
