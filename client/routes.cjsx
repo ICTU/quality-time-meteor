@@ -17,3 +17,8 @@ FlowRouter.route '/metrics',
   action: ->
     ReactLayout.render MainLayout,
       content: -> <h1>Metrics</h1>
+
+FlowRouter.route '/components',
+  action: ->
+    ReactLayout.render MainLayout,
+      content: -> <MeteorComponentsList />

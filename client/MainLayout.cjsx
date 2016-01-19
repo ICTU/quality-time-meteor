@@ -7,12 +7,12 @@ console.log ThemeManager
 
   getInitialState: ->
     open: false
-  # 
-  # childContextTypes:
-  #   muiTheme: React.PropTypes.object
-  #
-  # getChildContext: ->
-  #   muiTheme: ThemeManager.getMuiTheme()
+  
+  childContextTypes:
+    muiTheme: React.PropTypes.object
+
+  getChildContext: ->
+    muiTheme: ThemeManager.getMuiTheme()
 
   onTitleTouchTap: ->
     @setState open: not @state.open
