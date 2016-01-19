@@ -21,6 +21,8 @@ num = (val1) ->
     num binaryOperation 'add', val1, val
   multiply: (val) ->
     num binaryOperation 'multiply', val1, val
+  divide: (val) ->
+    num binaryOperation 'divide', val1, val
   equals: (val) ->
     bool binaryOperation 'equals', val1, val
 
