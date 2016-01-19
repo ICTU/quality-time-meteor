@@ -1,6 +1,9 @@
-supportedProperties   = (metric, ds)          -> (property for property in metric.properties when ds[property])
-dsFullySupportsMetric = (metric, ds)          -> metric.properties.length <= supportedProperties(metric, ds).length
-supportedDataSources  = (metric, datasources) -> (ds for ds in datasources when dsFullySupportsMetric metric, ds)
+supportedProperties = (metric, ds) ->
+  (property for property in metric.properties when ds[property])
+dsFullySupportsMetric = (metric, ds) ->
+  metric.properties.length <= supportedProperties(metric, ds).length
+supportedDataSources = (metric, datasources) ->
+  (ds for ds in datasources when dsFullySupportsMetric metric, ds)
 
 propertyWrapper = (config, propertyFunc) -> -> propertyFunc config
 measure = (metric, datasources...) ->
@@ -24,19 +27,31 @@ RApp = ->
 
 measureAndRegister = (metricClass, sourceClass, subject) ->
   calculation = (measure new metricClass(), new sourceClass(subject) )()
-  Measurements.insert
-    timestamp: new Date()
-    forSubject: subject.name
-    ofMetric: metricClass.name
-    value: Q.exec calculation
-    calculation: Q.toJSON calculation
+  jsonCalc = Q.toJSON calculation
+  query =
+    forSubject: subject.name, ofMetric: metricClass.name, calculation: jsonCalc
+
+  if measurement = Measurements.findOne(query, sort: lastMeasured: -1)
+    measurement.lastMeasured = new Date()
+    Measurements.update {_id: measurement._id}, measurement
+  else
+    Measurements.insert
+      firstMeasured: new Date()
+      lastMeasured: new Date()
+      forSubject: subject.name
+      ofMetric: metricClass.name
+      value: Q.exec calculation
+      calculation: jsonCalc
 
 runner = ->
+  console.log 'Running measurements'
   subject = RApp()
 
   measureAndRegister TotalUnitTests, Jenkins, subject
   measureAndRegister PassedUnitTests, Jenkins, subject
 
-# Meteor.startup ->
-#   runner()
-  # Meteor.setInterval runner, 3000
+Meteor.startup ->
+  if process.env.DEV
+    runner()
+    Meteor.setInterval runner, 30000
+  else console.log 'Runner disabled'
