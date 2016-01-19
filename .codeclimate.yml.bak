@@ -1,0 +1,5 @@
+engines:
+  coffeelint:
+    enabled: true
+exclude_paths:
+- ./.meteor/**/*
