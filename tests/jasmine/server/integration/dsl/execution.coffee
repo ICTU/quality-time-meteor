@@ -26,6 +26,22 @@ describe 'QDSL', ->
         expect( Q.exec v1.equals('v2', false) ).toBe false
         expect( Q.exec v1.equals('v2', true) ).toBe true
 
+    describe 'control', ->
+      it 'supports if-then-else', ->
+        iff = Q.if('v1', true)
+        iff.then(Q.val('v1', 4).add('v2', 2))
+        iff.else(Q.val('v1', 4).subtract('v2', 2))
+        expect( Q.exec iff).toBe 6
+
+        iff = Q.if('v1', false)
+        iff.then(Q.val('v1', 4).add('v2', 2))
+        iff.else(Q.val('v1', 4).subtract('v2', 2))
+        expect( Q.exec iff).toBe 2
+
+        iff = Q.if Q.val('v1', 4).subtract('v2', 3).equals('v3', 1)
+        iff.then(Q.val('v1', 4).add('v2', 6))
+        expect( Q.exec iff).toBe 10
+
 
 # q = Q.val('x', true).not().equals(Q.val('y', true))
 #
