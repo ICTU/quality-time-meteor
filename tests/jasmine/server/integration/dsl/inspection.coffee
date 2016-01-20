@@ -50,17 +50,7 @@ describe 'QDSL', ->
     describe 'control', ->
       it 'supports if-then-else', ->
         iff = Q.if('v1', true)
-        console.log 'waa', iff
         iff.then(Q.val('v1', 4).add('v2', 2))
         iff.else(Q.val('v1', 4).subtract('v2', 2))
         expect( Q.explain iff).toBe
         'if(v1(true)) then (v1(4) + v2(2)) else (v1(4) - v2(2))'
-
-          # iff = Q.if('v1', false)
-          # iff.then(Q.val('v1', 4).add('v2', 2))
-          # iff.else(Q.val('v1', 4).subtract('v2', 2))
-          # expect( Q.explain iff).toBe ''
-          #
-          # iff = Q.if Q.val('v1', 4).subtract('v2', 3).equals('v3', 1)
-          # iff.then(Q.val('v1', 4).add('v2', 6))
-          # expect( Q.explain iff).toBe ''
