@@ -72,3 +72,14 @@ describe 'QDSL', ->
           expect(val.node.arg1.value).toBe true
           expect(val.node.arg2.value).toBe false
           expectBoolType val
+
+      describe 'control', ->
+        it 'supports if-then-else', ->
+          iff = Q.if('v1', true)
+          iff.then(Q.val('v1', 4).add('v2', 2))
+          iff.else(Q.val('v1', 4).subtract('v2', 2))
+
+          expect(iff.node.type).toBe 'if'
+          expect(iff.node.expression.value).toBe true
+          expect(iff.node.then.operation).toBe 'add'
+          expect(iff.node.else.operation).toBe 'subtract'

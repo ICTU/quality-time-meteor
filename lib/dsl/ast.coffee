@@ -6,6 +6,8 @@ makeVal = (cb) -> (nameOrVal, val) ->
     cb nameOrVal
   else cb Q.val nameOrVal, val
 
+getNode = (val) -> val.node or val
+
 Q.val = (name, val) ->
   node = type: 'val', name: name, value: val
   switch type = typeof val
@@ -13,11 +15,17 @@ Q.val = (name, val) ->
     when 'boolean' then bool node
     else unsupportedValueType type
 
-Q.if = (val) ->
-  type: 'if'
-  value: val
-  then: (val) -> val
-  else: (val) -> val
+Q.if = makeVal (val) ->
+  x =
+    node:
+      type: 'if'
+      expression: getNode val
+    then: makeVal (val) -> x.node.then = getNode val; x
+    else: makeVal (val) -> x.node.else = getNode val; x
+
+#_then = (val1) ->
+#  t
+#  else: (val) -> val
 
 num = (val1) ->
   node: val1
@@ -39,7 +47,6 @@ bool = (val1) ->
   equals: makeVal (val) ->
     bool binaryOperation 'equals', val1, val
 
-getNode = (val) -> val.node or val
 binaryOperation = (operation, arg1, arg2) ->
   type: 'binaryOperation'
   operation: operation
