@@ -57,6 +57,33 @@ describe 'QDSL', ->
           expect(val.node.arg1.value).toBe 10
           expect(val.node.arg2.value).toBe 2
           expectBoolType val
+        it 'supports less-than comparison', ->
+          val = Q.val('v1', 10).lessThan(Q.val('v2', 2))
+          expect(val.node.type).toBe 'binaryOperation'
+          expect(val.node.operation).toBe 'lessThan'
+          expect(val.node.arg1.value).toBe 10
+          expect(val.node.arg2.value).toBe 2
+
+        it 'supports less-than-or-equals comparison', ->
+          val = Q.val('v1', 10).lessEquals(Q.val('v2', 2))
+          expect(val.node.type).toBe 'binaryOperation'
+          expect(val.node.operation).toBe 'lessEquals'
+          expect(val.node.arg1.value).toBe 10
+          expect(val.node.arg2.value).toBe 2
+
+        it 'supports greater-than comparison', ->
+          val = Q.val('v1', 10).gt(Q.val('v2', 2))
+          expect(val.node.type).toBe 'binaryOperation'
+          expect(val.node.operation).toBe 'greaterThan'
+          expect(val.node.arg1.value).toBe 10
+          expect(val.node.arg2.value).toBe 2
+
+        it 'supports greater-than-or-equals comparison', ->
+          val = Q.val('v1', 10).ge(Q.val('v2', 2))
+          expect(val.node.type).toBe 'binaryOperation'
+          expect(val.node.operation).toBe 'greaterEquals'
+          expect(val.node.arg1.value).toBe 10
+          expect(val.node.arg2.value).toBe 2
 
       describe 'bool', ->
         it 'supports negation', ->

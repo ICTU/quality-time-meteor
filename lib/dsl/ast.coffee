@@ -25,16 +25,33 @@ Q.if = makeVal (val) ->
 
 num = (val1) ->
   node: val1
-  subtract: makeVal (val) ->
+  subtract: minus =  makeVal (val) ->
     num binaryOperation 'subtract', val1, val
-  add: makeVal (val) ->
+  minus: minus
+  add: plus = makeVal (val) ->
     num binaryOperation 'add', val1, val
-  multiply: makeVal (val) ->
+  plus: plus
+  multiply: times =  makeVal (val) ->
     num binaryOperation 'multiply', val1, val
-  divide: makeVal (val) ->
+  times: times
+  divide: div = makeVal (val) ->
     num binaryOperation 'divide', val1, val
-  equals: makeVal (val) ->
+  div: div
+  equals: eq = makeVal (val) ->
     bool binaryOperation 'equals', val1, val
+  eq: eq
+  greaterEquals: ge = makeVal (val) ->
+    bool binaryOperation 'greaterEquals', val1, val
+  ge: ge
+  greaterThan: gt = makeVal (val) ->
+    bool binaryOperation 'greaterThan', val1, val
+  gt: gt
+  lessEquals: le = makeVal (val) ->
+    bool binaryOperation 'lessEquals', val1, val
+  le: le
+  lessThan: lt = makeVal (val) ->
+    bool binaryOperation 'lessThan', val1, val
+  lt: lt
 
 bool = (val1) ->
   node: val1
