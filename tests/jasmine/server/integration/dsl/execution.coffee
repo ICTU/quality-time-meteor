@@ -15,6 +15,22 @@ describe 'QDSL', ->
       it 'supports equality', ->
         expect( Q.exec v1.equals('v2', 10) ).toBe true
         expect( Q.exec v1.equals('v2', 2) ).toBe false
+      it 'supports greather-than comparison', ->
+        expect( Q.exec v1.gt('v2', 8) ).toBe true
+        expect( Q.exec v1.greaterThan('v2', 12) ).toBe false
+        expect( Q.exec v1.gt('v2', 10) ).toBe false
+      it 'supports greather-than-equals comparison', ->
+        expect( Q.exec v1.ge('v2', 8) ).toBe true
+        expect( Q.exec v1.greaterEquals('v2', 12) ).toBe false
+        expect( Q.exec v1.ge('v2', 10) ).toBe true
+      it 'supports less-than comparison', ->
+        expect( Q.exec v1.lt('v2', 8) ).toBe false
+        expect( Q.exec v1.lessThan('v2', 12) ).toBe true
+        expect( Q.exec v1.lt('v2', 10) ).toBe false
+      it 'supports less-than-equals comparison', ->
+        expect( Q.exec v1.le('v2', 8) ).toBe false
+        expect( Q.exec v1.lessEquals('v2', 12) ).toBe true
+        expect( Q.exec v1.le('v2', 10) ).toBe true
 
     describe 'bool', ->
 
