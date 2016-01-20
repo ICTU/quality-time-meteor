@@ -25,7 +25,6 @@ Q.explain = explain = (qObject) ->
     " else (#{explain node.else})"
 
   node = qObject.node or qObject
-  console.log 'explain', node
   switch node.type
     when 'binaryOperation'  then explainBinary node
     when 'unaryOperation'   then explainUnary node
