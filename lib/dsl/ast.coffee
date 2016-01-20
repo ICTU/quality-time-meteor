@@ -23,10 +23,6 @@ Q.if = makeVal (val) ->
     then: makeVal (val) -> x.node.then = getNode val; x
     else: makeVal (val) -> x.node.else = getNode val; x
 
-#_then = (val1) ->
-#  t
-#  else: (val) -> val
-
 num = (val1) ->
   node: val1
   subtract: makeVal (val) ->
