@@ -21,6 +21,18 @@ describe 'QDSL', ->
         'v1(10) equals v2(10)'
         expect( Q.explain v1.equals('v2', 2) ).toBe
         'v1(10) equals v2(2)'
+      it 'supports less-than', ->
+        expect( Q.explain v1.lessThan('v2', 10) ).toBe
+        'v1(10) < v2(10)'
+      it 'supports less-than-or-equals', ->
+        expect( Q.explain v1.lessThan('v2', 10) ).toBe
+        'v1(10) <= v2(10)'
+      it 'supports greater-than', ->
+        expect( Q.explain v1.lessThan('v2', 10) ).toBe
+        'v1(10) > v2(10)'
+      it 'supports greater-than-or-equals', ->
+        expect( Q.explain v1.lessThan('v2', 10) ).toBe
+        'v1(10) >= v2(10)'
 
     describe 'bool', ->
 

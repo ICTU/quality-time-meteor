@@ -11,6 +11,10 @@ Q.explain = explain = (qObject) ->
       when 'multiply'       then "#{explain(arg1)} * #{explain(arg2)}"
       when 'divide'         then "#{explain(arg1)} / #{explain(arg2)}"
       when 'equals'         then "#{explain(arg1)} equals #{explain(arg2)}"
+      when 'lessThan'       then "#{explain(arg1)} < #{explain(arg2)}"
+      when 'lessEquals'     then "#{explain(arg1)} <= #{explain(arg2)}"
+      when 'greaterThan'    then "#{explain(arg1)} > #{explain(arg2)}"
+      when 'greaterEquals'  then "#{explain(arg1)} >= #{explain(arg2)}"
       else                  unsupportedOperation operation
   explainUnary = ({operation, arg}) ->
     switch operation
