@@ -46,7 +46,7 @@ measureAndRegister = (metricClass, sourceClass, subject) ->
 runner = ->
   console.log 'Running measurements'
   subject = RApp()
-
+  
   measureAndRegister TotalUnitTests, Jenkins, subject
   measureAndRegister PassedUnitTests, Jenkins, subject
 
