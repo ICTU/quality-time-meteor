@@ -14,7 +14,8 @@ measure = (metric, datasources...) ->
       invocationParams[prop] = ds[prop].bind(ds)
 
   if Object.keys(invocationParams).length is metric.properties.length
-    metric.measure invocationParams
+    calc: metric.measure invocationParams
+    #status: if metric.status then (metric.status invocationParams) else null
   else
     throw new Error 'Unable to satisfy all property dependencies for metric, missing: ' + _.difference(metric.properties, Object.keys(invocationParams))
 
@@ -26,7 +27,8 @@ RApp = ->
     jobName: 'RApp'
 
 measureAndRegister = (metricClass, sourceClass, subject) ->
-  calculation = (measure new metricClass(), new sourceClass(subject) )()
+  m = (measure new metricClass(), new sourceClass(subject))
+  calculation = m.calc()
   jsonCalc = Q.toJSON calculation
   query =
     forSubject: subject.name, ofMetric: metricClass.name, calculation: jsonCalc
@@ -46,7 +48,7 @@ measureAndRegister = (metricClass, sourceClass, subject) ->
 runner = ->
   console.log 'Running measurements'
   subject = RApp()
-  
+
   measureAndRegister TotalUnitTests, Jenkins, subject
   measureAndRegister PassedUnitTests, Jenkins, subject
 
