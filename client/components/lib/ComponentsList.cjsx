@@ -1,7 +1,5 @@
-{ Paper, List, ListItem, Avatar } = mui
-
-avatarStyle =
-  fontSize: 14
+{ Paper, List, ListItem, Avatar, Styles } = mui
+{ Colors } = Styles
 
 paperStyle =
   width:300
@@ -13,6 +11,12 @@ h3Style =
 listStyle =
   padding: 0
 
+statusColor = (status) ->
+  switch status
+    when 'ok'   then Colors.green400
+    when 'nok'  then  Colors.red500
+    else Colors.lightBlue500
+
 @ComponentsList = React.createClass
 
   openDialog: (id) -> =>
@@ -20,8 +24,15 @@ listStyle =
 
   renderListItems: ->
     @props.measurements.map (measurement) =>
+      avatarStyle =
+        fontSize: 14
+        backgroundColor: statusColor measurement.status.value
       passedUnitTestsAvatar = <Avatar style={avatarStyle}>{measurement.value}</Avatar>
-      <ListItem key={measurement._id} primaryText={measurement.ofMetric} leftAvatar={passedUnitTestsAvatar} onTouchTap={@openDialog measurement._id}/>
+      <ListItem key={measurement._id}
+        primaryText={measurement.ofMetric}
+        leftAvatar={passedUnitTestsAvatar}
+        onTouchTap={@openDialog measurement._id}
+      />
 
   x: ->
     @props.measurements.map (measurement) ->
