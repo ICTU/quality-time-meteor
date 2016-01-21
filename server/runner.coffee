@@ -15,7 +15,7 @@ measure = (metric, datasources...) ->
 
   if Object.keys(invocationParams).length is metric.properties.length
     calc: metric.measure invocationParams
-    #status: if metric.status then (metric.status invocationParams) else null
+    status: if metric.status then (metric.status invocationParams) else null
   else
     throw new Error 'Unable to satisfy all property dependencies for metric, missing: ' + _.difference(metric.properties, Object.keys(invocationParams))
 
@@ -37,13 +37,24 @@ measureAndRegister = (metricClass, sourceClass, subject) ->
     measurement.lastMeasured = new Date()
     Measurements.update {_id: measurement._id}, measurement
   else
-    Measurements.insert
+    console.log m.status
+    measurementObject =
       firstMeasured: new Date()
       lastMeasured: new Date()
       forSubject: subject.name
       ofMetric: metricClass.name
       value: Q.exec calculation
       calculation: jsonCalc
+
+    if m.status
+      measurementObject.status =
+        calculation: Q.toJSON m.status
+        value: Q.exec m.status
+    else
+      measurementObject.status =
+        value: 'unknown'
+        
+    Measurements.insert measurementObject
 
 runner = ->
   console.log 'Running measurements'
