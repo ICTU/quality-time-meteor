@@ -11,8 +11,9 @@ getNode = (val) -> val.node or val
 Q.val = (name, val) ->
   node = type: 'val', name: name, value: val
   switch type = typeof val
-    when 'number' then num node
-    when 'boolean' then bool node
+    when 'number'   then num node
+    when 'boolean'  then bool node
+    when 'string'   then string node
     else unsupportedValueType type
 
 Q.if = makeVal (val) ->
@@ -58,6 +59,11 @@ bool = (val1) ->
   not: ->
     bool unaryOperation 'not', val1
   equals: makeVal (val) ->
+    bool binaryOperation 'equals', val1, val
+
+string = (val1) ->
+  node: val1
+  equals: eq = makeVal (val) ->
     bool binaryOperation 'equals', val1, val
 
 binaryOperation = (operation, arg1, arg2) ->
