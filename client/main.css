@@ -2,10 +2,17 @@ main {
   padding: 10px;
 }
 
+.ast {
+  font-family: Roboto, sans-serif;
+}
 .ast .node > .name {
   color: blue;
 }
 .ast .node > .value {
   color: grey;
+  font-weight: bold;
+}
+.ast .operator {
+  color: purple;
   font-weight: bold;
 }
