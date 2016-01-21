@@ -20,6 +20,10 @@ listStyle =
       passedUnitTestsAvatar = <Avatar style={avatarStyle}>{measurement.value}</Avatar>
       <ListItem key={measurement._id} primaryText={measurement.ofMetric} leftAvatar={passedUnitTestsAvatar} />
 
+  x: ->
+    @props.measurements.map (measurement) ->
+      <DslHtmlView key={measurement._id} ast={JSON.parse measurement.calculation} />
+
   render: ->
 
     <Paper style={paperStyle}>
@@ -27,6 +31,7 @@ listStyle =
       <List style={listStyle}>
         {@renderListItems()}
       </List>
+      {@x()}
     </Paper>
 
 

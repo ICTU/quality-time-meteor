@@ -1,3 +1,11 @@
 main {
   padding: 10px;
 }
+
+.ast .node > .name {
+  color: blue;
+}
+.ast .node > .value {
+  color: grey;
+  font-weight: bold;
+}
