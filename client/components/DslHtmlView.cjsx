@@ -1,6 +1,23 @@
+{ Dialog } = mui
+
 @DslHtmlView = React.createClass
+  handleClose: ->
+    @setState open: false
+
+  open: ->
+    @setState open: true
+
   render: ->
-    <pre className='ast'>{@renderAst @props.ast}</pre>
+    <Dialog
+      title={@props.title}
+      modal={false}
+      open={@state.open}
+      onRequestClose={@handleClose}>
+      <pre className='ast'>{@renderAst @props.ast}</pre>
+    </Dialog>
+
+  getInitialState: ->
+    open: false
 
   renderAst: (ast) ->
     unsupportedOperation = (operation) ->
@@ -23,14 +40,14 @@
       explainBinary = ({operation, arg1, arg2}) ->
         switch operation
           when 'subtract'       then renderBinary arg1, arg2, '-'
-          when 'add'            then "#{explain(arg1)} + #{explain(arg2)}"
-          when 'multiply'       then "#{explain(arg1)} * #{explain(arg2)}"
-          when 'divide'         then "#{explain(arg1)} / #{explain(arg2)}"
-          when 'equals'         then "#{explain(arg1)} equals #{explain(arg2)}"
-          when 'lessThan'       then "#{explain(arg1)} < #{explain(arg2)}"
-          when 'lessEquals'     then "#{explain(arg1)} <= #{explain(arg2)}"
-          when 'greaterThan'    then "#{explain(arg1)} > #{explain(arg2)}"
-          when 'greaterEquals'  then "#{explain(arg1)} >= #{explain(arg2)}"
+          when 'add'            then renderBinary arg1, arg2, '+'
+          when 'multiply'       then renderBinary arg1, arg2, '*'
+          when 'divide'         then renderBinary arg1, arg2, '/'
+          when 'equals'         then renderBinary arg1, arg2, 'is'
+          when 'lessThan'       then renderBinary arg1, arg2, '<'
+          when 'lessEquals'     then renderBinary arg1, arg2, '<='
+          when 'greaterThan'    then renderBinary arg1, arg2, '>'
+          when 'greaterEquals'  then renderBinary arg1, arg2, '>='
           else                  unsupportedOperation operation
       explainUnary = ({operation, arg}) ->
         switch operation

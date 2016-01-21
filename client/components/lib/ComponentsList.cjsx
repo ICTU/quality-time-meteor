@@ -15,14 +15,17 @@ listStyle =
 
 @ComponentsList = React.createClass
 
+  openDialog: (id) -> =>
+    @refs[id].open()
+
   renderListItems: ->
-    @props.measurements.map (measurement) ->
+    @props.measurements.map (measurement) =>
       passedUnitTestsAvatar = <Avatar style={avatarStyle}>{measurement.value}</Avatar>
-      <ListItem key={measurement._id} primaryText={measurement.ofMetric} leftAvatar={passedUnitTestsAvatar} />
+      <ListItem key={measurement._id} primaryText={measurement.ofMetric} leftAvatar={passedUnitTestsAvatar} onTouchTap={@openDialog measurement._id}/>
 
   x: ->
     @props.measurements.map (measurement) ->
-      <DslHtmlView key={measurement._id} ast={JSON.parse measurement.calculation} />
+      <DslHtmlView ref={measurement._id} key={measurement._id} ast={JSON.parse measurement.calculation} />
 
   render: ->
 
