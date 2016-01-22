@@ -12,10 +12,12 @@ describe 'SourceTypesList', ->
 
   beforeEach ->
     sources = [
+      _id: 'TestID1'
       name: 'TestSource1'
       description: 'test description 1'
-      img: 'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image2.jpg'
+      img: 'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg'
     ,
+      _id: 'TestID2'
       name: 'TestSource2'
       description: 'test description 2'
       img: 'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image2.jpg'
@@ -39,19 +41,15 @@ describe 'SourceTypesList', ->
           key='TestSource1'
           title='TestSource1'
           subtitle='test description 1'>
-          <img src='http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image2.jpg' />
+          <a href='/source/TestID1/edit'>
+            <img src='http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg' />
+          </a>
         </GridTile>
         <GridTile
           key='TestSource2'
           title='TestSource2'
           subtitle='test description 2'>
-          <img src='http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image2.jpg' />
+          <a href='/source/TestID2/edit'>
+            <img src='http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image2.jpg' />
+          </a>
         </GridTile>])
-
-      expect(component.props.children).toContain(
-        <GridTile
-          key='TestSource2'
-          title='TestSource2'
-          subtitle='test description 2'>
-          <img src='http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image2.jpg' />
-        </GridTile>)

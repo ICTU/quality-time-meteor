@@ -28,3 +28,8 @@ kadira:flow-router
 sanjo:jasmine
 velocity:console-reporter
 velocity:html-reporter
+cosmos:browserify
+meteorhacks:npm
+
+
+npm-container

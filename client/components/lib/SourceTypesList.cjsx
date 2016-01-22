@@ -1,4 +1,3 @@
-{ Table, TableBody, TableHeader, TableRow, TableRowColumn, TableHeaderColumn } = mui
 { GridList, GridTile} = mui
 
 
@@ -12,7 +11,9 @@
       key={source.name}
       title={source.name}
       subtitle={source.description}>
-      <img src={source.img} />
+      <a href={"/source/#{source._id}/edit"}>
+        <img src={source.img} />
+      </a>
     </GridTile>
 
   tiles: ->
