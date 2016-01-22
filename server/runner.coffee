@@ -26,6 +26,24 @@ RApp = ->
     url: 'http://www.jenkins.kiesraad.ictu/'
     jobName: 'RApp'
 
+InspectISZW = ->
+  name: 'Inspectieviews ISZW'
+  jenkins:
+    url: 'http://www.jenkins.inspectieviews.ictu/'
+    jobName: 'av-ingestion-iszw'
+
+InspectBedrijvenWsdl = ->
+  name: 'Inspectieviews Bedrijven WSDL'
+  jenkins:
+    url: 'http://www.jenkins.inspectieviews.ictu/'
+    jobName: 'iv-bedrijven-wsdl'
+
+MetricsKwaliteit = ->
+  name: 'Metrics Kwaliteit'
+  jenkins:
+    url: 'http://jenkins.isf.org:8080/'
+    jobName: 'metrics-kwaliteit'
+
 measureAndRegister = (metricClass, sourceClass, subject) ->
   m = (measure new metricClass(), new sourceClass(subject))
   calculation = m.calc()
@@ -53,7 +71,7 @@ measureAndRegister = (metricClass, sourceClass, subject) ->
     else
       measurementObject.status =
         value: 'unknown'
-        
+
     Measurements.insert measurementObject
 
 runner = ->
@@ -62,6 +80,19 @@ runner = ->
 
   measureAndRegister TotalUnitTests, Jenkins, subject
   measureAndRegister PassedUnitTests, Jenkins, subject
+
+  subject = InspectISZW()
+  measureAndRegister TotalUnitTests, Jenkins, subject
+  measureAndRegister PassedUnitTests, Jenkins, subject
+
+  subject = InspectBedrijvenWsdl()
+  measureAndRegister TotalUnitTests, Jenkins, subject
+  measureAndRegister PassedUnitTests, Jenkins, subject
+
+  subject = MetricsKwaliteit()
+  measureAndRegister TotalUnitTests, Jenkins, subject
+  measureAndRegister PassedUnitTests, Jenkins, subject
+
 
 Meteor.startup ->
   if process.env.DEV
