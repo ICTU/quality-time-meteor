@@ -21,4 +21,4 @@ FlowRouter.route '/metrics',
 FlowRouter.route '/components',
   action: ->
     ReactLayout.render MainLayout,
-      content: -> <MeteorComponentsList />
+      content: -> <MeteorComponentMeasurements />

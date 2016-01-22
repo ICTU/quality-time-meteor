@@ -20,7 +20,7 @@ statusColor = (status) ->
     when 'nok'  then  Colors.red500
     else Colors.lightBlue500
 
-@ComponentsList = React.createClass
+@ComponentMeasurements = React.createClass
 
   openDialog: (id) -> =>
     @refs[id].open()

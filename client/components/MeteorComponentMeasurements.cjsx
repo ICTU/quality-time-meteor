@@ -1,4 +1,4 @@
-@MeteorComponentsList = React.createClass
+@MeteorComponentMeasurements = React.createClass
 
   mixins: [ReactMeteorData]
 
@@ -32,8 +32,8 @@
 
   render: ->
     <span>
-      <ComponentsList measurements={@data.measurements.rapp} />
-      <ComponentsList measurements={@data.measurements.inspectieviews} />
-      <ComponentsList measurements={@data.measurements.inspectieviews2} />
-      <ComponentsList measurements={@data.measurements.x} />
+      <ComponentMeasurements measurements={@data.measurements.rapp} />
+      <ComponentMeasurements measurements={@data.measurements.inspectieviews} />
+      <ComponentMeasurements measurements={@data.measurements.inspectieviews2} />
+      <ComponentMeasurements measurements={@data.measurements.x} />
     </span>
