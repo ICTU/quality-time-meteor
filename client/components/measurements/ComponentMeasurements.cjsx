@@ -1,5 +1,4 @@
-{ Paper, List, ListItem, Avatar, Styles } = mui
-{ Colors } = Styles
+{ Paper, List } = mui
 
 paperStyle =
   width:300
@@ -14,30 +13,19 @@ h3Style =
 listStyle =
   padding: 0
 
-statusColor = (status) ->
-  switch status
-    when 'ok'   then Colors.green400
-    when 'nok'  then  Colors.red500
-    else Colors.lightBlue500
-
 @ComponentMeasurements = React.createClass
 
-  openDialog: (id) -> =>
-    @refs[id].open()
+  openDialog: (e, metric)->
+    @refs[metric._id].open()
 
   renderListItems: ->
     @props.measurements.map (measurement) =>
-      avatarStyle =
-        fontSize: 14
-        backgroundColor: statusColor measurement.status.value
-      passedUnitTestsAvatar = <Avatar style={avatarStyle}>{measurement.value}</Avatar>
-      <ListItem key={measurement._id}
-        primaryText={measurement.ofMetric}
-        leftAvatar={passedUnitTestsAvatar}
-        onTouchTap={@openDialog measurement._id}
-      />
+      <MeasurementListItem
+        key={measurement._id}
+        measurement={measurement}
+        onTouchTap={@openDialog} />
 
-  x: ->
+  renderDetailDialogs: ->
     @props.measurements.map (measurement) ->
       <DslHtmlView ref={measurement._id} key={measurement._id} ast={JSON.parse measurement.calculation}
       statusAst={JSON.parse measurement.status.calculation}/>
@@ -49,5 +37,5 @@ statusColor = (status) ->
       <List style={listStyle}>
         {@renderListItems()}
       </List>
-      {@x()}
+      {@renderDetailDialogs()}
     </Paper>

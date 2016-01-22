@@ -2,11 +2,6 @@ TestUtils = React.addons.TestUtils
 Simulate = TestUtils.Simulate
 { GridList, GridTile} = mui
 
-render = (comp) ->
-  renderer = TestUtils.createRenderer()
-  console.log renderer, comp
-  renderer.render comp
-  renderer.getRenderOutput()
 
 simulateClickOn = (el) ->
   React.addons.TestUtils.Simulate.click el[0]
