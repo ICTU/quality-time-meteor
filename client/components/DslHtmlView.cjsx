@@ -13,7 +13,10 @@
       modal={false}
       open={@state.open}
       onRequestClose={@handleClose}>
+      <h3>Value</h3>
       <pre className='ast'>{@renderAst @props.ast}</pre>
+      <h3>Status</h3>
+      <pre className='ast'>{@renderAst @props.statusAst}</pre>
     </Dialog>
 
   getInitialState: ->
@@ -43,7 +46,7 @@
           when 'add'            then renderBinary arg1, arg2, '+'
           when 'multiply'       then renderBinary arg1, arg2, '*'
           when 'divide'         then renderBinary arg1, arg2, '/'
-          when 'equals'         then renderBinary arg1, arg2, 'is'
+          when 'equals'         then renderBinary arg1, arg2, '=='
           when 'lessThan'       then renderBinary arg1, arg2, '<'
           when 'lessEquals'     then renderBinary arg1, arg2, '<='
           when 'greaterThan'    then renderBinary arg1, arg2, '>'
@@ -54,8 +57,11 @@
           when 'not'            then "not(#{explain(arg)})"
           else                  throw unsupportedOperation operation
       explainIf = (node) ->
-        "if(#{explain node.expression}) then (#{explain node.then})" +
-        " else (#{explain node.else})"
+        <span>if {explain node.expression}
+          <div style={paddingLeft:20}>{explain node.then}</div>
+          else
+          <div style={paddingLeft:20}>{explain node.else}</div>
+        </span>
 
       node = qObject.node or qObject
       switch node.type
