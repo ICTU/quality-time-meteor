@@ -7,7 +7,7 @@ console.log ThemeManager
 
   getInitialState: ->
     open: false
-  
+
   childContextTypes:
     muiTheme: React.PropTypes.object
 
@@ -39,6 +39,11 @@ console.log ThemeManager
           onLeftIconButtonTouchTap={@onLeftIconButtonTouchTap}
         />
 
+        <MenuItem
+          leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>dashboard</FontIcon>}
+          onTouchTap={@goToRoute '/dashboard'}>
+          Dashboard
+        </MenuItem>
         <MenuItem
           leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>settings_input_component</FontIcon>}
           onTouchTap={@goToRoute '/sources'}>
