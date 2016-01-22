@@ -10,6 +10,13 @@
           total_count: action.totalCount
           test_results_found: true
 
+    unless @results
+      @results =
+          fail_count: 0
+          skip_count: 0
+          total_count: 0
+          test_results_found: false
+
   get_json: (jenkins_url, jenkins_job) ->
     try
       result = HTTP.get jenkins_url + 'job/' + jenkins_job + '/lastBuild/api/json?tree=actions[failCount,skipCount,totalCount]'
