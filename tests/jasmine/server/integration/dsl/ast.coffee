@@ -7,8 +7,8 @@ describe 'QDSL', ->
         expect(val.node.name).toBe 'valueName'
         expect(val.node.value).toBe 10
       it 'throws an exception if the value is not supported', ->
-        f = -> Q.val('v', 'string')
-        expect(f).toThrowError 'Unsupported value type: string'
+        f = -> Q.val('v', {})
+        expect(f).toThrowError 'Unsupported value type: object'
 
       expectNumericType = (val) ->
         expect(val.subtract?).toEqual true
