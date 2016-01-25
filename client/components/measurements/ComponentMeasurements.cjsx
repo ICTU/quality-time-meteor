@@ -1,17 +1,18 @@
 { Paper, List } = mui
 
-paperStyle =
-  width:300
-  marginBottom: 10
-  marginLeft: 5
-  float: 'left'
-h3Style =
-  backgroundColor: 'silver'
-  padding: 10
-  fontWeight: 300
-  margin: 0
-listStyle =
-  padding: 0
+styles =
+  paper:
+    width:300
+    marginBottom: 10
+    marginLeft: 5
+    float: 'left'
+  h3:
+    backgroundColor: 'silver'
+    padding: 10
+    fontWeight: 300
+    margin: 0
+  list:
+    padding: 0
 
 @ComponentMeasurements = React.createClass
 
@@ -31,10 +32,9 @@ listStyle =
       statusAst={JSON.parse measurement.status.calculation}/>
 
   render: ->
-
-    <Paper style={paperStyle}>
-      <h3 style={h3Style}>{@props.measurements[0].forSubject}</h3>
-      <List style={listStyle}>
+    <Paper style={styles.paper}>
+      <h3 style={styles.h3}>{@props.measurements[0].forSubject}</h3>
+      <List style={styles.list}>
         {@renderListItems()}
       </List>
       {@renderDetailDialogs()}

@@ -6,6 +6,11 @@ FlowRouter.route '/',
 FlowRouter.route '/sources',
   action: ->
     ReactLayout.render MainLayout,
+      content: -> <MeteorSourcesList />
+
+FlowRouter.route '/source-types',
+  action: ->
+    ReactLayout.render MainLayout,
       content: -> <MeteorSourceTypesList />
 
 FlowRouter.route '/subjects',
@@ -28,6 +33,6 @@ FlowRouter.route '/source/:docId/edit',
   action: (params)->
     ReactLayout.render MainLayout,
       content: -> <MeteorEditForm
-        fields={['name', 'url', 'description', 'img']}
-        collection={SourceTypes}
+        fields={['name', 'url', 'description', 'image']}
+        collection={Sources}
         docId={params.docId} />

@@ -23,7 +23,7 @@ measure = (metric, datasources...) ->
 RApp = ->
   name: 'Referendum Applicatie'
   jenkins:
-    url: 'http://www.jenkins.kiesraad.ictu/'
+    # url: 'http://www.jenkins.kiesraad.ictu/'
     jobName: 'RApp'
 
 InspectISZW = ->
@@ -44,8 +44,8 @@ MetricsKwaliteit = ->
     url: 'http://jenkins.isf.org:8080/'
     jobName: 'metrics-kwaliteit'
 
-measureAndRegister = (metricClass, sourceClass, subject) ->
-  m = (measure new metricClass(), new sourceClass(subject))
+measureAndRegister = (metricClass, source, subject) ->
+  m = (measure new metricClass(), new global[source.class](source, subject))
   calculation = m.calc()
   jsonCalc = Q.toJSON calculation
   query =
@@ -76,23 +76,28 @@ measureAndRegister = (metricClass, sourceClass, subject) ->
 
 runner = ->
   console.log 'Running measurements'
-  subject = RApp()
 
-  measureAndRegister TotalUnitTests, Jenkins, subject
-  measureAndRegister PassedUnitTests, Jenkins, subject
+  # Sources.find().map (sourceType) ->
+
+  subject = RApp()
+  source = Sources.findOne name: 'Referendum Applicatie Jenkins'
+  measureAndRegister TotalUnitTests, source, subject
+  measureAndRegister PassedUnitTests, source, subject
 
   subject = InspectISZW()
-  measureAndRegister TotalUnitTests, Jenkins, subject
-  measureAndRegister PassedUnitTests, Jenkins, subject
+  source = Sources.findOne name: 'Inspectieviews Jenkins'
+  measureAndRegister TotalUnitTests, source, subject
+  measureAndRegister PassedUnitTests, source, subject
 
   subject = InspectBedrijvenWsdl()
-  measureAndRegister TotalUnitTests, Jenkins, subject
-  measureAndRegister PassedUnitTests, Jenkins, subject
+  source = Sources.findOne name: 'Inspectieviews Jenkins'
+  measureAndRegister TotalUnitTests, source, subject
+  measureAndRegister PassedUnitTests, source, subject
 
   subject = MetricsKwaliteit()
-  measureAndRegister TotalUnitTests, Jenkins, subject
-  measureAndRegister PassedUnitTests, Jenkins, subject
-
+  source = Sources.findOne name: 'Metrics Kwaliteit Jenkins'
+  measureAndRegister TotalUnitTests, source, subject
+  measureAndRegister PassedUnitTests, source, subject
 
 Meteor.startup ->
   if process.env.DEV

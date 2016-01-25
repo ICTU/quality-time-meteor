@@ -8,9 +8,12 @@
 
   onSave: (doc) -> @props.collection.upsert _id: doc._id, doc
 
+  onDelete: (doc) -> @props.collection.remove _id: doc._id
+
   render: ->
     <EditForm
       id={@props.docId}
       data={@data.document}
       fields={@props.fields}
-      onSave={@onSave}/>
+      onSave={@onSave}
+      onDelete={@onDelete}/>

@@ -5,6 +5,6 @@
   getMeteorData: ->
     sources: SourceTypes.find().fetch()
 
-
   render: ->
-    <SourceTypesList sources={@data.sources} />
+    <div>SourceTypesList is not implemented yet</div>
+    # <SourceTypesList sources={@data.sources} />

@@ -1,8 +1,8 @@
-
 @Jenkins = class Jenkins
-  constructor: (@config) ->
-    result = @get_json @config.jenkins.url, @config.jenkins.jobName
-    for action in result.json?.actions
+  constructor: (@source, @subject) ->
+    @config = _.extend @source, @subject.jenkins
+    result = @get_json @config.url, @config.jobName
+    for action in result?.json?.actions or []
       if 'failCount' of action
         @results =
           fail_count: action.failCount
@@ -12,10 +12,10 @@
 
     unless @results
       @results =
-          fail_count: 0
-          skip_count: 0
-          total_count: 0
-          test_results_found: false
+        fail_count: 0
+        skip_count: 0
+        total_count: 0
+        test_results_found: false
 
   get_json: (jenkins_url, jenkins_job) ->
     try
@@ -30,11 +30,29 @@
   passedUnitTestsCount: ->
     @totalUnitTestsCount().subtract(@failedUnitTestsCount()).subtract(@skippedUnitTestsCount())
 
+testSources = [
+    name: 'Referendum Applicatie Jenkins'
+    description: "RApp Jenkins CI"
+    url: 'http://www.jenkins.kiesraad.ictu/'
+    image: "https://blog.rosehosting.com/blog/wp-content/uploads/2014/11/jenkins.png"
+    class: 'Jenkins'
+  ,
+    name: 'Inspectieviews ISZW Jenkins'
+    description: "Inspectieviews ISZW Jenkins CI"
+    url: 'http://www.jenkins.inspectieviews.ictu/'
+    image: "https://blog.rosehosting.com/blog/wp-content/uploads/2014/11/jenkins.png"
+    class: 'Jenkins'
+  ,
+    name: 'Metrics Kwaliteit Jenkins'
+    description: "Metrics Kwaliteit Jenkins CI"
+    url: 'http://jenkins.isf.org:8080/'
+    image: "https://blog.rosehosting.com/blog/wp-content/uploads/2014/11/jenkins.png"
+    class: 'Jenkins'
+]
+
 Meteor.startup ->
-  SourceTypes.register 'Jenkins',
-    description: 'A Continuous Build Server'
-    img: 'https://blog.rosehosting.com/blog/wp-content/uploads/2014/11/jenkins.png'
-    class: Jenkins
+  if Sources.find().count() is 0
+    Sources.register source for source in testSources
 
   # Sources.register 'Sonar',
   #   description: 'A static code analysis tool'

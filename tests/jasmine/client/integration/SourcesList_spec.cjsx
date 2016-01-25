@@ -6,7 +6,7 @@ Simulate = TestUtils.Simulate
 simulateClickOn = (el) ->
   React.addons.TestUtils.Simulate.click el[0]
 
-describe 'SourceTypesList', ->
+describe 'SourcesList', ->
 
   sources = []
 
@@ -15,26 +15,26 @@ describe 'SourceTypesList', ->
       _id: 'TestID1'
       name: 'TestSource1'
       description: 'test description 1'
-      img: 'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg'
+      image: 'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg'
     ,
       _id: 'TestID2'
       name: 'TestSource2'
       description: 'test description 2'
-      img: 'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image2.jpg'
+      image: 'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image2.jpg'
     ]
 
   it 'should display a message when there is no data', ->
-    component = render <SourceTypesList sources={[]} />
+    component = render <SourcesList sources={[]} />
     expect(component.props.children).toEqual <span>No data</span>
 
   it 'should display a tile for each source', ->
-    component = render <SourceTypesList sources={sources} />
+    component = render <SourcesList sources={sources} />
     expect(component.props.children.length).toEqual 2
 
   describe 'Tiles', ->
 
     it 'should display source details', ->
-      component = render <SourceTypesList sources={sources} />
+      component = render <SourcesList sources={sources} />
 
       expect(component.props.children).toEqual([
         <GridTile

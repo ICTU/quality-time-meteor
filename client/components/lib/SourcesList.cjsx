@@ -1,7 +1,7 @@
 { GridList, GridTile} = mui
 
-
-@SourceTypesList = React.createClass
+@SourcesList = React.createClass
+  displayName: 'SourcesList'
 
   onRowSelection: ->
     console.log 'onRowSelection'
@@ -12,7 +12,7 @@
       title={source.name}
       subtitle={source.description}>
       <a href={"/source/#{source._id}/edit"}>
-        <img src={source.img} />
+        <img src={source.image} />
       </a>
     </GridTile>
 
