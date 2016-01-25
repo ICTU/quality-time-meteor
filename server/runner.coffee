@@ -80,7 +80,7 @@ runner = ->
   # Sources.find().map (sourceType) ->
 
   subject = RApp()
-  source = Sources.findOne name: 'Referendum Applicatie Jenkins'
+  source = Sources.findOne name: 'RApp Jenkins'
   measureAndRegister TotalUnitTests, source, subject
   measureAndRegister PassedUnitTests, source, subject
 

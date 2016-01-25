@@ -31,8 +31,8 @@
     @totalUnitTestsCount().subtract(@failedUnitTestsCount()).subtract(@skippedUnitTestsCount())
 
 testSources = [
-    name: 'Referendum Applicatie Jenkins'
-    description: "RApp Jenkins CI"
+    name: 'RApp Jenkins'
+    description: "Referendum Applicatie Jenkins CI"
     url: 'http://www.jenkins.kiesraad.ictu/'
     image: "https://blog.rosehosting.com/blog/wp-content/uploads/2014/11/jenkins.png"
     class: 'Jenkins'
