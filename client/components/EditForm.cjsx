@@ -35,5 +35,5 @@ capitalize = (text) ->
       <RaisedButton label="Save" onTouchTap={@save} style={styles.button}/>
       <RaisedButton label="Delete" onTouchTap={@delete}
         primary={true}
-        style={_.extend {"margin-left": 20}, styles.button}/>
+        style={_.extend {marginLeft: 20}, styles.button}/>
     </span>
