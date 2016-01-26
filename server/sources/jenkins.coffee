@@ -35,18 +35,21 @@ testSources = [
     description: "Referendum Applicatie Jenkins CI"
     url: 'http://www.jenkins.kiesraad.ictu/'
     image: "https://blog.rosehosting.com/blog/wp-content/uploads/2014/11/jenkins.png"
+    icon: "/images/jenkins/icon.png"
     class: 'Jenkins'
   ,
     name: 'Inspectieviews Jenkins'
     description: "Inspectieviews Jenkins CI"
     url: 'http://www.jenkins.inspectieviews.ictu/'
     image: "https://blog.rosehosting.com/blog/wp-content/uploads/2014/11/jenkins.png"
+    icon: "/images/jenkins/icon.png"
     class: 'Jenkins'
   ,
     name: 'Metrics Kwaliteit Jenkins'
     description: "Metrics Kwaliteit Jenkins CI"
     url: 'http://jenkins.isf.org:8080/'
     image: "https://blog.rosehosting.com/blog/wp-content/uploads/2014/11/jenkins.png"
+    icon: "/images/jenkins/icon.png"
     class: 'Jenkins'
 ]
 
