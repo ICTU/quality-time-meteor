@@ -1,6 +1,6 @@
+{ Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } = mui
 TestUtils = React.addons.TestUtils
 Simulate = TestUtils.Simulate
-{ GridList, GridTile} = mui
 
 
 simulateClickOn = (el) ->
@@ -15,41 +15,49 @@ describe 'SourcesList', ->
       _id: 'TestID1'
       name: 'TestSource1'
       description: 'test description 1'
-      image: 'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg'
+      image: 'image1.jpg'
+      icon: 'icon1.jpg'
     ,
       _id: 'TestID2'
       name: 'TestSource2'
       description: 'test description 2'
-      image: 'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image2.jpg'
+      image: 'image2.jpg'
+      icon: 'icon2.jpg'
+    ,
+      _id: 'TestID3'
+      name: 'TestSource3'
+      description: 'test description 3'
+      image: 'image3.jpg'
+      icon: 'icon3.jpg'
     ]
 
-  it 'should display a message when there is no data', ->
-    component = render <SourcesList sources={[]} />
-    expect(component.props.children).toEqual <span>No data</span>
 
-  it 'should display a tile for each source', ->
+  it 'should display an entry for each source', ->
     component = render <SourcesList sources={sources} />
-    expect(component.props.children.length).toEqual 2
+    body = component.props.children[1]
+    expect(body.props.children.length).toEqual 3
 
-  describe 'Tiles', ->
+  describe 'Source entry', ->
 
     it 'should display source details', ->
       component = render <SourcesList sources={sources} />
+      body = component.props.children[1]
 
-      expect(component.props.children).toEqual([
-        <GridTile
-          key='TestSource1'
-          title='TestSource1'
-          subtitle='test description 1'>
-          <a href='/source/TestID1/edit'>
-            <img src='http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg' />
-          </a>
-        </GridTile>
-        <GridTile
-          key='TestSource2'
-          title='TestSource2'
-          subtitle='test description 2'>
-          <a href='/source/TestID2/edit'>
-            <img src='http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image2.jpg' />
-          </a>
-        </GridTile>])
+      expect(body.props.children[0].props.children).toEqual([
+        <TableRowColumn>
+          <img src='icon1.jpg' style={height:50} />
+          <div style={top: -20, position: 'relative', paddingLeft: 10, display: 'inline-block'}>TestSource1</div>
+        </TableRowColumn>
+        <TableRowColumn>test description 1</TableRowColumn>])
+      expect(body.props.children[1].props.children).toEqual([
+        <TableRowColumn>
+          <img src='icon2.jpg' style={height:50} />
+          <div style={top: -20, position: 'relative', paddingLeft: 10, display: 'inline-block'}>TestSource2</div>
+        </TableRowColumn>
+        <TableRowColumn>test description 2</TableRowColumn>])
+      expect(body.props.children[2].props.children).toEqual([
+        <TableRowColumn>
+          <img src='icon3.jpg' style={height:50} />
+          <div style={top: -20, position: 'relative', paddingLeft: 10, display: 'inline-block'}>TestSource3</div>
+        </TableRowColumn>
+        <TableRowColumn>test description 3</TableRowColumn>])
