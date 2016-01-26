@@ -6,17 +6,13 @@ styles =
   button:
     marginTop: 15
 
-capitalize = (text) ->
-  [first, rest...] = text
-  "#{first.toUpperCase()}#{rest.join('')}"
-
 @EditForm = React.createClass
   displayName: 'EditForm'
 
   mixins: [LinkedStateMixin]
 
   getInitialState: ->
-    @props.data
+    @props.doc
 
   save: -> @props.onSave @state
 
@@ -26,11 +22,7 @@ capitalize = (text) ->
     <span>
       <Paper style={styles.form}>
         {for field in @props.fields
-          <ClearFix key={field}>
-            <TextField ref={field}
-              hintText={capitalize(field)}
-              valueLink={@linkState "#{field}"}/>
-          </ClearFix>}
+          <EditField key={field} field={field} valueLink={@linkState "#{field}"}/>}
       </Paper>
       <RaisedButton label="Save" onTouchTap={@save} style={styles.button}/>
       <RaisedButton label="Delete" onTouchTap={@delete}

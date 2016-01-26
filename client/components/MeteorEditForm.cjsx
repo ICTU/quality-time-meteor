@@ -13,7 +13,7 @@
   render: ->
     <EditForm
       id={@props.docId}
-      data={@data.document}
+      doc={@data.document}
       fields={@props.fields}
       onSave={@onSave}
       onDelete={@onDelete}/>

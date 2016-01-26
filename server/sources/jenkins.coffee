@@ -37,8 +37,8 @@ testSources = [
     image: "https://blog.rosehosting.com/blog/wp-content/uploads/2014/11/jenkins.png"
     class: 'Jenkins'
   ,
-    name: 'Inspectieviews ISZW Jenkins'
-    description: "Inspectieviews ISZW Jenkins CI"
+    name: 'Inspectieviews Jenkins'
+    description: "Inspectieviews Jenkins CI"
     url: 'http://www.jenkins.inspectieviews.ictu/'
     image: "https://blog.rosehosting.com/blog/wp-content/uploads/2014/11/jenkins.png"
     class: 'Jenkins'
