@@ -19,31 +19,6 @@ measure = (metric, datasources...) ->
   else
     throw new Error 'Unable to satisfy all property dependencies for metric, missing: ' + _.difference(metric.properties, Object.keys(invocationParams))
 
-
-RApp = ->
-  name: 'Referendum Applicatie'
-  jenkins:
-    # url: 'http://www.jenkins.kiesraad.ictu/'
-    jobName: 'RApp'
-
-InspectISZW = ->
-  name: 'Inspectieviews ISZW'
-  jenkins:
-    url: 'http://www.jenkins.inspectieviews.ictu/'
-    jobName: 'av-ingestion-iszw'
-
-InspectBedrijvenWsdl = ->
-  name: 'Inspectieviews Bedrijven WSDL'
-  jenkins:
-    url: 'http://www.jenkins.inspectieviews.ictu/'
-    jobName: 'iv-bedrijven-wsdl'
-
-MetricsKwaliteit = ->
-  name: 'Metrics Kwaliteit'
-  jenkins:
-    url: 'http://jenkins.isf.org:8080/'
-    jobName: 'metrics-kwaliteit'
-
 measureAndRegister = (metricClass, source, subject) ->
   m = (measure new metricClass(), new global[source.class](source, subject))
   calculation = m.calc()
@@ -77,24 +52,22 @@ measureAndRegister = (metricClass, source, subject) ->
 runner = ->
   console.log 'Running measurements'
 
-  # Sources.find().map (sourceType) ->
-
-  subject = RApp()
+  subject = Subjects.findOne name: 'Referendum Applicatie'
   source = Sources.findOne name: 'RApp Jenkins'
   measureAndRegister TotalUnitTests, source, subject
   measureAndRegister PassedUnitTests, source, subject
 
-  subject = InspectISZW()
+  subject = Subjects.findOne name: 'Inspectieviews ISZW'
   source = Sources.findOne name: 'Inspectieviews Jenkins'
   measureAndRegister TotalUnitTests, source, subject
   measureAndRegister PassedUnitTests, source, subject
 
-  subject = InspectBedrijvenWsdl()
+  subject = Subjects.findOne name: 'Inspectieviews Bedrijven WSDL'
   source = Sources.findOne name: 'Inspectieviews Jenkins'
   measureAndRegister TotalUnitTests, source, subject
   measureAndRegister PassedUnitTests, source, subject
 
-  subject = MetricsKwaliteit()
+  subject = Subjects.findOne name: 'Metrics Kwaliteit'
   source = Sources.findOne name: 'Metrics Kwaliteit Jenkins'
   measureAndRegister TotalUnitTests, source, subject
   measureAndRegister PassedUnitTests, source, subject

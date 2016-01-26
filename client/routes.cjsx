@@ -16,7 +16,7 @@ FlowRouter.route '/source-types',
 FlowRouter.route '/subjects',
   action: ->
     ReactLayout.render MainLayout,
-      content: -> <h1>Subjects</h1>
+      content: -> <MeteorSubjectsList />
 
 FlowRouter.route '/metrics',
   action: ->
