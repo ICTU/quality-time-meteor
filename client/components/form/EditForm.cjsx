@@ -11,6 +11,9 @@ styles =
 
   mixins: [LinkedStateMixin]
 
+  getDefaultProps: ->
+    showActionButtons: true
+
   getInitialState: ->
     @props.doc
 
@@ -20,12 +23,16 @@ styles =
 
   render: ->
     <span>
-      <Paper style={styles.form}>
+      <div>
         {for field in @props.fields
           <EditField key={field} field={field} valueLink={@linkState "#{field}"}/>}
-      </Paper>
-      <RaisedButton label="Save" onTouchTap={@save} style={styles.button}/>
-      <RaisedButton label="Delete" onTouchTap={@delete}
-        primary={true}
-        style={_.extend {marginLeft: 20}, styles.button}/>
+      </div>
+      {if @props.showActionButtons
+        <span className='buttons'>
+          <RaisedButton label="Save" onTouchTap={@save} style={styles.button}/>
+          <RaisedButton label="Delete" onTouchTap={@delete}
+            primary={true}
+            style={_.extend {marginLeft: 20}, styles.button}/>
+        </span>
+      }
     </span>
