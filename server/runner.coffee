@@ -74,6 +74,5 @@ runner = ->
 
 Meteor.startup ->
   if process.env.DEV
-    runner()
     Meteor.setInterval runner, 30000
   else console.log 'Runner disabled'
