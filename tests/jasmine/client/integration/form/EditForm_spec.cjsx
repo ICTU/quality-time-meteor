@@ -17,7 +17,11 @@ describe 'EditForm', ->
     expect(component.props.children[0].props.children.length).toEqual 4
   it 'should display save button', ->
     component = render <EditForm doc={source} fields={[]}/>
-    expect(component.props.children[1].props.label).toEqual 'Save'
+    expect(component.props.children[1].props.children[0].props.label).toEqual 'Save'
   it 'should display delete button', ->
     component = render <EditForm doc={source} fields={[]}/>
-    expect(component.props.children[2].props.label).toEqual 'Delete'
+    expect(component.props.children[1].props.children[1].props.label).toEqual 'Delete'
+  it 'should not display action buttens when showActionButtons is false', ->
+    component = render <EditForm doc={source} fields={[]} showActionButtons={false}/>
+    expect(component.props.children.length).toEqual 2
+    expect(component.props.children[1]).toBe undefined
