@@ -4,8 +4,10 @@
   displayName: 'EditField'
 
   render: ->
+    capitalizedField = Utils.capitalize(@props.field)
     <ClearFix>
       <TextField ref={@props.field}
-        hintText={Utils.capitalize(@props.field)}
+        style={width:'100%'}
+        floatingLabelText={capitalizedField}
         valueLink={@props.valueLink}/>
     </ClearFix>
