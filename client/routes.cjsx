@@ -6,7 +6,7 @@ FlowRouter.route '/',
 FlowRouter.route '/sources',
   action: ->
     ReactLayout.render MainLayout,
-      content: -> <MeteorSourcesList />
+      content: -> <SourcesPage />
 
 FlowRouter.route '/source-types',
   action: ->
