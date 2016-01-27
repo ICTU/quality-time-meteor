@@ -6,7 +6,7 @@
 
   onRowSelection: (rows) ->
     source = @props.sources[rows[0]]
-    FlowRouter.go "/source/#{source._id}/edit"
+    @props.onSourceSelected source
 
   tableRows: ->
     @props.sources.map (source) =>
