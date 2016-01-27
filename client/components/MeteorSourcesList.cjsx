@@ -7,4 +7,4 @@
     sources: Sources.find().fetch()
 
   render: ->
-    <SourcesList sources={@data.sources} />
+    <SourcesList {... @props} sources={@data.sources} />
