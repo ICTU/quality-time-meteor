@@ -52,16 +52,6 @@
           onTouchTap={@goToRoute '/subjects'}>
         Subjects
         </MenuItem>
-        <MenuItem
-          leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>gavel</FontIcon>}
-          onTouchTap={@goToRoute '/metrics'}>
-          Metrics
-        </MenuItem>
-        <MenuItem
-          leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>view_column</FontIcon>}
-          onTouchTap={@goToRoute '/source-types'}>
-          Source Types
-        </MenuItem>
       </LeftNav>
 
       <main>
