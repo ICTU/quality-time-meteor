@@ -24,38 +24,40 @@
 
   render: ->
     <div>
-      <AppBar
-        title="Quality Time"
-        iconClassNameRight="muidocs-icon-navigation-expand-more"
-        onTitleTouchTap={@onTitleTouchTap}
-        onLeftIconButtonTouchTap={@onLeftIconButtonTouchTap}
-      />
-      <LeftNav ref='leftnav' width={250} open={@state.open} >
+      <div className='leftSide'>
+        <LeftNav ref='leftnav' className='nav' open={true} >
+          <AppBar
+            className='appBar'
+            style={backgroundColor:'white'}
+            showMenuIconButton={false}
+            title="Quality Time" }
+          />
+
+          <MenuItem
+            leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>dashboard</FontIcon>}
+            onTouchTap={@goToRoute '/dashboard'}>
+            Dashboard
+          </MenuItem>
+          <MenuItem
+            leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>settings_input_component</FontIcon>}
+            onTouchTap={@goToRoute '/sources'}>
+            Sources
+          </MenuItem>
+          <MenuItem
+            leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>description</FontIcon>}
+            onTouchTap={@goToRoute '/subjects'}>
+          Subjects
+          </MenuItem>
+        </LeftNav>
+      </div>
+      <div className='rightSide'>
         <AppBar
-          title="Quality Time"
-          onTitleTouchTap={@onTitleTouchTap}
-          onLeftIconButtonTouchTap={@onLeftIconButtonTouchTap}
-        />
+          showMenuIconButton={false}
+          title="Dashboard" />
 
-        <MenuItem
-          leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>dashboard</FontIcon>}
-          onTouchTap={@goToRoute '/dashboard'}>
-          Dashboard
-        </MenuItem>
-        <MenuItem
-          leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>settings_input_component</FontIcon>}
-          onTouchTap={@goToRoute '/sources'}>
-          Sources
-        </MenuItem>
-        <MenuItem
-          leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>description</FontIcon>}
-          onTouchTap={@goToRoute '/subjects'}>
-        Subjects
-        </MenuItem>
-      </LeftNav>
-
-      <main className='page'>
-        {@props.content()}
-      </main>
+        <main className='page'>
+          {@props.content()}
+        </main>
+      </div>
 
     </div>

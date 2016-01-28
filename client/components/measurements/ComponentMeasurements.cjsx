@@ -7,7 +7,7 @@ styles =
     marginLeft: 5
     float: 'left'
   h3:
-    backgroundColor: 'silver'
+    backgroundColor: 'rgba(0, 0, 0, 0.16)'
     padding: 10
     fontWeight: 300
     margin: 0
