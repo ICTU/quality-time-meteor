@@ -1,38 +1,36 @@
-{ Paper, ClearFix, TextField, RaisedButton } = mui
-
-styles =
-  form:
-    padding: 15
-  button:
-    marginTop: 15
+{ ClearFix, TextField } = mui
 
 @EditForm = React.createClass
   displayName: 'EditForm'
 
   mixins: [LinkedStateMixin]
 
-  getDefaultProps: ->
-    showActionButtons: true
+  getInitialState: -> doc: @props.doc
+  save: -> @props.onSave? @state.doc
+  delete: -> @props.onDelete? @state.doc
+  render: ->
+    <EditFormPart fields={@props.fields} valueLink={@linkState 'doc'}/>
+
+@EditFormPart = React.createClass
+  mixins: [LinkedStateMixin]
 
   getInitialState: ->
-    @props.doc
+    @props.valueLink.value
 
-  save: -> @props.onSave @state
+  setState: (newState) ->
+    @state = _.extend @state, newState
+    @props.valueLink.requestChange @state
 
-  delete: -> @props.onDelete @state
+  renderEditField: (field) ->
+    <EditField key={field} field={field} valueLink={@linkState field}/>
 
   render: ->
     <span>
-      <div>
-        {for field in @props.fields
-          <EditField key={field} field={field} valueLink={@linkState "#{field}"}/>}
-      </div>
-      {if @props.showActionButtons
-        <span className='buttons'>
-          <RaisedButton label="Save" onTouchTap={@save} style={styles.button}/>
-          <RaisedButton label="Delete" onTouchTap={@delete}
-            primary={true}
-            style={_.extend {marginLeft: 20}, styles.button}/>
-        </span>
+      {for field in @props.fields
+        if (typeof field) isnt 'object'
+          @renderEditField field
+        else
+          for x of field
+            <EditFormPart key={x} fields={field[x]} valueLink={@linkState x} />
       }
     </span>
