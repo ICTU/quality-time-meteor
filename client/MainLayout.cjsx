@@ -3,6 +3,10 @@
 
 @MainLayout = React.createClass
 
+  propTypes:
+    title: React.PropTypes.string.isRequired
+    content: React.PropTypes.func.isRequired
+
   getInitialState: ->
     open: false
 
@@ -53,7 +57,7 @@
       <div className='rightSide'>
         <AppBar
           showMenuIconButton={false}
-          title="Dashboard" />
+          title={@props.title} />
 
         <main className='page'>
           {@props.content()}
