@@ -6,22 +6,33 @@ describe 'EditForm', ->
 
   beforeEach ->
     source =
-      _id: 'TestID1'
       name: 'TestSource1'
       url: 'Test URL 1'
       description: 'test description 1'
-      image: 'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg'
+      image: 'image1.jpg'
 
-  it 'should display all text inputs', ->
+  it 'renders a form part with all fields', ->
     component = render <EditForm doc={source} fields={['name', 'description', 'url', 'image']}/>
-    expect(component.props.children[0].props.children.length).toEqual 4
-  it 'should display save button', ->
-    component = render <EditForm doc={source} fields={[]}/>
-    expect(component.props.children[1].props.children[0].props.label).toEqual 'Save'
-  it 'should display delete button', ->
-    component = render <EditForm doc={source} fields={[]}/>
-    expect(component.props.children[1].props.children[1].props.label).toEqual 'Delete'
-  it 'should not display action buttens when showActionButtons is false', ->
-    component = render <EditForm doc={source} fields={[]} showActionButtons={false}/>
-    expect(component.props.children.length).toEqual 2
-    expect(component.props.children[1]).toBe undefined
+    expect(component.props.fields.length).toEqual 4
+    expect(component.props.valueLink).not.toBe null
+
+  describe 'EditFormPart', ->
+    it 'renders all fields', ->
+      valueLink =
+        value: source
+      component = render <EditFormPart fields={['name', 'description', 'url', 'image']} valueLink={valueLink}/>
+      expect(component.props.children.length).toBe 4
+
+    it 'renders nested fields', ->
+      source =
+        name: 'Test'
+        jenkins: jobName: 'job1'
+      fields = ['name', {'jenkins': ['jobName']}]
+      valueLink =
+        value: source
+      component = render <EditFormPart fields={fields} valueLink={valueLink}/>
+      expect(component.props.children.length).toBe 2
+      expect(component.props.children[0].props.field).toBe 'name'
+      expect(component.props.children[1][0].key).toBe 'jenkins'
+      expect(component.props.children[1][0].props.fields.length).toBe 1
+      expect(component.props.children[1][0].props.fields[0]).toBe 'jobName'
