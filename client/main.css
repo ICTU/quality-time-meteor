@@ -16,3 +16,13 @@ main {
   color: purple;
   font-weight: bold;
 }
+
+.page {
+  margin: 10px 72px;
+}
+
+h2 {
+  margin: 0px;
+  font-weight: 400;
+  line-height: 1.4;
+}

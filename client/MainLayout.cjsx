@@ -1,4 +1,4 @@
-{ AppBar, LeftNav, MenuItem, FontIcon, Styles} = mui
+{ AppBar, LeftNav, MenuItem, FontIcon, Styles } = mui
 { ThemeManager, Colors } = Styles
 
 @MainLayout = React.createClass
@@ -54,7 +54,7 @@
         </MenuItem>
       </LeftNav>
 
-      <main>
+      <main className='page'>
         {@props.content()}
       </main>
 

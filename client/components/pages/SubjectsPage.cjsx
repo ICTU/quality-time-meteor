@@ -5,4 +5,11 @@
     fields = ['name']
     editFields = ['name', {'jenkins': ['jobName']}]
 
-    <MeteorCrudPage collection={Subjects} listFields={fields} editFields={editFields} />
+    <Page title='All subjects'>
+      <MeteorCrudPage
+        collection={Subjects}
+        listFields={fields}
+        editFields={editFields}
+        itemName='Subject'
+        />
+    </Page>

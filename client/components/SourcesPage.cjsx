@@ -30,7 +30,7 @@
         onTouchTap={@dialogSaved} />
     ]
 
-    <span>
+    <Page title='All sources'>
       <MeteorSourcesList onSourceSelected={@onSourceSelected} />
       <Dialog
           title='Edit source'
@@ -47,4 +47,4 @@
                 docId={@state.selectedSourceId} />
           }
       </Dialog>
-    </span>
+    </Page>
