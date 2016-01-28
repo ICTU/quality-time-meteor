@@ -9,5 +9,5 @@
       <TextField ref={@props.field}
         style={width:'100%'}
         floatingLabelText={capitalizedField}
-        valueLink={@props.valueLink}/>
+        {... @props} />
     </ClearFix>
