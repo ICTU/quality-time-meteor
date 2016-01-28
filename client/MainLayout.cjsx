@@ -1,8 +1,6 @@
 { AppBar, LeftNav, MenuItem, FontIcon, Styles} = mui
 { ThemeManager, Colors } = Styles
 
-console.log ThemeManager
-
 @MainLayout = React.createClass
 
   getInitialState: ->
