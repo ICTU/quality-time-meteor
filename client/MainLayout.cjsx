@@ -6,6 +6,7 @@
   propTypes:
     title: React.PropTypes.string.isRequired
     content: React.PropTypes.func.isRequired
+    currentRoute: React.PropTypes.string.isRequired
 
   getInitialState: ->
     open: false
@@ -25,6 +26,13 @@
     @setState open: not @state.open
     FlowRouter.go route
 
+  renderMenuItem: (route, title, icon) ->
+    color = if route is @props.currentRoute then '#FF4081'
+    <MenuItem style={color:color}
+      leftIcon={<FontIcon className="material-icons" color={color}>{icon}</FontIcon>}
+      onTouchTap={@goToRoute route} value={route}>
+      {title}
+    </MenuItem>
 
   render: ->
     <div>
@@ -36,22 +44,11 @@
             showMenuIconButton={false}
             title="Quality Time" }
           />
-
-          <MenuItem
-            leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>dashboard</FontIcon>}
-            onTouchTap={@goToRoute '/dashboard'}>
-            Dashboard
-          </MenuItem>
-          <MenuItem
-            leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>settings_input_component</FontIcon>}
-            onTouchTap={@goToRoute '/sources'}>
-            Sources
-          </MenuItem>
-          <MenuItem
-            leftIcon={<FontIcon className="material-icons" color={Colors.grey500}>description</FontIcon>}
-            onTouchTap={@goToRoute '/subjects'}>
-          Subjects
-          </MenuItem>
+          {[
+            @renderMenuItem '/dashboard', 'Dashboard', 'dashboard'
+            @renderMenuItem '/sources', 'Sources', 'settings_input_component'
+            @renderMenuItem '/subjects', 'Subjects', 'description'
+          ]}
         </LeftNav>
       </div>
       <div className='rightSide'>
