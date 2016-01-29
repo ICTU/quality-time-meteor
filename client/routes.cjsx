@@ -8,20 +8,20 @@ FlowRouter.route '/',
 FlowRouter.route '/sources',
   action: ->
     ReactLayout.render MainLayout,
-      title: 'Sources'
+      title: <T>sources</T>
       currentRoute: '/sources'
       content: -> <SourcesPage />
 
 FlowRouter.route '/subjects',
   action: ->
     ReactLayout.render MainLayout,
-      title: 'Subjects'
+      title: <T>subjects</T>
       currentRoute: '/subjects'
       content: -> <SubjectsPage />
 
 FlowRouter.route '/dashboard',
   action: ->
     ReactLayout.render MainLayout,
-      title: 'Dashboard'
+      title: <T>dashboard</T>
       currentRoute: '/dashboard'
       content: -> <MeteorComponentMeasurements />

@@ -3,8 +3,10 @@
 
 @MainLayout = React.createClass
 
+  mixins: [_i18n.refreshOnChangeLocaleMixin]
+
   propTypes:
-    title: React.PropTypes.string.isRequired
+    title: React.PropTypes.any.isRequired
     content: React.PropTypes.func.isRequired
     currentRoute: React.PropTypes.string.isRequired
 
@@ -28,7 +30,7 @@
 
   renderMenuItem: (route, title, icon) ->
     color = if route is @props.currentRoute then '#FF4081'
-    <MenuItem style={color:color}
+    <MenuItem key={route} style={color:color}
       leftIcon={<FontIcon className="material-icons" color={color}>{icon}</FontIcon>}
       onTouchTap={@goToRoute route} value={route}>
       {title}
@@ -45,9 +47,9 @@
             title="Quality Time" }
           />
           {[
-            @renderMenuItem '/dashboard', 'Dashboard', 'dashboard'
-            @renderMenuItem '/sources', 'Sources', 'settings_input_component'
-            @renderMenuItem '/subjects', 'Subjects', 'description'
+            @renderMenuItem '/dashboard', <T>dashboard</T>, 'dashboard'
+            @renderMenuItem '/subjects', <T>subjects</T>, 'description'
+            @renderMenuItem '/sources', <T>sources</T>, 'settings_input_component'
           ]}
         </LeftNav>
       </div>
