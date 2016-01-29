@@ -1,3 +1,6 @@
 dashboard: Dashboard
 subjects: Subjects
 sources: Sources
+
+button:
+  create: Create

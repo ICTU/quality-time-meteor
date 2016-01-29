@@ -5,7 +5,9 @@
 
   mixins: [LinkedStateMixin]
 
-  getInitialState: -> doc: @props.doc
+  getInitialState: ->
+    console.log 'editForm initialState', @props
+    doc: @props.doc
   save: -> @props.onSave? @state.doc
   delete: -> @props.onDelete? @state.doc
   render: ->
@@ -15,7 +17,7 @@
   mixins: [LinkedStateMixin]
 
   getInitialState: ->
-    @props.valueLink.value
+    @props.valueLink.value or {}
 
   setState: (newState) ->
     @state = _.extend @state, newState

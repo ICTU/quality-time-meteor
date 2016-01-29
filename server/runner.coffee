@@ -67,6 +67,11 @@ runner = ->
   measureAndRegister TotalUnitTests, source, subject
   measureAndRegister PassedUnitTests, source, subject
 
+  subject = Subjects.findOne name: 'Ingestion DCMR'
+  source = Sources.findOne name: 'Inspectieviews Jenkins'
+  measureAndRegister TotalUnitTests, source, subject
+  measureAndRegister PassedUnitTests, source, subject
+
   subject = Subjects.findOne name: 'Metrics Kwaliteit'
   source = Sources.findOne name: 'Metrics Kwaliteit Jenkins'
   measureAndRegister TotalUnitTests, source, subject

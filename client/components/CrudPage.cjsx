@@ -1,7 +1,9 @@
-{ Dialog, FlatButton } = mui
+{ Dialog, FlatButton, ClearFix } = mui
 
 @CrudPage = React.createClass
   displayName: 'CrudPage'
+
+  mixins: [_i18n.refreshOnChangeLocaleMixin]
 
   propTypes:
     listFields: React.PropTypes.array.isRequired
@@ -22,6 +24,9 @@
     @refs.editForm.save()
     @setState selectedDoc: null
 
+  handleCreateTouchTap: ->
+    @setState selectedDoc: {}
+
   render: ->
 
     actions = [
@@ -37,6 +42,7 @@
     ]
 
     <span>
+      <ClearFix><FlatButton primary={true} style={float:'right'} onTouchTap={@handleCreateTouchTap}><T>button.create</T></FlatButton></ClearFix>
       <CollectionList documents={@props.documents} fields={@props.listFields} onDocumentSelected={@onDocumentSelected} />
       <Dialog
           title='Edit'
