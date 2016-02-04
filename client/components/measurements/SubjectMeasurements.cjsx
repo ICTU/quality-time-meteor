@@ -14,7 +14,7 @@ styles =
   list:
     padding: 0
 
-@ComponentMeasurements = React.createClass
+@SubjectMeasurements = React.createClass
 
   openDialog: (e, metric)->
     @refs[metric._id].open()
@@ -33,7 +33,7 @@ styles =
 
   render: ->
     <Paper style={styles.paper}>
-      <h3 style={styles.h3}>{@props.measurements[0].forSubject}</h3>
+      <h3 style={styles.h3}>{@props.title}</h3>
       <List style={styles.list}>
         {@renderListItems()}
       </List>

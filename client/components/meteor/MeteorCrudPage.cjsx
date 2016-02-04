@@ -30,7 +30,8 @@
         onSave={@onSave}
         documents={@data.documents}
         listFields={@props.listFields}
-        editFields={@props.editFields} />
+        editFields={@props.editFields}
+        customRenderer={@props.customRenderer} />
 
       <Snackbar
           open={@state.snackbarOpen}

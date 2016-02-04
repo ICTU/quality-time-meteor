@@ -1,5 +1,3 @@
-{ Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } = mui
-
 @CollectionList = React.createClass
   displayName: 'CollectionList'
 
@@ -8,17 +6,26 @@
     documents: React.PropTypes.array.isRequired
     onDocumentSelected: React.PropTypes.func
 
+  onTouchTap: (e,x)->
+    e.stopPropagation()
+    console.log 'button tapped', e, x
+
   onRowSelection: (rows) ->
     document = @props.documents[rows[0]]
     @props.onDocumentSelected? document
 
   renderTableRowsColumns: (doc, fields) ->
-    fields.map (field) =>
+    x = fields.map (field) =>
       if typeof doc[field] isnt 'object'
         <TableRowColumn key={field}>{doc[field]}</TableRowColumn>
 
+    # x.push <TableRowColumn key='buttons'>
+    #   <FlatButton secondary={true} label='Add' icon={<ContentAdd />} onTouchTap={@onTouchTap} />
+    # </TableRowColumn>
+    # x
+
   tableRows: ->
-    @props.documents.map (doc) =>
+    x = @props.documents.map (doc) =>
       <TableRow key={doc._id}>
         {@renderTableRowsColumns doc, @props.fields}
       </TableRow>

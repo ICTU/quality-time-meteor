@@ -11,7 +11,12 @@
   save: -> @props.onSave? @state.doc
   delete: -> @props.onDelete? @state.doc
   render: ->
-    <EditFormPart fields={@props.fields} valueLink={@linkState 'doc'}/>
+    <span>
+      <EditFormPart fields={@props.fields} valueLink={@linkState 'doc'}/>
+      {if @props.customRenderer
+        @props.customRenderer @linkState('doc')
+      }
+    </span>
 
 @EditFormPart = React.createClass
   mixins: [LinkedStateMixin]

@@ -52,30 +52,30 @@ measureAndRegister = (metricClass, source, subject) ->
 runner = ->
   console.log 'Running measurements'
 
-  subject = Subjects.findOne name: 'Referendum Applicatie'
-  source = Sources.findOne name: 'RApp Jenkins'
-  measureAndRegister TotalUnitTests, source, subject
-  measureAndRegister PassedUnitTests, source, subject
-
-  subject = Subjects.findOne name: 'Inspectieviews ISZW'
-  source = Sources.findOne name: 'Inspectieviews Jenkins'
-  measureAndRegister TotalUnitTests, source, subject
-  measureAndRegister PassedUnitTests, source, subject
-
-  subject = Subjects.findOne name: 'Inspectieviews Bedrijven WSDL'
-  source = Sources.findOne name: 'Inspectieviews Jenkins'
-  measureAndRegister TotalUnitTests, source, subject
-  measureAndRegister PassedUnitTests, source, subject
-
-  subject = Subjects.findOne name: 'Ingestion DCMR'
-  source = Sources.findOne name: 'Inspectieviews Jenkins'
-  measureAndRegister TotalUnitTests, source, subject
-  measureAndRegister PassedUnitTests, source, subject
-
-  subject = Subjects.findOne name: 'Metrics Kwaliteit'
-  source = Sources.findOne name: 'Metrics Kwaliteit Jenkins'
-  measureAndRegister TotalUnitTests, source, subject
-  measureAndRegister PassedUnitTests, source, subject
+  # subject = Subjects.findOne name: 'Referendum Applicatie'
+  # source = Sources.findOne name: 'RApp Jenkins'
+  # measureAndRegister TotalUnitTests, source, subject
+  # measureAndRegister PassedUnitTests, source, subject
+  #
+  # subject = Subjects.findOne name: 'Inspectieviews ISZW'
+  # source = Sources.findOne name: 'Inspectieviews Jenkins'
+  # measureAndRegister TotalUnitTests, source, subject
+  # measureAndRegister PassedUnitTests, source, subject
+  #
+  # subject = Subjects.findOne name: 'Inspectieviews Bedrijven WSDL'
+  # source = Sources.findOne name: 'Inspectieviews Jenkins'
+  # measureAndRegister TotalUnitTests, source, subject
+  # measureAndRegister PassedUnitTests, source, subject
+  #
+  # subject = Subjects.findOne name: 'Ingestion DCMR'
+  # source = Sources.findOne name: 'Inspectieviews Jenkins'
+  # measureAndRegister TotalUnitTests, source, subject
+  # measureAndRegister PassedUnitTests, source, subject
+  #
+  # subject = Subjects.findOne name: 'Metrics Kwaliteit'
+  # source = Sources.findOne name: 'Metrics Kwaliteit Jenkins'
+  # measureAndRegister TotalUnitTests, source, subject
+  # measureAndRegister PassedUnitTests, source, subject
 
 Meteor.startup ->
   if process.env.DEV

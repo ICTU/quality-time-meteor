@@ -4,13 +4,20 @@ html, body {
   background-color: #FAFAFA;
 }
 
+.overlay {
+  /*opacity: .1 !important;*/
+  background-color: rgba(0, 0, 0, 0.241176) !important;
+  z-index: 1300 !important;
+}
 .leftSide .nav {
   position: fixed !important;
   width: 15% !important;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16), 0 3px 1px rgba(0, 0, 0, 0.23) !important;
+  /*box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16), 0 3px 1px rgba(0, 0, 0, 0.23) !important;*/
+  z-index: 1200 !important;
 }
 .leftSide .appBar {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 0px 1px rgba(0, 0, 0, 0.24) !important;
+  box-shadow: 0 0px 0px rgba(0, 0, 0, .12), 0 0px 1px rgba(0, 0, 0, 0.24) !important;
+  padding-left: 15px !important;
 }
 .leftSide .appBar h1 {
   color: #727272 !important;

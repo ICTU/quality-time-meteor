@@ -24,4 +24,4 @@ FlowRouter.route '/dashboard',
     ReactLayout.render MainLayout,
       title: <T>dashboard</T>
       currentRoute: '/dashboard'
-      content: -> <MeteorComponentMeasurements />
+      content: -> <DashboardPage />
