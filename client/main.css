@@ -1,19 +1,42 @@
+.velocity-icon-status {
+  left: 10px !important;
+  bottom: 10px !important;
+  position: fixed !important;
+}
+
 html, body {
   height: 100%;
   width: 100%;
-  background-color: #FAFAFA;
+  background-color: #F2F2F2;
 }
 
 .overlay {
   /*opacity: .1 !important;*/
   background-color: rgba(0, 0, 0, 0.241176) !important;
-  z-index: 1300 !important;
+  /*z-index: 1300 !important;*/
+}
+.appBar {
+  background-color: #483D8B !important;
+  box-shadow: 0 5px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24) !important;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+}
+.leftSide {
+  width: 15% !important;
+  min-width: 250px;
+  margin: 10px;
+  margin-top: 20px;
 }
 .leftSide .nav {
-  position: fixed !important;
-  width: 15% !important;
-  /*box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16), 0 3px 1px rgba(0, 0, 0, 0.23) !important;*/
-  z-index: 1200 !important;
+  background-color: #F2F2F2 !important;
+  position: relative !important;
+  box-shadow: none !important;
+  /*z-index: 1200 !important;*/
+}
+.leftSide .nav .list {
+  background-color: #F2F2F2 !important;
 }
 .leftSide .appBar {
   box-shadow: 0 0px 0px rgba(0, 0, 0, .12), 0 0px 1px rgba(0, 0, 0, 0.24) !important;
@@ -22,14 +45,22 @@ html, body {
 .leftSide .appBar h1 {
   color: #727272 !important;
 }
+.main {
+  width:80%;
+}
 .rightSide {
-  width:85%;
-  position: fixed !important;
-  right: 0;
+  width: 15% !important;
+  min-width: 0;
+  margin: 10px;
+  margin-top: 20px;
 }
 
 main {
   padding: 10px;
+}
+.page h3 {
+  color: rgba(0,0,0,.6);
+  font-weight: 200;
 }
 
 .ast {

@@ -38,17 +38,14 @@
 
   tableRows: ->
     @props.documents.map (doc) =>
-      <TableRow key={doc._id}>
+      <TableRow key={doc._id} className='tableRow'>
         {@renderTableRowsColumns doc, @props.fields}
       </TableRow>
 
   render: ->
-    <Table heigh={300} onRowSelection={@onRowSelection}>
+    <Table className='collectionList' headerStyle={height:0, overflow:'hidden'} heigh={300} onRowSelection={@onRowSelection}>
       <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
         <TableRow>
-          {@props.fields.map (field) =>
-            <TableHeaderColumn key={field}>{field}</TableHeaderColumn>
-          }
         </TableRow>
       </TableHeader>
       <TableBody showRowHover={true} displayRowCheckbox={false} selectable={false}>

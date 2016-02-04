@@ -16,7 +16,8 @@
     leftNavOpen: false
 
   onDocumentSelected: (doc) ->
-    @setState selectedDoc: doc
+    FlowRouter.go "/sources/edit/#{doc._id}"
+    #@setState selectedDoc: doc
 
   dialogCancelled: ->
     @setState selectedDoc: null
@@ -42,12 +43,12 @@
         onTouchTap={@dialogSaved} />
     ]
 
+    # <ClearFix><FlatButton primary={true} style={float:'right'} onTouchTap={@handleCreateTouchTap}><T>button.create</T></FlatButton></ClearFix>
     <span>
-      <ClearFix><FlatButton primary={true} style={float:'right'} onTouchTap={@handleCreateTouchTap}><T>button.create</T></FlatButton></ClearFix>
       <CollectionList documents={@props.documents} fields={@props.listFields} onDocumentSelected={@onDocumentSelected} />
       <LeftNav
           docked={false}
-          width={500}
+          width={1600}
           openRight={true}
           open={@state.selectedDoc isnt null}
           style={marginTop:60, padding:10}

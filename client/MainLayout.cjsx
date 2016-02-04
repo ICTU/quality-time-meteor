@@ -11,7 +11,7 @@
     currentRoute: React.PropTypes.string.isRequired
 
   getInitialState: ->
-    open: false
+    open: true
 
   childContextTypes:
     muiTheme: React.PropTypes.object
@@ -19,48 +19,47 @@
   getChildContext: ->
     muiTheme: ThemeManager.getMuiTheme()
 
-  onTitleTouchTap: ->
-    @setState open: not @state.open
   onLeftIconButtonTouchTap: ->
     @setState open: not @state.open
 
   goToRoute: (route) -> =>
-    @setState open: not @state.open
     FlowRouter.go route
 
-  renderMenuItem: (route, title, icon) ->
-    color = if route is @props.currentRoute then '#FF4081'
-    <MenuItem key={route} style={color:color}
-      leftIcon={<FontIcon className="material-icons" color={color}>{icon}</FontIcon>}
+  renderMenuItem: (route, title, icon, iconColor) ->
+    color = if route is @props.currentRoute then 'black' else '#676461'
+    fontWeight = if route is @props.currentRoute then 400 else 100
+    bgColor = if route is @props.currentRoute then '#E7E7E7' else '#F2F2F2'
+    <ListItem key={route} style={color:color, backgroundColor:bgColor, fontWeight:fontWeight, fontSize:14} value={route}
+      leftIcon={<FontIcon className="material-icons" color={iconColor}>{icon}</FontIcon>}
       onTouchTap={@goToRoute route} value={route}>
       {title}
-    </MenuItem>
+    </ListItem>
 
   render: ->
-    <div>
-      <div className='leftSide'>
-        <LeftNav ref='leftnav' className='nav' open={true} >
-          <AppBar
-            className='appBar'
-            style={backgroundColor:'white'}
-            showMenuIconButton={false}
-            title="Quality Time" }
-          />
-          {[
-            @renderMenuItem '/dashboard', <T>dashboard</T>, 'dashboard'
-            @renderMenuItem '/subjects', <T>subjects</T>, 'description'
-            @renderMenuItem '/sources', <T>sources</T>, 'settings_input_component'
-          ]}
-        </LeftNav>
-      </div>
-      <div className='rightSide'>
-        <AppBar
-          showMenuIconButton={false}
-          title={@props.title} />
 
-        <main className='page'>
+    <div>
+      <AppBar
+        className='appBar'
+        showMenuIconButton={true}
+        onLeftIconButtonTouchTap={@onLeftIconButtonTouchTap}
+        title={@props.title} />
+      <div className='container'>
+        <div className='leftSide'>
+          <LeftNav ref='leftnav' className='nav' open={@state.open} >
+            <List className='list' value={@props.currentRoute}>
+              {[
+                @renderMenuItem '/dashboard', <T>dashboard</T>, 'dashboard', '#4285F4'
+                @renderMenuItem '/subjects', <T>subjects</T>, 'description', '#795548'
+                @renderMenuItem '/sources', <T>sources</T>, 'device_hub', '#3FAF79'
+              ]}
+            </List>
+          </LeftNav>
+        </div>
+        <main className='main'>
           {@props.content()}
         </main>
+        <div className='rightSide'>
+        </div>
       </div>
 
     </div>

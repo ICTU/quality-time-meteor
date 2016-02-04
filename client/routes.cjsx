@@ -12,6 +12,20 @@ FlowRouter.route '/sources',
       currentRoute: '/sources'
       content: -> <SourcesPage />
 
+FlowRouter.route '/sources/edit/:_id',
+  action: (params) ->
+    ReactLayout.render MainLayout,
+      title: <T>sources</T>
+      currentRoute: '/sources'
+      content: -> <SourceEditPage id={params._id}/>
+
+FlowRouter.route '/sources/new/',
+  action: ->
+    ReactLayout.render MainLayout,
+      title: <T>sources</T>
+      currentRoute: '/sources'
+      content: -> <SourceEditPage />
+
 FlowRouter.route '/subjects',
   action: ->
     ReactLayout.render MainLayout,

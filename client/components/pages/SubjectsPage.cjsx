@@ -3,8 +3,7 @@
   displayName: 'SubjectsPage'
 
   customEditComponent: (valueLink) ->
-    console.log 'customEditComponent', valueLink
-    <SubjectSourceEditor valueLink={valueLink} />
+    <SubjectSourceLinkEditor valueLink={valueLink} />
 
   render: ->
     fields = ['name']
@@ -20,7 +19,7 @@
         />
     </Page>
 
-SubjectSourceEditor = React.createClass
+SubjectSourceLinkEditor = React.createClass
   displayName: 'SubjectSourceEditor'
 
   mixins: [ReactMeteorData]
@@ -38,7 +37,6 @@ SubjectSourceEditor = React.createClass
     @props.valueLink.requestChange @state
 
   render: (valueLink) ->
-    console.log 'customEditComponent', valueLink
     <div>
       <Toolbar>
         <ToolbarGroup firstChild={true} float="left">
@@ -55,4 +53,30 @@ SubjectSourceEditor = React.createClass
           </IconMenu>
         </ToolbarGroup>
       </Toolbar>
+
+      {@state.sources.map (s, idx) ->
+        handleChange = (idx) -> (obj) =>
+          @state.sources[idx] = _.extend @state.sources[idx], obj
+          @props.valueLink.requestChange @state
+
+        <SourceConfigEditor key={s.id} config={s} onChange={handleChange idx}/>
+      }
+
     </div>
+
+SourceConfigEditor = React.createClass
+  displayName: 'SourceConfigEditor'
+  mixins: [ReactMeteorData]
+
+  getMeteorData: ->
+    source: Sources.findOne _id: @props.config.id
+
+  handleChange: (e) ->
+    console.log 'change', e.target.value, e
+    @props.handleChange {jobName: e.target.value}
+
+  render: ->
+    <span>
+      <h3>{@data.source.name}</h3>
+      <EditField field='jobName' onChange={@handleChange}/>
+    </span>
