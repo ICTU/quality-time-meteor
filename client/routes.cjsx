@@ -33,6 +33,20 @@ FlowRouter.route '/subjects',
       currentRoute: '/subjects'
       content: -> <SubjectsPage />
 
+FlowRouter.route '/subjects/edit/:_id',
+  action: (params) ->
+    ReactLayout.render MainLayout,
+      title: <T>subjects</T>
+      currentRoute: '/subjects'
+      content: -> <SubjectsEditPage id={params._id}/>
+
+FlowRouter.route '/subjects/new/',
+  action: ->
+    ReactLayout.subjects MainLayout,
+      title: <T>sources</T>
+      currentRoute: '/sources'
+      content: -> <SubjectsEditPage />
+
 FlowRouter.route '/dashboard',
   action: ->
     ReactLayout.render MainLayout,
