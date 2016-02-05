@@ -9,4 +9,4 @@
 Meteor.startup ->
   MetricTypes.register 'TotalUnitTests',
     description: 'Shows the total number of unit tests'
-    class: TotalUnitTests
+    className: 'TotalUnitTests'

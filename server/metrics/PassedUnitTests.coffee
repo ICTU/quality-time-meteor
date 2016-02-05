@@ -9,4 +9,4 @@
 Meteor.startup ->
   MetricTypes.register 'PassedUnitTests',
     description: 'Shows the number of successful unit tests'
-    class: PassedUnitTests
+    className: 'PassedUnitTests'
