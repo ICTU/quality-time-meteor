@@ -1,34 +1,7 @@
-{ Paper, List } = mui
-
-styles =
-  paper:
-    width:300
-    marginBottom: 10
-    marginLeft: 5
-    float: 'left'
-  h3:
-    backgroundColor: 'rgba(0, 0, 0, 0.16)'
-    padding: 10
-    fontWeight: 300
-    margin: 0
-  list:
-    padding: 0
-
-@SubjectMeasurements = React.createClass
+@SubjectMeasurement = React.createClass
 
   openDialog: (e, metric)->
     @refs[metric._id].open()
-
-  renderListItems: ->
-    if @props.measurements?.length > 0
-      @props.measurements.map (measurement) =>
-        <MeasurementListItem
-          key={measurement._id}
-          measurement={measurement}
-          onTouchTap={@openDialog} />
-    else
-      <NoMeasurements />
-
 
   renderDetailDialogs: ->
     @props.measurements.map (measurement) ->
@@ -36,10 +9,7 @@ styles =
       statusAst={JSON.parse measurement.status.calculation}/>
 
   render: ->
-    <Paper style={styles.paper}>
-      <h3 style={styles.h3}>{@props.title}</h3>
-      <List style={styles.list}>
-        {@renderListItems()}
-      </List>
-      {@renderDetailDialogs()}
-    </Paper>
+    <MeasurementListItem
+      title={@props.title}
+      measurement={@props.measurement}
+      onTouchTap={@openDialog} />

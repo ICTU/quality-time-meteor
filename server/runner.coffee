@@ -54,7 +54,7 @@ runner = ->
 
   for subject in Subjects.find().fetch()
     console.log 'for subject', subject.name
-    for metric in subject.metrics
+    for metric in subject.metrics or []
       metricType = MetricTypes.findOne name: metric.name
       source = Sources.findOne _id: metric.sourceId
       console.log 'metric', metricType.name, ' with source', source.name

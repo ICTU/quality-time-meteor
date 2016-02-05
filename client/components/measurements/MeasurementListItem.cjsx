@@ -10,7 +10,8 @@
     m = @props.measurement
     avatar = <MeasurementAvatar measurement={m} />
     <ListItem
-      primaryText={m.ofMetric}
+      primaryText={@props.title}
+      secondaryText={'No measurements!' unless m}
       leftAvatar={avatar}
       onTouchTap={@onTouchTap}
     />

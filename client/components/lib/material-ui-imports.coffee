@@ -17,7 +17,7 @@
 { @List, @ListItem, @SelectableContainerEnhance } = mui
 
 # Misc
-{ @Divider, @Avatar, @Snackbar, @FontIcon, Styles: {@Colors} } = mui
+{ @Divider, @Avatar, @Snackbar, @FontIcon, Styles: {@Colors}, @Paper } = mui
 
 @SelectableList = SelectableContainerEnhance List
 
