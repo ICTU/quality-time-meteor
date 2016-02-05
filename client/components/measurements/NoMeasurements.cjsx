@@ -5,7 +5,7 @@
 
   render: ->
     <ListItem
-      primaryText={'There is no data available for this metric!'}
+      primaryText={'There is no data available for this subject!'}
       leftAvatar={ <ExclamationIcon /> }
     />
 
