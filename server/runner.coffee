@@ -19,12 +19,12 @@ measure = (metric, datasources...) ->
   else
     throw new Error 'Unable to satisfy all property dependencies for metric, missing: ' + _.difference(metric.properties, Object.keys(invocationParams))
 
-measureAndRegister = (metricClass, source, subject) ->
-  m = (measure new metricClass(), new global[source.class](source, subject))
+measureAndRegister = (metric, source, subject) ->
+  m = (measure new global[metric.className](), new global[source.class](source, subject))
   calculation = m.calc()
   jsonCalc = Q.toJSON calculation
   query =
-    forSubject: subject.name, ofMetric: metricClass.name, calculation: jsonCalc
+    forSubject: subject.name, ofMetric: metric.name, calculation: jsonCalc
 
   if measurement = Measurements.findOne(query, sort: lastMeasured: -1)
     measurement.lastMeasured = new Date()
@@ -35,7 +35,7 @@ measureAndRegister = (metricClass, source, subject) ->
       firstMeasured: new Date()
       lastMeasured: new Date()
       forSubject: subject.name
-      ofMetric: metricClass.name
+      ofMetric: metric.name
       value: Q.exec calculation
       calculation: jsonCalc
 
@@ -52,32 +52,23 @@ measureAndRegister = (metricClass, source, subject) ->
 runner = ->
   console.log 'Running measurements'
 
-  # subject = Subjects.findOne name: 'Referendum Applicatie'
-  # source = Sources.findOne name: 'RApp Jenkins'
-  # measureAndRegister TotalUnitTests, source, subject
-  # measureAndRegister PassedUnitTests, source, subject
-  #
-  # subject = Subjects.findOne name: 'Inspectieviews ISZW'
-  # source = Sources.findOne name: 'Inspectieviews Jenkins'
-  # measureAndRegister TotalUnitTests, source, subject
-  # measureAndRegister PassedUnitTests, source, subject
-  #
-  # subject = Subjects.findOne name: 'Inspectieviews Bedrijven WSDL'
-  # source = Sources.findOne name: 'Inspectieviews Jenkins'
-  # measureAndRegister TotalUnitTests, source, subject
-  # measureAndRegister PassedUnitTests, source, subject
-  #
-  # subject = Subjects.findOne name: 'Ingestion DCMR'
-  # source = Sources.findOne name: 'Inspectieviews Jenkins'
-  # measureAndRegister TotalUnitTests, source, subject
-  # measureAndRegister PassedUnitTests, source, subject
-  #
-  # subject = Subjects.findOne name: 'Metrics Kwaliteit'
-  # source = Sources.findOne name: 'Metrics Kwaliteit Jenkins'
-  # measureAndRegister TotalUnitTests, source, subject
-  # measureAndRegister PassedUnitTests, source, subject
+  for subject in Subjects.find().fetch()
+    console.log 'for subject', subject.name
+    for metric in subject.metrics
+      metricType = MetricTypes.findOne name: metric.name
+      source = Sources.findOne _id: metric.sourceId
+      console.log 'metric', metricType.name, ' with source', source.name
+      subjectSources = _.filter subject.sources, (s) -> s.id is source._id
+      if subjectSources.length > 0
+        subjectSources[0].name = subject.name
+        measureAndRegister metricType, source, subjectSources[0]
+      else
+        console.log 'No source configuration defined in subject'
+      console.log '----'
+    console.log '=================='
 
 Meteor.startup ->
   if process.env.DEV
-    Meteor.setInterval runner, 30000
+    Meteor.defer runner
+    Meteor.setInterval runner, 10000
   else console.log 'Runner disabled'
