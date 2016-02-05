@@ -8,6 +8,17 @@
   render: ->
     <span>
       {for subject in @data.subjects
-        <SubjectMeasurements key={subject._id} title={subject.name} measurements={[]} />
+        <MeteorSubjectMeasurement key={subject._id} subject={subject} />
       }
     </span>
+
+
+@MeteorSubjectMeasurement = React.createClass
+
+  mixins: [ReactMeteorData]
+
+  getMeteorData: ->
+    measurements: Measurements.find({forSubject: @props.subject.name}, {sort: lastMeasured: -1}).fetch()
+
+  render: ->
+    <SubjectMeasurements title={@props.subject.name} measurements={@data.measurements} />

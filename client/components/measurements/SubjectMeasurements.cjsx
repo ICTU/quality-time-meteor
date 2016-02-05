@@ -20,11 +20,15 @@ styles =
     @refs[metric._id].open()
 
   renderListItems: ->
-    @props.measurements.map (measurement) =>
-      <MeasurementListItem
-        key={measurement._id}
-        measurement={measurement}
-        onTouchTap={@openDialog} />
+    if @props.measurements?.length > 0
+      @props.measurements.map (measurement) =>
+        <MeasurementListItem
+          key={measurement._id}
+          measurement={measurement}
+          onTouchTap={@openDialog} />
+    else
+      <NoMeasurements />
+
 
   renderDetailDialogs: ->
     @props.measurements.map (measurement) ->
