@@ -18,7 +18,9 @@
   mixins: [ReactMeteorData]
 
   getMeteorData: ->
-    measurements: Measurements.find({forSubject: @props.subject.name}, {sort: lastMeasured: -1}).fetch()
+    measurements = for metric in @props.subject.metrics
+      Measurements.findOne({forSubject: @props.subject.name, ofMetric: metric.name}, {sort: lastMeasured: -1})
+    measurements: _.filter measurements, (m) -> m?
 
   render: ->
     <SubjectMeasurements title={@props.subject.name} measurements={@data.measurements} />
