@@ -20,5 +20,5 @@ subjects.route '/new/',
   action: ->
     ReactLayout.render MainLayout,
       title: <T>sources</T>
-      currentRoute: '/sources'
+      currentRoute: '/subjects'
       content: -> <SubjectEditPage />
