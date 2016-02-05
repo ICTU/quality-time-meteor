@@ -1,6 +1,6 @@
 @Jenkins = class Jenkins
   constructor: (@source, @subject) ->
-    @config = _.extend @source, @subject.jenkins
+    @config = _.extend @source, @subject
     result = @get_json @config.url, @config.jobName
     for action in result?.json?.actions or []
       if 'failCount' of action
