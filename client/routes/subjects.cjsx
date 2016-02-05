@@ -18,7 +18,7 @@ subjects.route '/edit/:_id',
 
 subjects.route '/new/',
   action: ->
-    ReactLayout.subjects MainLayout,
+    ReactLayout.render MainLayout,
       title: <T>sources</T>
       currentRoute: '/sources'
       content: -> <SubjectEditPage />
