@@ -11,6 +11,11 @@ styles =
     margin: 0
   list:
     padding: 0
+  noMetric:
+    textAlign:'center'
+    color: 'grey'
+    fontWeight:200
+    padding:20
 
 @MeteorSubjectMeasurements = React.createClass
   render: ->
@@ -23,7 +28,7 @@ styles =
             <MeteorSubjectMeasurement subject={@props.subject} metric={metric} />}
         </List>
       else
-        <span>No metrics configured</span>}
+        <div style={styles.noMetric}>No metrics configured</div>}
     </Paper>
 
 MeteorSubjectMeasurement = React.createClass
