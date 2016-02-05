@@ -81,4 +81,6 @@
         </div>
       </div>
 
+      <CollectionModificationSnackbar collection={Subjects} itemName='Subject' />
+      <CollectionModificationSnackbar collection={Sources} itemName='Source' />
     </div>
