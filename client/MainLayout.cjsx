@@ -36,13 +36,32 @@
     </ListItem>
 
   render: ->
-
     <div>
       <AppBar
         className='appBar'
         showMenuIconButton={true}
         onLeftIconButtonTouchTap={@onLeftIconButtonTouchTap}
-        title={@props.title} />
+        title={@props.title}
+        iconElementRight={if Meteor.userId()
+          <IconMenu
+            iconButtonElement={<IconButton className='userMenu' style={marginRight:20}><Avatar src={"http://www.gravatar.com/avatar/#{CryptoJS.MD5(Meteor.user().emails[0].address).toString()}"}
+              size={50}  /></IconButton>}
+            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+          >
+            <MenuItem primaryText="Refresh" />
+            <MenuItem primaryText="Send feedback" />
+            <MenuItem primaryText="Settings" />
+            <MenuItem primaryText="Help" />
+            <MenuItem primaryText="Sign out" />
+            <FlatButton label="Logout" onClick={Meteor.logout} />
+          </IconMenu>
+        else
+          <FlatButton label="Login" linkButton={true} href="/login" />
+        }
+        >
+
+      </AppBar>
       <div className='container'>
         <div className='leftSide'>
           <LeftNav ref='leftnav' className='nav' open={@state.open} >

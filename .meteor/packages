@@ -34,3 +34,6 @@ meteorhacks:npm
 
 npm-container
 universe:i18n
+qnub:accounts-react-material-ui
+accounts-password
+jparker:crypto-md5

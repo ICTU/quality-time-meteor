@@ -5,6 +5,13 @@ FlowRouter.route '/',
       currentRoute: '/'
       content: -> <h1>Welcome</h1>
 
+FlowRouter.route '/login',
+  action: ->
+    ReactLayout.render MainLayout,
+      title: 'Login'
+      currentRoute: '/login'
+      content: -> <Accounts.ui.LoginFormSet />
+
 FlowRouter.route '/sources',
   action: ->
     ReactLayout.render MainLayout,

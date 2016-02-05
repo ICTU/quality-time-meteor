@@ -63,6 +63,15 @@ main {
   font-weight: 200;
 }
 
+.userMenu > div > span { /* userAvatar ripple */
+  z-index: 1000;
+}
+.userMenu > div > img { /* userAvatar */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .ast {
   font-family: Roboto, sans-serif;
 }
