@@ -1,15 +1,15 @@
 @SubjectMeasurement = React.createClass
 
   openDialog: (e, metric)->
-    @refs[metric._id].open()
-
-  renderDetailDialogs: ->
-    @props.measurements.map (measurement) ->
-      <DslHtmlView ref={measurement._id} key={measurement._id} ast={JSON.parse measurement.calculation}
-      statusAst={JSON.parse measurement.status.calculation}/>
+    @refs['DslHtmlView'].open()
 
   render: ->
-    <MeasurementListItem
-      title={@props.title}
-      measurement={@props.measurement}
-      onTouchTap={@openDialog} />
+    m = @props.measurement
+    <span>
+      <MeasurementListItem
+        title={@props.title}
+        measurement={m}
+        onTouchTap={@openDialog} />
+        <DslHtmlView ref='DslHtmlView' key={m._id} ast={JSON.parse m.calculation}
+            statusAst={JSON.parse m.status.calculation}/>
+    </span>
