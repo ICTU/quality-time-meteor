@@ -24,6 +24,18 @@ FlowRouter.route '/login',
           <Accounts.ui.LoginFormSet />
         </Page>
 
+loggedInGroup.route '/account',
+  name: 'account'
+  action: ->
+    ReactLayout.render MainLayout,
+      title: 'Account'
+      currentRoute: '/account'
+      content: ->
+        <Page title='Change Password'
+          style={paddingTop:100,paddingBottom:100}>
+          <Accounts.ui.LoginFormSet />
+        </Page>
+
 loggedInGroup.route '/dashboard',
   action: ->
     ReactLayout.render MainLayout,
