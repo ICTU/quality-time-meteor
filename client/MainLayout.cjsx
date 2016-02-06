@@ -52,12 +52,9 @@
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-            <MenuItem primaryText="Refresh" />
-            <MenuItem primaryText="Send feedback" />
-            <MenuItem primaryText="Settings" />
-            <MenuItem primaryText="Help" />
-            <MenuItem primaryText="Sign out" />
-            <FlatButton label="Logout" onClick={Meteor.logout} />
+            <MenuItem primaryText="My Account" onClick={-> FlowRouter.go 'account'} />
+            <Divider />
+            <MenuItem primaryText="Sign out" onClick={Meteor.logout} />
           </IconMenu>
         else
           <FlatButton label="Login" linkButton={true} href="/login" />
