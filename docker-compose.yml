@@ -1,0 +1,13 @@
+web:
+  image: ictu/quality-time
+  ports:
+    - "80:80"
+  environment:
+    - MONGO_URL=mongodb://mongo/quality
+    - ROOT_URL=http://quality-time.io
+  links:
+    - mongo
+mongo:
+  image: mongo:3.2
+  volumes:
+    - ./mongo-data:/data/db
