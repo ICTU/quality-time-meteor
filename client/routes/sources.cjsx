@@ -1,4 +1,4 @@
-sources = FlowRouter.group
+sources = loggedInGroup.group
   prefix: '/sources'
   name: 'sources'
 

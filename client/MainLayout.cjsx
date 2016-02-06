@@ -3,12 +3,15 @@
 
 @MainLayout = React.createClass
 
-  mixins: [_i18n.refreshOnChangeLocaleMixin]
+  mixins: [_i18n.refreshOnChangeLocaleMixin, ReactMeteorData]
 
   propTypes:
     title: React.PropTypes.any.isRequired
     content: React.PropTypes.func.isRequired
     currentRoute: React.PropTypes.string.isRequired
+
+  getMeteorData: ->
+    user: Meteor.user()
 
   getInitialState: ->
     open: true
@@ -42,7 +45,7 @@
         showMenuIconButton={true}
         onLeftIconButtonTouchTap={@onLeftIconButtonTouchTap}
         title={@props.title}
-        iconElementRight={if Meteor.userId()
+        iconElementRight={if @data.user
           <IconMenu
             iconButtonElement={<IconButton className='userMenu' style={marginRight:20}><Avatar src={"http://www.gravatar.com/avatar/#{CryptoJS.MD5(Meteor.user().emails[0].address).toString()}"}
               size={50}  /></IconButton>}
@@ -64,15 +67,17 @@
       </AppBar>
       <div className='container'>
         <div className='leftSide'>
-          <LeftNav ref='leftnav' className='nav' open={@state.open} >
-            <List className='list' value={@props.currentRoute}>
-              {[
-                @renderMenuItem '/dashboard', <T>dashboard</T>, 'dashboard', '#4285F4'
-                @renderMenuItem '/subjects', <T>subjects</T>, 'description', '#795548'
-                @renderMenuItem '/sources', <T>sources</T>, 'device_hub', '#3FAF79'
-              ]}
-            </List>
-          </LeftNav>
+          {if @data.user
+            <LeftNav ref='leftnav' className='nav' open={@state.open} >
+              <List className='list' value={@props.currentRoute}>
+                {[
+                  @renderMenuItem '/dashboard', <T>dashboard</T>, 'dashboard', '#4285F4'
+                  @renderMenuItem '/subjects', <T>subjects</T>, 'description', '#795548'
+                  @renderMenuItem '/sources', <T>sources</T>, 'device_hub', '#3FAF79'
+                ]}
+              </List>
+            </LeftNav>
+          }
         </div>
         <main className='main'>
           {@props.content()}
