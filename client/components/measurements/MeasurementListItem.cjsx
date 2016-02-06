@@ -13,5 +13,6 @@
       primaryText={@props.title}
       secondaryText={'No measurements!' unless m}
       leftAvatar={avatar}
+      disabled={not m?}
       onTouchTap={@onTouchTap}
     />
