@@ -2,5 +2,17 @@ dashboard: Dashboard
 subjects: Subjects
 sources: Sources
 
+source:
+  add: Add source
+  edit: Edit {$name}
+
 button:
   create: Create
+  cancel: Cancel
+  save: Save
+
+measurement:
+  noMeasurements: No measurements!
+
+item:
+  saved: '{$name} saved'

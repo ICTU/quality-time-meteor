@@ -2,5 +2,17 @@ dashboard: Overzichtsscherm
 subjects: Onderwerpen
 sources: Bronnen
 
+source:
+  add: Bron toevoegen
+  edit: '{$name} bewerken'
+
 button:
   create: Nieuw
+  cancel: Annuleren
+  save: Opslaan
+
+measurement:
+  noMeasurements: Geen metingen!
+
+item:
+  saved: '${$name} opgeslagen'

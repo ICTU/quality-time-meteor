@@ -35,7 +35,7 @@
 
       <Snackbar
           open={@state.snackbarOpen}
-          message={"#{@props.itemName} saved"}
+          message={i18n 'item.saved', name: @props.itemName}
           autoHideDuration={0}
           onRequestClose={@handleSnackbarClose}
         />

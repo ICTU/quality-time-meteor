@@ -11,7 +11,7 @@
     avatar = <MeasurementAvatar measurement={m} />
     <ListItem
       primaryText={@props.title}
-      secondaryText={'No measurements!' unless m}
+      secondaryText={i18n('measurement.noMeasurements') unless m}
       leftAvatar={avatar}
       disabled={not m?}
       onTouchTap={@onTouchTap}
