@@ -26,11 +26,8 @@ markoshust:material-ui
 kadira:react-layout
 kadira:flow-router
 sanjo:jasmine
-velocity:console-reporter
-velocity:html-reporter
 cosmos:browserify
 meteorhacks:npm
-
 
 npm-container
 universe:i18n
