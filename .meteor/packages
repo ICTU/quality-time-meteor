@@ -25,7 +25,6 @@ http
 markoshust:material-ui
 kadira:react-layout
 kadira:flow-router
-sanjo:jasmine
 cosmos:browserify
 meteorhacks:npm
 
