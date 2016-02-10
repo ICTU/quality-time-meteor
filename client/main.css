@@ -72,8 +72,24 @@ main {
   left: 0;
 }
 
+
 .ast {
   font-family: Roboto, sans-serif;
+}
+.ast .node.noMeasurement { /* when there is no measurement */
+  border-bottom: 1px dashed red;
+  padding: 2px;
+  font-weight: 100;
+}
+.ast .node.constant {
+  color: blue
+}
+.ast .controlFlow > .if, .ast .controlFlow > .else {
+  font-weight: 500;
+}
+.ast .controlFlow > .thenClause, .ast .controlFlow > .elseClause { /* if/else clause styling */
+  padding-left: 20px;
+  display: block;
 }
 .ast .node > .name {
   color: blue;
