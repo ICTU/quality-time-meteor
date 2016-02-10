@@ -29,9 +29,16 @@
       throw new Error "Unsupported node type: #{nodeType}"
 
     explain  = (qObject) ->
-      renderVal = ({name, value}) ->
-        <span className='node'>
-          <span className='name'>{name}</span>(<span className='value'>{node.value}</span>)
+
+      renderConstant = ({value}) ->
+        <span className='node constant'>{value}</span>
+
+      renderNoMeasurement = ({name}) ->
+        <span className='node noMeasurement'>{name}</span>
+
+      renderMeasurement = ({name, value}) ->
+        <span className='node measurement'>
+          <span className='name'>{name}</span>(<span className='value'>{value}</span>)
         </span>
       renderBinary = (arg1, arg2, operator) ->
         <span className='node'>
@@ -57,10 +64,10 @@
           when 'not'            then "not(#{explain(arg)})"
           else                  throw unsupportedOperation operation
       explainIf = (node) ->
-        <span>if {explain node.expression}
-          <div style={paddingLeft:20}>{explain node.then}</div>
-          else
-          <div style={paddingLeft:20}>{explain node.else}</div>
+        <span className='controlFlow'><span className='if'>if</span> {explain node.expression}
+          <span className='thenClause'>{explain node.then}</span>
+          <span className='else'>else</span>
+          <span className='elseClause'>{explain node.else}</span>
         </span>
 
       node = qObject.node or qObject
@@ -68,7 +75,9 @@
         when 'binaryOperation'  then explainBinary node
         when 'unaryOperation'   then explainUnary node
         when 'if'               then explainIf node
-        when 'val'              then renderVal node
+        when 'constant'         then renderConstant node
+        when 'measurement'      then renderMeasurement node
+        when 'no_measurement'   then renderNoMeasurement node
         else                    unsupportedNodeType node.type
 
     explain ast

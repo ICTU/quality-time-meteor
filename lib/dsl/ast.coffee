@@ -8,13 +8,28 @@ makeVal = (cb) -> (nameOrVal, val) ->
 
 getNode = (val) -> val.node or val
 
-Q.val = (name, val) ->
-  node = type: 'val', name: name, value: val
+Q.noMeasurement =  (property) ->
+  multiType type: 'no_measurement', name: property
+
+Q.constant = (constantValue) ->
+  type: 'constant', value: constantValue
+
+Q.measurement = (name, val) ->
+  node = type: 'measurement', name: name, value: val
   switch type = typeof val
     when 'number'   then num node
     when 'boolean'  then bool node
     when 'string'   then string node
     else unsupportedValueType type
+
+# Q.val = (name, val) ->
+#   node = type: 'val', name: name, value: val
+#   switch type = typeof val
+#     when 'number'   then num node
+#     when 'boolean'  then bool node
+#     when 'string'   then string node
+#     when 'object'   then multiType node
+#     else unsupportedValueType type
 
 Q.if = makeVal (val) ->
   x =
@@ -65,6 +80,9 @@ string = (val1) ->
   node: val1
   equals: eq = makeVal (val) ->
     bool binaryOperation 'equals', val1, val
+
+multiType = (node) ->
+  _.extend (bool node), (num node), (string node)
 
 binaryOperation = (operation, arg1, arg2) ->
   type: 'binaryOperation'

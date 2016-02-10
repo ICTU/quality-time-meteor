@@ -3,8 +3,8 @@
   measure: ({passedUnitTestsCount}) -> passedUnitTestsCount
   status: ({passedUnitTestsCount, totalUnitTestsCount}) ->
     iff = Q.if passedUnitTestsCount().eq(totalUnitTestsCount())
-    iff.then Q.val('status', 'ok')
-    iff.else Q.val('status', 'nok')
+    iff.then Q.constant 'ok'
+    iff.else Q.constant 'nok'
 
 Meteor.startup ->
   MetricTypes.register 'PassedUnitTests',
