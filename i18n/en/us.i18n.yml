@@ -13,6 +13,7 @@ button:
 
 measurement:
   noMeasurements: No measurements!
+  failing: Problem with data source!
 
 item:
   saved: '{$name} saved'

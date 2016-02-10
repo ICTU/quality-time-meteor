@@ -13,6 +13,7 @@ button:
 
 measurement:
   noMeasurements: Geen metingen!
+  failing: Probleem met bron!
 
 item:
   saved: '${$name} opgeslagen'
