@@ -13,15 +13,18 @@ statusColor = (status) ->
 
   render: ->
     m = @props.measurement
-    if m and m.value
-      avatarStyle = _.extend @props.style,
-        fontSize: 14
-        backgroundColor: statusColor m.status.value
 
-      <Avatar style={avatarStyle}>{m.value}</Avatar>
+    getStyle = (backgroundColor) =>
+      _.extend @props.style,
+        fontSize: 14
+        boxShadow: "0 0px 3px #{backgroundColor}, 0 1px 4px rgba(0, 0, 0, 0.24)"
+        backgroundColor: backgroundColor
+
+    if m and m.value
+      <Avatar style={getStyle statusColor m.status.value}>{m.value}</Avatar>
     else if m
-      <Avatar backgroundColor={Colors.red500} {...@props}
+      <Avatar style={getStyle Colors.red500} {...@props}
         icon={<ActionReportProblem className="material-icons" />} />
     else
-      <Avatar backgroundColor={Colors.deepOrange400} {...@props}
+      <Avatar style={getStyle Colors.deepOrange400} {...@props}
         icon={<ActionReportProblem className="material-icons" />} />
