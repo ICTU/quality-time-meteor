@@ -8,20 +8,19 @@ makeVal = (cb) -> (nameOrVal, val) ->
 
 getNode = (val) -> val.node or val
 
-Q.noMeasurement =  (property) ->
-  multiType type: 'no_measurement', name: property
+Q.noMeasurement =  (property, sourceInfo) ->
+  multiType type: 'no_measurement', name: property, sourceInfo: sourceInfo
 
-Q.constant = (constantValue) ->
-  type: 'constant', value: constantValue
-
-Q.measurement = (name, val) ->
-  node = type: 'measurement', name: name, value: val
+Q.measurement = (name, val, sourceInfo) ->
+  node = type: 'measurement', name: name, value: val, sourceInfo: sourceInfo
   switch type = typeof val
     when 'number'   then num node
     when 'boolean'  then bool node
     when 'string'   then string node
     else unsupportedValueType type
 
+Q.constant = (constantValue) ->
+  type: 'constant', value: constantValue
 # Q.val = (name, val) ->
 #   node = type: 'val', name: name, value: val
 #   switch type = typeof val

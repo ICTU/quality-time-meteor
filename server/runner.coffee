@@ -7,20 +7,21 @@ supportedDataSources = (metric, datasources) ->
 
 propertyWrapper = (config, propertyFunc) -> -> propertyFunc config
 measure = (metric, datasources...) ->
-  invocationParams = {}
+  propertyValues = {}
   for ds in datasources
     props = supportedProperties metric, ds
     for prop in props
-      invocationParams[prop] = ds[prop].bind(ds)
+      propertyValues[prop] = ds[prop].bind(ds)
 
-  if Object.keys(invocationParams).length is metric.properties.length
-    calc: metric.measure invocationParams
-    status: if metric.status then (metric.status invocationParams) else null
+  if Object.keys(propertyValues).length is metric.properties.length
+    calc: metric.measure propertyValues
+    status: if metric.status then (metric.status propertyValues) else null
   else
-    throw new Error 'Unable to satisfy all property dependencies for metric, missing: ' + _.difference(metric.properties, Object.keys(invocationParams))
+    throw new Error 'Unable to satisfy all property dependencies for metric, missing: ' + _.difference(metric.properties, Object.keys(propertyValues))
 
 measureAndRegister = (metric, source, subject) ->
-  m = (measure new global[metric.className](), new global[source.class](source, subject))
+  source.class = 'Jenkins'
+  m = (measure new global[metric.className](),  new global[source.class](source, subject))
   calculation = m.calc()
   jsonCalc = Q.toJSON calculation
   query =
@@ -57,13 +58,16 @@ runner = ->
     for metric in subject.metrics or []
       metricType = MetricTypes.findOne name: metric.name
       source = Sources.findOne _id: metric.sourceId
-      console.log 'metric', metricType.name, ' with source', source.name
-      subjectSources = _.filter subject.sources, (s) -> s.id is source._id
-      if subjectSources.length > 0
-        subjectSources[0].name = subject.name
-        measureAndRegister metricType, source, subjectSources[0]
+      if source
+        console.log 'metric', metricType.name, ' with source', source.name
+        subjectSources = _.filter subject.sources, (s) -> s.id is source._id
+        if subjectSources.length > 0
+          subjectSources[0].name = subject.name
+          measureAndRegister metricType, source, subjectSources[0]
+        else
+          console.log 'No source configuration defined in subject'
       else
-        console.log 'No source configuration defined in subject'
+        console.log 'metric', metricType.name, ' has no source configured'
       console.log '----'
     console.log '=================='
 

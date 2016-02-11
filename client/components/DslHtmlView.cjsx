@@ -1,5 +1,3 @@
-{ Dialog } = mui
-
 @DslHtmlView = React.createClass
   handleClose: ->
     @setState open: false
@@ -17,6 +15,7 @@
       <pre className='ast'>{@renderAst @props.ast}</pre>
       <h3>Status</h3>
       <pre className='ast'>{@renderAst @props.statusAst}</pre>
+      <ProblemView ast={@props.ast} />
     </Dialog>
 
   getInitialState: ->
