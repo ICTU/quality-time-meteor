@@ -7,6 +7,6 @@
     iff.else Q.constant 'nok'
 
 Meteor.startup ->
-  MetricTypes.register 'PassedUnitTests',
+  MetricTypes.register
     description: 'Shows the number of successful unit tests'
-    className: 'PassedUnitTests'
+    name: 'PassedUnitTests'
