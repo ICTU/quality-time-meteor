@@ -6,7 +6,7 @@ supportedDataSources = (metric, datasources) ->
   (ds for ds in datasources when dsFullySupportsMetric metric, ds)
 
 propertyWrapper = (config, propertyFunc) -> -> propertyFunc config
-measure = (metric, datasources...) ->
+measure = (metric, metricConstants, datasources...) ->
   propertyValues = {}
   for ds in datasources
     props = supportedProperties metric, ds
@@ -15,13 +15,17 @@ measure = (metric, datasources...) ->
 
   if Object.keys(propertyValues).length is metric.properties.length
     calc: metric.measure propertyValues
-    status: if metric.status then (metric.status propertyValues) else null
+    status: if metric.status then (metric.status propertyValues, metricConstants) else null
   else
     throw new Error 'Unable to satisfy all property dependencies for metric, missing: ' + _.difference(metric.properties, Object.keys(propertyValues))
 
+getMetricConstants = (metric) ->
+  _.object (["#{constant.name}", constant.value] for constant in MetricTypesConstants.find(metric: metric.name).fetch())
+
 measureAndRegister = (metric, source, subject) ->
   source.class = 'Jenkins'
-  m = (measure new global[metric.className](),  new global[source.class](source, subject))
+  metricConstants = getMetricConstants metric
+  m = (measure new global[metric.name](), metricConstants, new global[source.class](source, subject))
   calculation = m.calc()
   jsonCalc = Q.toJSON calculation
   query =
@@ -72,7 +76,7 @@ runner = ->
     console.log '=================='
 
 Meteor.startup ->
-  if process.env.DEV
+  if process.env.ENABLE_RUNNER
     Meteor.defer runner
     Meteor.setInterval runner, 10000
   else console.log 'Runner disabled'
