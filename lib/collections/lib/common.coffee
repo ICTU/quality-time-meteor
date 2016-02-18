@@ -1,3 +1,3 @@
-Mongo.Collection::register = (doc) ->
+Mongo.Collection::register = (doc, cb) ->
   @upsert {name: doc.name}, doc
-  console.log "Source implementation registered: #{doc.name}"
+  cb? doc

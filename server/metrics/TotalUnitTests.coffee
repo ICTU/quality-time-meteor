@@ -3,7 +3,7 @@
   constants: minimumUnitTestCount: 0
   measure: ({totalUnitTestsCount}) -> totalUnitTestsCount
   status: ({totalUnitTestsCount}, {minimumUnitTestCount}) ->
-    iff = Q.if totalUnitTestsCount().gt(Q.constant minimumUnitTestCount or 0)
+    iff = Q.if totalUnitTestsCount().gt(Q.constant minimumUnitTestCount)
     iff.then Q.constant 'ok'
     iff.else Q.constant 'nok'
 

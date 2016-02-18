@@ -4,40 +4,35 @@ testSources = [
     url: 'http://www.jenkins.kiesraad.ictu/'
     image: "https://blog.rosehosting.com/blog/wp-content/uploads/2014/11/jenkins.png"
     icon: "/images/jenkins/icon.png"
-    class: 'Jenkins'
+    type: 'Jenkins'
   ,
     name: 'Inspectieviews Jenkins'
     description: "Inspectieviews Jenkins CI"
     url: 'http://www.jenkins.inspectieviews.ictu/'
     image: "https://blog.rosehosting.com/blog/wp-content/uploads/2014/11/jenkins.png"
     icon: "/images/jenkins/icon.png"
-    class: 'Jenkins'
+    type: 'Jenkins'
   ,
     name: 'Metrics Kwaliteit Jenkins'
     description: "Metrics Kwaliteit Jenkins CI"
     url: 'http://jenkins.isf.org:8080/'
     image: "https://blog.rosehosting.com/blog/wp-content/uploads/2014/11/jenkins.png"
     icon: "/images/jenkins/icon.png"
-    class: 'Jenkins'
-]
-
-testSubjects = [
-    name: 'Referendum Applicatie'
-    jenkins:
-      jobName: 'RApp'
+    type: 'Jenkins'
   ,
-    name: 'Inspectieviews ISZW'
-    jenkins:
-      jobName: 'av-ingestion-iszw'
+    name: 'LRK Sonar'
+    description: "The Sonar of LRK"
+    url: 'http://www.sonar.lrk.ictu:9000/'
+    image: "http://docs.sonarqube.org/download/attachments/6951171/SONAR?version=1&modificationDate=1452514709000&api=v2"
+    icon: "http://docs.sonarqube.org/download/attachments/6951171/SONAR?version=1&modificationDate=1452514709000&api=v2"
+    type: 'Sonar'
   ,
-    name: 'Inspectieviews Bedrijven WSDL'
-    jenkins:
-      jobName: 'iv-bedrijven-wsdl'
-  ,
-    name: 'Metrics Kwaliteit'
-    jenkins:
-      jobName: 'metrics-kwaliteit'
-
+    name: 'Inspectieviews Sonar'
+    description: "The Sonar of Inspectieviews"
+    url: 'http://www.sonar.inspectieviews.ictu:9000/'
+    image: "http://docs.sonarqube.org/download/attachments/6951171/SONAR?version=1&modificationDate=1452514709000&api=v2"
+    icon: "http://docs.sonarqube.org/download/attachments/6951171/SONAR?version=1&modificationDate=1452514709000&api=v2"
+    type: 'Sonar'
 ]
 
 addTestData = (collection, data) ->
@@ -46,4 +41,3 @@ addTestData = (collection, data) ->
 
 Meteor.startup ->
   addTestData Sources, testSources
-  addTestData Subjects, testSubjects

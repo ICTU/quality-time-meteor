@@ -8,5 +8,5 @@
 
 Meteor.startup ->
   MetricTypes.register
-    description: 'Shows the number of successful unit tests'
     name: 'PassedUnitTests'
+    description: 'Shows the number of successful unit tests'

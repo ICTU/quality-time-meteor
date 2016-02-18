@@ -13,5 +13,4 @@ Meteor.startup ->
           name: constant
           metric: impl.name
           value: "#{constants[constant]}"
-
     console.log "MetricType registered: #{impl.name}"

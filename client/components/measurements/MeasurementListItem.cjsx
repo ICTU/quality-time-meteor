@@ -8,7 +8,7 @@
 
   render: ->
     secondaryText = (m) ->
-      if m and not m.value then i18n('measurement.failing')
+      if m and Utils.isEmpty(m) then i18n('measurement.failing')
       else if not m then i18n('measurement.noMeasurements')
 
     m = @props.measurement

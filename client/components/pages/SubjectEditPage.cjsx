@@ -136,15 +136,20 @@ SourceConfigEditor = React.createClass
   getInitialState: ->
     @props.config
 
-  handleChange: (e) ->
-    @setState jobName: e.target.value
-    @props.onChange {jobName: e.target.value}
+  handleChange: (field) -> (e) =>
+    fields = {}; fields[field] = e.target.value
+    @setState fields
+    @props.onChange fields
 
   render: ->
-    <span>
-      <h3>{@data.source.name}</h3>
-      <EditField field='jobName' value={@state.jobName} onChange={@handleChange}/>
-    </span>
+    sourceType = SourceTypes.findOne(name: @data.source.type)
+    <div className="source-fields">
+      {for field in sourceType.fields
+        <span key=field>
+          <h3>{"#{@data.source.name} (#{@data.source.type})"}</h3>
+          <EditField field=field value={@state[field]} onChange={@handleChange(field)}/>
+        </span>}
+    </div>
 
 SourceMetricEditor = React.createClass
   displayName: 'SourceMetricEditor'
@@ -170,4 +175,3 @@ SourceMetricEditor = React.createClass
         }
       </SelectField>
     </span>
-  # <EditField field='jobName' value={@state.jobName} onChange={@handleChange}/>

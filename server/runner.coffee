@@ -23,9 +23,8 @@ getMetricConstants = (metric) ->
   _.object (["#{constant.name}", constant.value] for constant in MetricTypesConstants.find(metric: metric.name).fetch())
 
 measureAndRegister = (metric, source, subject) ->
-  source.class = 'Jenkins'
   metricConstants = getMetricConstants metric
-  m = (measure new global[metric.name](), metricConstants, new global[source.class](source, subject))
+  m = (measure new global[metric.name](), metricConstants, new global[source.type](source, subject))
   calculation = m.calc()
   jsonCalc = Q.toJSON calculation
   query =

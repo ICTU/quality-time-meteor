@@ -20,7 +20,7 @@ statusColor = (status) ->
         boxShadow: "0 0px 3px #{backgroundColor}, 0 1px 4px rgba(0, 0, 0, 0.24)"
         backgroundColor: backgroundColor
 
-    if m and m.value
+    if m and not Utils.isEmpty(m.value)
       <Avatar style={getStyle statusColor m.status.value}>{m.value}</Avatar>
     else if m
       <Avatar style={getStyle Colors.red500} {...@props}

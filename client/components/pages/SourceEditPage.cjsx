@@ -20,7 +20,7 @@
     @setState snackbarOpen: true
 
   render: ->
-    editFields = ['name', 'url', 'description', 'image', 'icon']
+    editFields = ['name', 'url', 'description', 'image', 'icon', 'type']
     title = if @props.id then <T name={@data.name}>source.edit</T> else <T>source.add</T>
 
     <span>
