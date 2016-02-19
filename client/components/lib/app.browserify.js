@@ -1,1 +1,1 @@
-LinkedStateMixin = require('react-addons-linked-state-mixin')
+LinkedStateMixin  = require('react-addons-linked-state-mixin')
