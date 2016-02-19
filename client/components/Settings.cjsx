@@ -2,6 +2,8 @@ metricTargetValuesPage = 'metricTargetValues'
 
 @Settings = React.createClass
 
+  mixins: [LinkedStateMixin]
+
   getDefaultProps: ->
     open: false
 
@@ -9,12 +11,14 @@ metricTargetValuesPage = 'metricTargetValues'
     open: @props.open
     page: null
 
-
   handleClose: ->
     @setState open: false
 
   open: ->
     @setState open: true
+
+  handlePageUpdate: (e, value) ->
+    @setState page: value
 
   render: ->
     actions = [
@@ -36,12 +40,11 @@ metricTargetValuesPage = 'metricTargetValues'
       >
         <Divider />
         <div style={display:'flex'}>
-          <List style={width:'25%'}>
-            <ListItem
+          <SelectableList style={width:'25%'} valueLink={{value: @state.page, requestChange: @handlePageUpdate}}>
+            <ListItem value={<MetricTargetValuesPage />}
               primaryText={<T>metric.targetValues</T>}
-              onTouchTap={=> @setState page: <MetricTargetValuesPage />}
             />
-          </List>
+          </SelectableList>
           <div style={width:'75%'}>
             {if @state.page then @state.page}
           </div>
