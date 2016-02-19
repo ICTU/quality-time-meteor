@@ -1,6 +1,6 @@
 class @CodeCoverage
   properties: ['codeCoverage']
-  constants: minimumCodeCoverage: 0
+  constants: minimumCodeCoverage: 80
   measure: ({codeCoverage}) -> codeCoverage
   status: ({codeCoverage}, {minimumCodeCoverage}) ->
     iff = Q.if codeCoverage().ge(Q.constant minimumCodeCoverage)
