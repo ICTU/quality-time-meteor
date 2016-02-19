@@ -1,6 +1,10 @@
 dashboard: Overzichtsscherm
 subjects: Onderwerpen
 sources: Bronnen
+settings: Instellingen
+
+metric:
+  targetValues: Metriek doelwaarden
 
 source:
   add: Bron toevoegen

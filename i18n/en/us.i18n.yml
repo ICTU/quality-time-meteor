@@ -1,6 +1,10 @@
 dashboard: Dashboard
 subjects: Subjects
 sources: Sources
+settings: Settings
+
+metric:
+  targetValues: Metric target values
 
 source:
   add: Add source
