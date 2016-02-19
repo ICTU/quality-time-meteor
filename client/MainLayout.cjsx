@@ -28,13 +28,13 @@
   goToRoute: (route) -> =>
     FlowRouter.go route
 
-  renderMenuItem: (route, title, icon, iconColor) ->
-    color = if route is @props.currentRoute then 'black' else '#676461'
-    fontWeight = if route is @props.currentRoute then 400 else 100
-    bgColor = if route is @props.currentRoute then '#E7E7E7' else '#F2F2F2'
-    <ListItem key={route} style={color:color, backgroundColor:bgColor, fontWeight:fontWeight, fontSize:14} value={route}
+  renderMenuItem: (routeOrFunc, title, icon, iconColor) ->
+    color = if routeOrFunc is @props.currentRoute then 'black' else '#676461'
+    fontWeight = if routeOrFunc is @props.currentRoute then 400 else 100
+    bgColor = if routeOrFunc is @props.currentRoute then '#E7E7E7' else '#F2F2F2'
+    <ListItem key={routeOrFunc} style={color:color, backgroundColor:bgColor, fontWeight:fontWeight, fontSize:14}
       leftIcon={<FontIcon className="material-icons" color={iconColor}>{icon}</FontIcon>}
-      onTouchTap={@goToRoute route} value={route}>
+      onTouchTap={if typeof routeOrFunc is 'function' then routeOrFunc else @goToRoute routeOrFunc} >
       {title}
     </ListItem>
 
@@ -73,6 +73,10 @@
                   @renderMenuItem '/sources', <T>sources</T>, 'device_hub', '#3FAF79'
                 ]}
               </List>
+              <Divider />
+              <List className='list'>
+                {@renderMenuItem (=> @refs.settings.open()), <T>settings</T>, 'settings', Colors.grey500}
+              </List>
             </LeftNav>
           }
         </div>
@@ -85,4 +89,5 @@
 
       <CollectionModificationSnackbar collection={Subjects} itemName='Subject' />
       <CollectionModificationSnackbar collection={Sources} itemName='Source' />
+      <Settings ref='settings' />
     </div>
