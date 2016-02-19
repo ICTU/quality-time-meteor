@@ -15,12 +15,12 @@
   onSaveTapped: ->
     @refs.editForm.save()
     FlowRouter.go '/sources'
+
   onSave: (doc) ->
-    Sources.upsert _id: doc._id, doc
+    Meteor.call 'Sources.upsert', doc
     @setState snackbarOpen: true
 
   render: ->
-    editFields = ['name', 'url', 'description', 'image', 'icon', 'type']
     title = if @props.id then <T name={@data.name}>source.edit</T> else <T>source.add</T>
 
     <span>
@@ -30,7 +30,7 @@
           ref='editForm'
           onSave={@onSave}
           showActionButtons={false}
-          fields={editFields}
+          collection={Sources}
           doc={@data}
           customRenderer={@customRenderer}/>
 
