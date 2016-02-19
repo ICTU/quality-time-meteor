@@ -27,14 +27,14 @@ measureAndRegister = (metric, source, subject) ->
   m = (measure new global[metric.name](), metricConstants, new global[source.type](source, subject))
   calculation = m.calc()
   jsonCalc = Q.toJSON calculation
+  jsonStatus = Q.toJSON m.status
   query =
-    forSubject: subject.name, ofMetric: metric.name, calculation: jsonCalc
+    forSubject: subject.name, ofMetric: metric.name, calculation: jsonCalc, 'status.calculation': jsonStatus
 
   if measurement = Measurements.findOne(query, sort: lastMeasured: -1)
     measurement.lastMeasured = new Date()
     Measurements.update {_id: measurement._id}, measurement
   else
-    console.log m.status
     measurementObject =
       firstMeasured: new Date()
       lastMeasured: new Date()
@@ -45,7 +45,7 @@ measureAndRegister = (metric, source, subject) ->
 
     if m.status
       measurementObject.status =
-        calculation: Q.toJSON m.status
+        calculation: jsonStatus
         value: Q.exec m.status
     else
       measurementObject.status =
