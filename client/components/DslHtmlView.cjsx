@@ -1,25 +1,7 @@
 @DslHtmlView = React.createClass
-  handleClose: ->
-    @setState open: false
-
-  open: ->
-    @setState open: true
 
   render: ->
-    <Dialog
-      title={@props.title}
-      modal={false}
-      open={@state.open}
-      onRequestClose={@handleClose}>
-      <h3>Value</h3>
-      <pre className='ast'>{@renderAst @props.ast}</pre>
-      <h3>Status</h3>
-      <pre className='ast'>{@renderAst @props.statusAst}</pre>
-      <ProblemView ast={@props.ast} />
-    </Dialog>
-
-  getInitialState: ->
-    open: false
+    <pre className='ast'>{@renderAst @props.ast}</pre>
 
   renderAst: (ast) ->
     unsupportedOperation = (operation) ->

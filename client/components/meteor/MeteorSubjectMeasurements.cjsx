@@ -40,4 +40,4 @@ MeteorSubjectMeasurement = React.createClass
 
   render: ->
     console.log 'render MeteorSubjectMeasurement'
-    <SubjectMeasurement title={@props.metric.name} measurement={@data.measurement} />
+    <SubjectMeasurement title={@props.metric.name} subject={@props.subject} measurement={@data.measurement} />
