@@ -4,7 +4,7 @@ sources: Sources
 settings: Settings
 
 metric:
-  targetValues: Metric target values
+  targetValues: Metrics
 
 source:
   add: Add source

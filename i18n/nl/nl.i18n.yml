@@ -4,7 +4,7 @@ sources: Bronnen
 settings: Instellingen
 
 metric:
-  targetValues: Metriek doelwaarden
+  targetValues: Metrieken
 
 source:
   add: Bron toevoegen
