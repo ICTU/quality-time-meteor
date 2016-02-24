@@ -8,7 +8,7 @@
     actionHover: false
 
   onDocumentSelected: (doc) ->
-    FlowRouter.go "/subjects/edit/#{doc._id}"
+    FlowRouter.go "/subjects/#{doc._id}/edit"
 
   onTouchTap: ->
     FlowRouter.go "/subjects/new"
