@@ -4,7 +4,7 @@
 
   render: ->
     <div className='page'>
-      <h3>{@props.title}</h3>
+      {if @props.title then <h3>{@props.title}</h3>}
       <Paper style={@props.style}>
         <div style={backgroundColor:'white'}>
           {@props.children}
