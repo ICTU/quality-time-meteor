@@ -1,0 +1,38 @@
+.sunburst #main {
+  display: table;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+.sunburst #chart {
+  width: 750px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+
+.sunburst #sequence text, .sunburst #legend text {
+  font-weight: 600;
+  fill: #fff;
+}
+
+.sunburst #chart {
+  position: relative;
+}
+
+.sunburst #chart path {
+  stroke: #fff;
+}
+
+.sunburst #explanation {
+  position: absolute;
+  top: 45%;
+  width: 100%;
+  text-align: center;
+  color: #666;
+  z-index: -1;
+  font-size: 20px;
+}
+.sunburst #groupName {
+  font-weight:bold;
+}
