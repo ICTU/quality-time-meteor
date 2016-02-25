@@ -20,8 +20,9 @@ styles =
 @MeteorSubjectMeasurements = React.createClass
   render: ->
     <Paper style={styles.paper}>
-      <a href="/subjects/#{@props.subject._id}" ><h3 style={styles.h3}>{@props.subject.name}</h3></a>
+      <h3 style={styles.h3}>{@props.subject.name}</h3>
       {if @props.subject.metrics?.length
+        console.log '@props.subject.metrics?', @props.subject.metrics
         <List style={styles.list}>
           {for metric in @props.subject.metrics
             <MeteorSubjectMeasurement subject={@props.subject} metric={metric} />}
