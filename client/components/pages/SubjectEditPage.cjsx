@@ -23,7 +23,6 @@
     <SubjectSourceLinkEditor valueLink={valueLink} />
 
   render: ->
-    editFields = ['name']
     title = if @props.id then "Edit #{@data.name}" else 'Add subject'
 
     <span>
@@ -32,7 +31,7 @@
           ref='editForm'
           onSave={@onSave}
           showActionButtons={false}
-          fields={editFields}
+          schema={Schema.Subjects}
           doc={@data}
           customRenderer={@customEditComponent} />
       </Page>

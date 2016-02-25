@@ -10,7 +10,7 @@
   delete: -> @props.onDelete? @state.doc
   render: ->
     <span>
-      <EditFormPart collection={@props.collection} valueLink={@linkState 'doc'}/>
+      <EditFormPart schema={@props.schema} valueLink={@linkState 'doc'}/>
       {@props.customRenderer @linkState('doc') if @props.customRenderer}
     </span>
 
@@ -42,7 +42,7 @@
       console.log 'unknown field type', options.type
 
   render: ->
-    schema = @props.collection.simpleSchema().schema()
     <span>
-      {@renderEditField field, options for field, options of schema}
+      {for field, options of @props.schema
+        @renderEditField field, options}
     </span>

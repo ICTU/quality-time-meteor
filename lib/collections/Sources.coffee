@@ -1,9 +1,6 @@
 @Sources = new Mongo.Collection 'sources'
 
-SimpleSchema.extendOptions
-  autoform: Match.Optional(Object)
-
-Sources.attachSchema new SimpleSchema
+Schema.Sources =
   name: type: String
   url:
     type: String
@@ -23,3 +20,5 @@ Sources.attachSchema new SimpleSchema
       options: -> SourceTypes.find().map (st) ->
         value: st._id
         label: st.name
+
+Sources.attachSchema new SimpleSchema Schema.Sources

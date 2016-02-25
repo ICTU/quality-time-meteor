@@ -30,7 +30,7 @@
           ref='editForm'
           onSave={@onSave}
           showActionButtons={false}
-          collection={Sources}
+          schema={Schema.Sources}
           doc={@data}
           customRenderer={@customRenderer}/>
 
