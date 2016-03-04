@@ -11,7 +11,7 @@ class @Jira extends Source
   getResult: (url, jql) ->
     try
       x = Url.resolve url, "rest/api/2/search?jql=#{jql}&fields=customfield_10002"
-      result = HTTP.get x, auth: 'user:passwd'
+      result = HTTP.get x, auth: "#{@config.username}:#{@config.password}"
       issues: result.data.issues
     catch e
       error: e.message
