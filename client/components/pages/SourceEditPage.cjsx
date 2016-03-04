@@ -6,7 +6,8 @@
 
   getMeteorData: ->
     if @props.id
-      Sources.findOne _id: @props.id
+      source: Sources.findOne _id: @props.id
+      type: SourceTypes.findOne name: 'Jira'
     else {}
 
   onCancelTapped: ->
@@ -21,7 +22,10 @@
     @setState snackbarOpen: true
 
   render: ->
-    title = if @props.id then <T name={@data.name}>source.edit</T> else <T>source.add</T>
+    console.log '!!', Schema[@data.type.name]
+    console.log _.extend Schema.Sources, Schema[@data.type.name]
+    console.log '@data', @data
+    title = if @props.id then <T name={@data.source.name}>source.edit</T> else <T>source.add</T>
 
     <span>
       <Page title={title} style={padding:10}>
@@ -30,8 +34,8 @@
           ref='editForm'
           onSave={@onSave}
           showActionButtons={false}
-          schema={Schema.Sources}
-          doc={@data}
+          schema={_.extend Schema.Sources, Schema[@data.type.name]}
+          doc={@data.source}
           customRenderer={@customRenderer}/>
 
       </Page>
