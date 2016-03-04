@@ -7,7 +7,7 @@ metric:
   targetValues: Metrieken
 
 source:
-  add: Bron toevoegen
+  add: '${$type} bron toevoegen'
   edit: '{$name} bewerken'
 
 button:

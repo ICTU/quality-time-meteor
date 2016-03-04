@@ -7,7 +7,7 @@ metric:
   targetValues: Metrics
 
 source:
-  add: Add source
+  add: Add {$type} source
   edit: Edit {$name}
 
 button:
