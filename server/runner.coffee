@@ -19,17 +19,23 @@ measure = (metric, metricConstants, datasources...) ->
   else
     throw new Error 'Unable to satisfy all property dependencies for metric, missing: ' + _.difference(metric.properties, Object.keys(propertyValues))
 
-getMetricConstants = (metric) ->
+getMetricConstantDefaults = (metric) ->
   _.object (["#{constant.name}", constant.value] for constant in MetricTypesConstants.find(metric: metric.name).fetch())
 
-measureAndRegister = (metric, source, subject) ->
-  metricConstants = getMetricConstants metric
-  m = (measure new global[metric.name](), metricConstants, new global[source.type](source, subject))
+measureAndRegister = (metricType, source, subjectSource, metric) ->
+  metricConstantDefaults = getMetricConstantDefaults metricType
+  metricConstants = {}
+  for k, v of metricConstantDefaults
+    metricConstants[k] =
+      default: v
+      override: metric.constants?[k]
+      value: metric.constants?[k] or v
+  m = (measure new global[metricType.name](), metricConstants, new global[source.type](source, subjectSource))
   calculation = m.calc()
   jsonCalc = Q.toJSON calculation
   jsonStatus = Q.toJSON m.status
   query =
-    forSubject: subject.name, ofMetric: metric.name, calculation: jsonCalc, 'status.calculation': jsonStatus
+    forSubject: subjectSource.name, ofMetric: metricType.name, calculation: jsonCalc, 'status.calculation': jsonStatus
 
   if measurement = Measurements.findOne(query, sort: lastMeasured: -1)
     measurement.lastMeasured = new Date()
@@ -38,8 +44,8 @@ measureAndRegister = (metric, source, subject) ->
     measurementObject =
       firstMeasured: new Date()
       lastMeasured: new Date()
-      forSubject: subject.name
-      ofMetric: metric.name
+      forSubject: subjectSource.name
+      ofMetric: metricType.name
       value: Q.exec calculation
       calculation: jsonCalc
 
@@ -66,7 +72,7 @@ runner = ->
         subjectSources = _.filter subject.sources, (s) -> s.id is source._id
         if subjectSources.length > 0
           subjectSources[0].name = subject.name
-          measureAndRegister metricType, source, subjectSources[0]
+          measureAndRegister metricType, source, subjectSources[0], metric
         else
           console.log 'No source configuration defined in subject'
       else

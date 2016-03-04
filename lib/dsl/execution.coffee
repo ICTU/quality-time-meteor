@@ -34,7 +34,7 @@ Q.exec = exec = (qObject) ->
     when 'binaryOperation'  then interpretBinary node
     when 'unaryOperation'   then interpretUnary node
     when 'if'               then interpretIf node
-    when 'constant'         then node.value
+    when 'constant'         then node.value.value or node.value
     when 'measurement'      then node.value
     when 'no_measurement'   then undefined
     else                    unsupportedNodeType node.type

@@ -157,20 +157,38 @@ SourceMetricEditor = React.createClass
   getMeteorData: ->
     metricType: MetricTypes.findOne name: @props.config.name
     sources: Sources.find({_id: $in: @props.sourceIds}).fetch()
+    constants: MetricTypesConstants.find(metric: @props.config.name).fetch()
 
   getInitialState: ->
     @props.config
 
-  handleChange: (e, id, value) ->
+  handleSourceChange: (e, id, value) ->
     @setState sourceId: value
     @props.onChange {sourceId: value}
+
+  handleConstantChange: (constant) -> (e) =>
+    if e.target.value isnt ''
+      state = {constants: {}}; state.constants[constant] = e.target.value
+      @props.onChange _.extend @state, state
+      @setState state
+    else
+      delete @state.constants[constant]
+      @props.onChange @state
 
   render: ->
     <span>
       <h3>{@data.metricType.name}</h3>
-      <SelectField value={@state.sourceId} onChange={@handleChange} floatingLabelText='Select a source'>
+      <SelectField value={@state.sourceId} onChange={@handleSourceChange} floatingLabelText='Select a source'>
         {@data.sources.map (s) ->
           <MenuItem key={s._id} value={s._id} primaryText={s.name}/>
         }
       </SelectField>
+      {for constant in @data.constants
+        <TextField
+          key=constant.name
+          floatingLabelText="#{constant.name}, default: #{constant.value}"
+          value={@state.constants?[constant.name]}
+          onChange={@handleConstantChange(constant.name)}
+        />
+      }
     </span>
