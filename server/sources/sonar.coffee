@@ -23,4 +23,5 @@ Meteor.startup ->
   SourceTypes.register
     name: 'Sonar'
     description: 'Sonar data source'
+    icon: '/images/sources/sonar_icon.gif'
     fields: ['resourceName']

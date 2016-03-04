@@ -22,4 +22,5 @@ Meteor.startup ->
   SourceTypes.register
     name: 'Jira'
     description: 'Jira issue tracker'
+    icon: '/images/sources/jira_icon.png'
     fields: ['jql']

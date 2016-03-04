@@ -30,4 +30,5 @@ Meteor.startup ->
   SourceTypes.register
     name: 'Jenkins'
     description: 'Jenkins data source'
+    icon: '/images/sources/jenkins_icon.png'
     fields: ['jobName']
