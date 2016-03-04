@@ -8,14 +8,17 @@ Schema.Sources =
   description:
     type: String
     optional: true
-  icon:
-    type: String
-    optional: true
-  type:
-    type: String
-    autoform:
-      options: -> SourceTypes.find().map (st) ->
-        value: st._id
-        label: st.name
+  # icon:
+  #   type: String
+  #   autoform:
+  #     options: -> SourceTypes.find().map (st) ->
+  #       value: st.icon
+  #       label: st.icon
+  # type:
+  #   type: String
+  #   autoform:
+  #     options: -> SourceTypes.find().map (st) ->
+  #       value: st._id
+  #       label: st.name
 
-Sources.attachSchema new SimpleSchema Schema.Sources
+#Sources.attachSchema new SimpleSchema Schema.Sources
