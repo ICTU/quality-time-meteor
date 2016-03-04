@@ -50,7 +50,6 @@ SourceInfoItem = React.createClass
 
   getUrl: (config) ->
     {url, type} = config
-    console.log '!!', config
     switch type
       when 'Sonar'    then Url.resolve url, "/dashboard/index/#{config.resourceName}"
       when 'Jenkins'  then Url.resolve url, "/job/#{config.jobName}"
