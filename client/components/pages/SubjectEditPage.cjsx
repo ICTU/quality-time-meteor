@@ -168,12 +168,12 @@ SourceMetricEditor = React.createClass
 
   handleConstantChange: (constant) -> (e) =>
     if e.target.value isnt ''
-      state = {constants: {}}; state.constants[constant] = e.target.value
-      @props.onChange _.extend @state, state
-      @setState state
+      constants = @state.constants or {}
+      constants[constant] = e.target.value
+      @state.constants = constants
     else
       delete @state.constants[constant]
-      @props.onChange @state
+    @props.onChange @state
 
   render: ->
     <span>
