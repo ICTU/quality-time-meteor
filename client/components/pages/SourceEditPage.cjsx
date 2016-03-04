@@ -5,10 +5,9 @@
   mixins: [ReactMeteorData]
 
   getMeteorData: ->
-    if @props.id
-      source: Sources.findOne _id: @props.id
-      type: SourceTypes.findOne name: 'Jira'
-    else {}
+    source = Sources.findOne _id: @props.id
+    type: SourceTypes.findOne name: (@props.sourceTypeName or source.type)
+    source: source
 
   onCancelTapped: ->
     FlowRouter.go '/sources'
@@ -18,14 +17,16 @@
     FlowRouter.go '/sources'
 
   onSave: (doc) ->
+    doc.type = @data.type.name
+    doc.icon = @data.type.icon
     Meteor.call 'Sources.upsert', doc
     @setState snackbarOpen: true
 
   render: ->
-    console.log '!!', Schema[@data.type.name]
-    console.log _.extend Schema.Sources, Schema[@data.type.name]
-    console.log '@data', @data
-    title = if @props.id then <T name={@data.source.name}>source.edit</T> else <T>source.add</T>
+    title = if @props.id then <T name={@data.source.name}>source.edit</T> else <T type={@data.type.name}>source.add</T>
+    schema = if typeSchema = Schema[@data.type.name]
+      _.extend {}, Schema.Sources, typeSchema
+    else Schema.Sources
 
     <span>
       <Page title={title} style={padding:10}>
@@ -34,7 +35,7 @@
           ref='editForm'
           onSave={@onSave}
           showActionButtons={false}
-          schema={_.extend Schema.Sources, Schema[@data.type.name]}
+          schema=schema
           doc={@data.source}
           customRenderer={@customRenderer}/>
 
