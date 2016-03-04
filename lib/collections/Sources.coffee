@@ -8,9 +8,6 @@ Schema.Sources =
   description:
     type: String
     optional: true
-  image:
-    type: String
-    optional: true
   icon:
     type: String
     optional: true
