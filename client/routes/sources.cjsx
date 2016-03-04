@@ -16,9 +16,9 @@ sources.route '/edit/:_id',
       currentRoute: '/sources'
       content: -> <SourceEditPage id={params._id}/>
 
-sources.route '/new',
-  action: ->
+sources.route '/new/:sourceTypeName',
+  action: (params) ->
     ReactLayout.render MainLayout,
       title: <T>sources</T>
       currentRoute: '/sources'
-      content: -> <SourceEditPage />
+      content: -> <SourceEditPage sourceTypeName=params.sourceTypeName />
