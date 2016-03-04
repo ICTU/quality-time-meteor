@@ -1,0 +1,9 @@
+.sourcesPopover {
+  background-color: inherit !important;
+  box-shadow: none !important;
+}
+
+.sourcesPopover .list {
+  background-color: inherit !important;
+  border-left: 1px dashed lightgrey;
+}
