@@ -6,11 +6,11 @@ class @Jira extends Source
     @results = {}
 
     result = @getResult @config.url, @config.jql
-    @results['readyUserStories'] = _.reduce result.issues, ((memo, r) -> memo + (r.fields.customfield_10002 or 0)), 0
+    @results['readyUserStories'] = _.reduce result.issues, ((memo, r) => memo + (r.fields?[@config.storyPointField] or 0)), 0
 
   getResult: (url, jql) ->
     try
-      x = Url.resolve url, "rest/api/2/search?jql=#{jql}&fields=customfield_10002"
+      x = Url.resolve url, "rest/api/2/search?jql=#{jql}&fields=#{@config.storyPointField}"
       result = HTTP.get x, auth: "#{@config.username}:#{@config.password}"
       issues: result.data.issues
     catch e
