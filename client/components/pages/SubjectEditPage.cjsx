@@ -5,124 +5,138 @@
   mixins: [ReactMeteorData]
 
   getMeteorData: ->
-    if @props.id
-      Subjects.findOne _id: @props.id
-    else {}
+    subject: Subjects.findOne _id: @props.id or {}
+    allSources: Sources.find({}, sort: name: 1).fetch()
+    allMetricTypes: MetricTypes.find({}, sort: name: 1).fetch()
 
-  onCancelTapped: ->
-    FlowRouter.go '/subjects'
-
-  onSaveTapped: ->
-    @refs.editForm.save()
-    FlowRouter.go '/subjects'
   onSave: (doc) ->
     Subjects.upsert _id: doc._id, doc
-    @setState snackbarOpen: true
+    FlowRouter.go '/subjects'
 
-  customEditComponent: (valueLink) ->
-    <SubjectSourceLinkEditor valueLink={valueLink} />
+  onCancel: ->
+    FlowRouter.go '/subjects'
 
   render: ->
-    title = if @props.id then "Edit #{@data.name}" else 'Add subject'
+    <xSubjectEditPage
+      subject={@data.subject}
+      allSources={@data.allSources}
+      allMetricTypes={@data.allMetricTypes}
+      save={@onSave}
+      cancel={@onCancel}
+    />
 
-    <span>
-      <Page title={title} style={padding:10}>
+xSubjectEditPage = React.createClass
+  displayName: 'xSubjectEditPage'
+  mixins: [LinkedStateMixin]
+
+  getInitialState: ->
+    subject: @props.subject
+
+  onSaveTapped: ->
+    @props.save @state.subject
+
+  render: ->
+    title = if @state.subject.name then "Edit #{@state.subject.name}" else 'Add subject'
+
+    <Page title={title} style={padding:10}>
+      <Card>
         <EditForm
           ref='editForm'
-          onSave={@onSave}
           showActionButtons={false}
           schema={Schema.Subjects}
-          doc={@data}
-          customRenderer={@customEditComponent} />
-      </Page>
+          doc={@state.subject}
+        />
+      </Card>
+
+      <PageElement title='Sources'
+        rightElement={
+          <SubjectItemsMenu valueLink={@linkState('subject')} field='sources' items={@props.allSources} />}>
+
+        <SubjectSourceEditor valueLink={@linkState('subject')} />
+      </PageElement>
+
+      <PageElement title='Metrics'
+        rightElement={
+          <SubjectItemsMenu valueLink={@linkState('subject')} field='metrics' items={@props.allMetricTypes} />}>
+
+        <SubjectMetricEditor valueLink={@linkState('subject')} />
+      </PageElement>
 
       <div style={textAlign: 'right', paddingTop: 20}>
         <FlatButton
           label="Cancel"
           secondary={true}
-          onTouchTap={@onCancelTapped} />
+          onTouchTap={@props.cancel} />
         <FlatButton
           label="Save"
           primary={true}
           keyboardFocused={true}
           onTouchTap={@onSaveTapped} />
       </div>
-    </span>
+    </Page>
 
-
-SubjectSourceLinkEditor = React.createClass
-  displayName: 'SubjectSourceEditor'
-
-  mixins: [ReactMeteorData]
+SubjectItemsMenu = React.createClass
+  displayName: 'SubjectItemsMenu'
 
   getInitialState: ->
-    doc = @props.valueLink.value or {}
-    doc.sources = [] unless doc.sources
-    doc.metrics = [] unless doc.metrics
+    doc = @props.valueLink?.value or {}
+    doc.sources = [] unless doc.sources # null safeguard
     doc
 
-  getMeteorData: ->
-    allSources: Sources.find({}, sort: name: 1).fetch()
-    metricTypes: MetricTypes.find({}, sort: name: 1).fetch()
-
-  onTouchTap: (source) -> =>
-    @state.sources.push {id: source._id}
+  onTouchTap: (items) -> =>
+    @state[@props.field].push {id: items._id}
     @props.valueLink.requestChange @state
 
-  onTouchTapMetricType: (metricType) -> =>
-    @state.metrics.push {name: metricType.name}
-    @props.valueLink.requestChange @state
+  render: ->
+    <IconMenu
+      anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+      iconButtonElement={<IconButton touch={true}><ContentAdd /></IconButton>}>
+      {@props.items.map (items) =>
+        <MenuItem key={items._id} value={items._id} primaryText={items.name} onTouchTap={@onTouchTap items}/>
+      }
+    </IconMenu>
 
-  render: (valueLink) ->
+SubjectSourceEditor = React.createClass
+  displayName: 'SubjectSourceEditor'
+
+  getInitialState: ->
+    doc = @props.valueLink?.value or {}
+    doc.sources = [] unless doc.sources # null safeguard
+    doc
+
+  render: ->
     <div>
-      <Toolbar>
-        <ToolbarGroup firstChild={true} float="left">
-          <ToolbarTitle text="Sources" />
-        </ToolbarGroup>
-        <ToolbarGroup float="right">
-          <IconMenu
-            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-            targetOrigin={{horizontal: 'right', vertical: 'top'}}
-            iconButtonElement={<IconButton touch={true}><ContentAdd /></IconButton>}>
-            {@data.allSources.map (source) =>
-              <MenuItem key={source._id} value={source._id} primaryText={source.name} onTouchTap={@onTouchTap source}/>
-            }
-          </IconMenu>
-        </ToolbarGroup>
-      </Toolbar>
-
       {@state.sources.map (s, idx) =>
         handleChange = (idx) => (obj) =>
           @state.sources[idx] = _.extend @state.sources[idx], obj
           @props.valueLink.requestChange @state
 
-        <SourceConfigEditor key={s.id} config={s} onChange={handleChange idx}/>
+        <Card key=idx style={margin=20}>
+          <SourceConfigEditor key={s.id} config={s} onChange={handleChange idx}/>
+        </Card>
       }
+    </div>
 
-      <Toolbar>
-        <ToolbarGroup firstChild={true} float="left">
-          <ToolbarTitle text="Metrics" />
-        </ToolbarGroup>
-        <ToolbarGroup float="right">
-          <IconMenu
-            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-            targetOrigin={{horizontal: 'right', vertical: 'top'}}
-            iconButtonElement={<IconButton touch={true}><ContentAdd /></IconButton>}>
-            {@data.metricTypes.map (metricType) =>
-              <MenuItem key={metricType._id} value={metricType.name} primaryText={metricType.name} onTouchTap={@onTouchTapMetricType metricType}/>
-            }
-          </IconMenu>
-        </ToolbarGroup>
-      </Toolbar>
+SubjectMetricEditor = React.createClass
+  displayName: 'SubjectMetricEditor'
 
+  getInitialState: ->
+    doc = @props.valueLink?.value or {}
+    doc.metrics = [] unless doc.metrics # null safeguard
+    doc
+
+  render: ->
+    <div>
       {@state.metrics.map (m, idx) =>
         handleChange = (idx) => (obj) =>
           @state.metrics[idx] = _.extend @state.metrics[idx], obj
           @props.valueLink.requestChange @state
 
-        <SourceMetricEditor key={m.name} config={m} onChange={handleChange idx} sourceIds={@state.sources.map (s) -> s.id}/>
+        <Card key=idx style={margin=20}>
+          <MetricConfigEditor key={m.name} config={m} onChange={handleChange idx} sourceIds={@state.sources.map (s) -> s.id}/>
+        </Card>
       }
-
     </div>
 
 SourceConfigEditor = React.createClass
@@ -150,8 +164,8 @@ SourceConfigEditor = React.createClass
         </span>}
     </div>
 
-SourceMetricEditor = React.createClass
-  displayName: 'SourceMetricEditor'
+MetricConfigEditor = React.createClass
+  displayName: 'MetricConfigEditor'
   mixins: [ReactMeteorData]
 
   getMeteorData: ->
