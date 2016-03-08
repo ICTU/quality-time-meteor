@@ -1,5 +1,3 @@
-{ Paper, Divider, Toolbar, ToolbarGroup, ToolbarTitle, FlatButton } = mui
-
 @Page = React.createClass
 
   render: ->
