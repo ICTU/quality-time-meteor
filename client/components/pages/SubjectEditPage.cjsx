@@ -50,14 +50,26 @@ xSubjectEditPage = React.createClass
 
       <PageElement title='Sources'
         rightElement={
-          <SubjectItemsMenu valueLink={@linkState('subject')} field='sources' items={@props.allSources} />}>
-
+          <SubjectItemsMenu
+            valueLink={@linkState('subject')}
+            field='sources'
+            transform={(item) -> id: item._id}
+            items={@props.allSources}
+          />
+        }
+      >
         <SubjectSourceEditor valueLink={@linkState('subject')} />
       </PageElement>
 
       <PageElement title='Metrics'
         rightElement={
-          <SubjectItemsMenu valueLink={@linkState('subject')} field='metrics' items={@props.allMetricTypes} />}>
+          <SubjectItemsMenu valueLink={@linkState('subject')}
+            field='metrics'
+            transform={(item) -> sourceId: item._id, name: item.name}
+            items={@props.allMetricTypes}
+          />
+        }
+      >
 
         <SubjectMetricEditor valueLink={@linkState('subject')} />
       </PageElement>
@@ -83,8 +95,8 @@ SubjectItemsMenu = React.createClass
     doc.sources = [] unless doc.sources # null safeguard
     doc
 
-  onTouchTap: (items) -> =>
-    @state[@props.field].push {id: items._id}
+  onTouchTap: (item) -> =>
+    @state[@props.field].push @props.transform item
     @props.valueLink.requestChange @state
 
   render: ->
@@ -112,9 +124,8 @@ SubjectSourceEditor = React.createClass
           @state.sources[idx] = _.extend @state.sources[idx], obj
           @props.valueLink.requestChange @state
 
-        <Card key=idx style={margin=20}>
-          <SourceConfigEditor key={s.id} config={s} onChange={handleChange idx}/>
-        </Card>
+
+        <SourceConfigEditor key={s.id} config={s} onChange={handleChange idx}/>
       }
     </div>
 
@@ -133,9 +144,9 @@ SubjectMetricEditor = React.createClass
           @state.metrics[idx] = _.extend @state.metrics[idx], obj
           @props.valueLink.requestChange @state
 
-        <Card key=idx style={margin=20}>
+        <ExpandableCard key=idx headerElement={<h4>{m.name}</h4>}>
           <MetricConfigEditor key={m.name} config={m} onChange={handleChange idx} sourceIds={@state.sources.map (s) -> s.id}/>
-        </Card>
+        </ExpandableCard>
       }
     </div>
 
@@ -156,13 +167,13 @@ SourceConfigEditor = React.createClass
 
   render: ->
     sourceType = SourceTypes.findOne(name: @data.source.type)
-    <div className="source-fields">
-      {for field in sourceType.fields
-        <span key=field>
-          <h3>{"#{@data.source.name} (#{@data.source.type})"}</h3>
-          <EditField field=field value={@state[field]} onChange={@handleChange(field)}/>
-        </span>}
-    </div>
+    <ExpandableCard headerElement={<h4>{@data.source.name} ({@data.source.type})</h4>}>
+      <div className="source-fields">
+        {for field in sourceType.fields
+          <EditField key=field field=field value={@state[field]} onChange={@handleChange(field)}/>
+        }
+      </div>
+    </ExpandableCard>
 
 MetricConfigEditor = React.createClass
   displayName: 'MetricConfigEditor'
@@ -191,7 +202,6 @@ MetricConfigEditor = React.createClass
 
   render: ->
     <span>
-      <h3>{@data.metricType.name}</h3>
       <SelectField value={@state.sourceId} onChange={@handleSourceChange} floatingLabelText='Select a source'>
         {@data.sources.map (s) ->
           <MenuItem key={s._id} value={s._id} primaryText={s.name}/>
