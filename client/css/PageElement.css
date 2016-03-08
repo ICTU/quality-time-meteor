@@ -1,0 +1,9 @@
+.pageElement .toolbar {
+  background-color: rgba(0,0,0,0) !important;
+  padding: 0px 0px 0px 24px !important;
+}
+.pageElement .toolbarTitle {
+  color: rgba(0,0,0,.6) !important;
+  font-weight: 200;
+  font-size: 18px !important;
+}
