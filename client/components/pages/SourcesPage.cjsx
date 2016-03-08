@@ -34,7 +34,9 @@
 
     <span>
       <Page title='All sources'>
-        <CollectionList documents={@data.sources} fields={fields} onDocumentSelected={@onDocumentSelected} />
+        <Card>
+          <CollectionList documents={@data.sources} fields={fields} onDocumentSelected={@onDocumentSelected} />
+        </Card>
       </Page>
       <FloatingActionButton
         ref='actionButton'

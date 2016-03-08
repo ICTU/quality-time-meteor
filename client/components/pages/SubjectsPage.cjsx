@@ -26,7 +26,9 @@
 
     <span>
       <Page title='All subjects'>
-        <CollectionList documents={@data.subjects} fields={fields} onDocumentSelected={@onDocumentSelected} />
+        <Card>
+          <CollectionList documents={@data.subjects} fields={fields} onDocumentSelected={@onDocumentSelected} />
+        </Card>
       </Page>
       <FloatingActionButton
         style={position:'fixed', right:40, bottom: 40}
