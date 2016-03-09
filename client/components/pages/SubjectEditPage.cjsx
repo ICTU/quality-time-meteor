@@ -124,7 +124,6 @@ SubjectSourceEditor = React.createClass
           @state.sources[idx] = _.extend @state.sources[idx], obj
           @props.valueLink.requestChange @state
 
-
         <SourceConfigEditor key={s.id} config={s} onChange={handleChange idx}/>
       }
     </div>
@@ -144,7 +143,7 @@ SubjectMetricEditor = React.createClass
           @state.metrics[idx] = _.extend @state.metrics[idx], obj
           @props.valueLink.requestChange @state
 
-        <ExpandableCard key=idx headerElement={<h4>{m.name}</h4>}>
+        <ExpandableCard key=idx leftAvatar={<Avatar>{m.name[0]}</Avatar>} headerElement={<h4 style={margin: 10}>{m.name}</h4>}>
           <MetricConfigEditor key={m.name} config={m} onChange={handleChange idx} sourceIds={@state.sources.map (s) -> s.id}/>
         </ExpandableCard>
       }
@@ -167,7 +166,7 @@ SourceConfigEditor = React.createClass
 
   render: ->
     sourceType = SourceTypes.findOne(name: @data.source.type)
-    <ExpandableCard headerElement={<h4>{@data.source.name} ({@data.source.type})</h4>}>
+    <ExpandableCard leftAvatar={<Avatar src={@data.source.icon} />} headerElement={<h4 style={margin: 10}>{@data.source.name} ({@data.source.type})</h4>}>
       <div className="source-fields">
         {for field in sourceType.fields
           <EditField key=field field=field value={@state[field]} onChange={@handleChange(field)}/>
@@ -201,18 +200,26 @@ MetricConfigEditor = React.createClass
     @props.onChange @state
 
   render: ->
-    <span>
-      <SelectField value={@state.sourceId} onChange={@handleSourceChange} floatingLabelText='Select a source'>
-        {@data.sources.map (s) ->
-          <MenuItem key={s._id} value={s._id} primaryText={s.name}/>
+    <div style={display: 'flex'}>
+      <div style={width:'50%'}>
+        <h5>Configuration</h5>
+        <SelectField value={@state.sourceId} onChange={@handleSourceChange} floatingLabelText='Select a source'>
+          {@data.sources.map (s) ->
+            <MenuItem key={s._id} value={s._id} primaryText={s.name}/>
+          }
+        </SelectField>
+      </div>
+      <div style={width:'50%'}>
+        <h5>Override defaults</h5>
+        {for constant in @data.constants
+          <span>
+            <TextField
+              key=constant.name
+              floatingLabelText="#{constant.name}, default: #{constant.value}"
+              value={@state.constants?[constant.name]}
+              onChange={@handleConstantChange(constant.name)}
+            />
+          </span>
         }
-      </SelectField>
-      {for constant in @data.constants
-        <TextField
-          key=constant.name
-          floatingLabelText="#{constant.name}, default: #{constant.value}"
-          value={@state.constants?[constant.name]}
-          onChange={@handleConstantChange(constant.name)}
-        />
-      }
-    </span>
+      </div>
+    </div>
