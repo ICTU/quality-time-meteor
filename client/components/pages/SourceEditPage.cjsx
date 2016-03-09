@@ -28,9 +28,8 @@
       _.extend {}, Schema.Sources, typeSchema
     else Schema.Sources
 
-    <span>
-      <Page title={title} style={padding:10}>
-
+    <Page title={title} style={padding:10}>
+      <Card>
         <EditForm
           ref='editForm'
           onSave={@onSave}
@@ -38,9 +37,7 @@
           schema=schema
           doc={@data.source}
           customRenderer={@customRenderer}/>
-
-      </Page>
-
+      </Card>
       <div style={textAlign: 'right', paddingTop: 20}>
         <FlatButton
           label={<T>button.cancel</T>}
@@ -52,4 +49,4 @@
           keyboardFocused={true}
           onTouchTap={@onSaveTapped} />
       </div>
-    </span>
+    </Page>
