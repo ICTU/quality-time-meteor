@@ -212,14 +212,13 @@ MetricConfigEditor = React.createClass
       <div style={width:'50%'}>
         <h5>Override defaults</h5>
         {for constant in @data.constants
-          <span>
-            <TextField
-              key=constant.name
-              floatingLabelText="#{constant.name}, default: #{constant.value}"
-              value={@state.constants?[constant.name]}
-              onChange={@handleConstantChange(constant.name)}
-            />
-          </span>
+          <TextField
+            fullWidth={true}
+            key=constant.name
+            floatingLabelText="#{constant.name}, default: #{constant.value}"
+            value={@state.constants?[constant.name]}
+            onChange={@handleConstantChange(constant.name)}
+          />
         }
       </div>
     </div>
