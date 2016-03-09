@@ -5,7 +5,7 @@
   mixins: [ReactMeteorData]
 
   getMeteorData: ->
-    subject: Subjects.findOne _id: @props.id or {}
+    subject: (Subjects.findOne _id: @props.id) or {}
     allSources: Sources.find({}, sort: name: 1).fetch()
     allMetricTypes: MetricTypes.find({}, sort: name: 1).fetch()
 
@@ -58,7 +58,16 @@ xSubjectEditPage = React.createClass
           />
         }
       >
-        <SubjectSourceEditor valueLink={@linkState('subject')} />
+        {if not @state.subject.sources or not @state.subject.sources.length
+          <div style={paddingRight:50, display:'flex', flexDirection: 'row-reverse'}>
+            <img src="/images/arrows/arrow1.svg" style={height: 40, position: 'relative', top: -10, right: -10} />
+            <div style={fontSize:18, paddingTop:20, color: '#bdbdbd'}>
+              Click to configure <span style={borderBottom: '2px #bdbdbd dashed'}>sources</span> for this subject
+            </div>
+          </div>
+        else
+          <SubjectSourceEditor valueLink={@linkState('subject')} />
+        }
       </PageElement>
 
       <PageElement title='Metrics'
@@ -70,8 +79,16 @@ xSubjectEditPage = React.createClass
           />
         }
       >
-
-        <SubjectMetricEditor valueLink={@linkState('subject')} />
+        {if not @state.subject.metrics or not @state.subject.metrics.length
+          <div style={paddingRight:50, display:'flex', flexDirection: 'row-reverse'}>
+            <img src="/images/arrows/arrow2.svg" style={height: 50, position: 'relative', top: 5, right: -35} />
+            <div style={fontSize:18, paddingTop:30, color: '#bdbdbd'}>
+              Click to configure <span style={borderBottom: '2px #bdbdbd dashed'}>metrics</span> for this subject
+            </div>
+          </div>
+        else
+          <SubjectMetricEditor valueLink={@linkState('subject')} />
+        }
       </PageElement>
 
       <div style={textAlign: 'right', paddingTop: 20}>
@@ -92,7 +109,7 @@ SubjectItemsMenu = React.createClass
 
   getInitialState: ->
     doc = @props.valueLink?.value or {}
-    doc.sources = [] unless doc.sources # null safeguard
+    doc[@props.field] = [] unless doc[@props.field] # null safeguard
     doc
 
   onTouchTap: (item) -> =>
