@@ -1,6 +1,6 @@
 class @LinesOfCode
   properties: ['linesOfCode']
-  constants: maximumLinesOfCode: 50000, dummy: 1
+  constants: maximumLinesOfCode: 50000
   measure: ({linesOfCode}) -> linesOfCode
   status: ({linesOfCode}, {maximumLinesOfCode}) ->
     iff = Q.if linesOfCode().le(Q.constant maximumLinesOfCode)
