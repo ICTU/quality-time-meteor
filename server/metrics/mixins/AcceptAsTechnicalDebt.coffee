@@ -3,5 +3,8 @@
     subject = Subjects.findOne name: measurement.forSubject
     metric = _.findWhere subject.metrics, name: measurement.ofMetric
 
-    console.log 'metric', metric
-    console.log @constants
+    constantName = Object.keys(@constants)[0]
+    metric.acceptedTechnicalDebt = {} unless metric.acceptedTechnicalDebt
+    metric.acceptedTechnicalDebt[constantName] = measurement.value
+
+    Subjects.update subject._id, subject
