@@ -1,10 +1,22 @@
-{ ListItem } = mui
-
 @MeasurementListItem = React.createClass
 
   onTouchTap: (e) ->
     if @props.onTouchTap
       @props.onTouchTap e, @props.measurement
+
+  acceptTechnicalDebt: (m) -> =>
+    Meteor.call 'acceptTechnicalDebt', m
+
+  renderIconMenu: (m)->
+    if m?.status?.value is 'nok'
+      <IconMenu
+        iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>}
+        anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+      >
+        <MenuItem primaryText="Accept as technical debt" onTouchTap={@acceptTechnicalDebt m} />
+      </IconMenu>
+    else <span></span>
 
   render: ->
     secondaryText = (m) ->
@@ -19,4 +31,5 @@
       leftAvatar={avatar}
       disabled={not m?}
       onTouchTap={@onTouchTap}
+      rightIconButton={@renderIconMenu m}
     />
