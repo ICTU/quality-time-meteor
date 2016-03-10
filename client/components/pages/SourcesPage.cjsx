@@ -63,7 +63,7 @@
         <div style={paddingBottom:20}>
           <List className='list'>
             {@data.sourceTypes.map (type) =>
-              <ListItem primaryText=type.name leftAvatar={<Avatar src=type.icon />} onTouchTap={@onListTouchTap type.name } />
+              <ListItem key=type.name primaryText=type.name leftAvatar={<Avatar src=type.icon />} onTouchTap={@onListTouchTap type.name } />
             }
           </List>
         </div>
