@@ -4,7 +4,7 @@
 { @FlatButton, @FloatingActionButton } = mui
 # Icons -> Svg
 { SvgIcons } = mui
-{ @NavigationExpandMore, @ContentAdd, @HardwareDeviceHub, @ActionDescription, @ActionReportProblem } = SvgIcons
+{ @NavigationExpandMore, @ContentAdd, @HardwareDeviceHub, @ActionDescription, @ActionReportProblem, @NavigationMoreVert } = SvgIcons
 # Input elements
 { @SelectField, @IconButton } = mui
 # Menu's
