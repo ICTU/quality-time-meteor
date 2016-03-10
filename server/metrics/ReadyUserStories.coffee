@@ -1,4 +1,5 @@
-class @ReadyUserStories
+class @ReadyUserStories extends Metric
+  mixins: [AcceptAsTechnicalDebt]
   properties: ['readyUserStories']
   constants: minimumStories: 0
   measure: ({readyUserStories}) -> readyUserStories
