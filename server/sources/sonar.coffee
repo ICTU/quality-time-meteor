@@ -3,7 +3,7 @@ class @Sonar extends Source
     super @source, @subject
     @results = {}
 
-    result = @get_json @config.url, @config.resourceName, ['ncloc', 'coverage']
+    result = @get_json @config.url, @config.resourceName, ['ncloc', 'coverage', 'violations', 'complexity', 'tests']
     for msr in result?.json?.msr
       @results[msr.key] = msr.val
     if result.error
@@ -18,6 +18,9 @@ class @Sonar extends Source
 
   linesOfCode: -> @result('ncloc')
   codeCoverage: -> @result('coverage')
+  violations: -> @result('violations')
+  complexity: -> @result('complexity')
+  unitTests: -> @result('tests')
 
 Meteor.startup ->
   SourceTypes.register
