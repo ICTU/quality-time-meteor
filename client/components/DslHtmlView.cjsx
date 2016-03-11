@@ -12,7 +12,11 @@
     explain  = (qObject) ->
 
       renderConstant = ({value}) ->
-        text = if value.override then "#{value.value} (default: #{value.default})" else value.value or value
+        text = if value.acceptedTechnicalDebt
+          "#{value.value} (accepted technical debt, default: #{value.default})"
+        else if value.override
+          "#{value.value} (default: #{value.default})"
+        else value.value or value
         <span className='node constant'>{text}</span>
 
       renderNoMeasurement = ({name}) ->

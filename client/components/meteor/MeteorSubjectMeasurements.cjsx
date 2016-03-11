@@ -22,10 +22,9 @@ styles =
     <Paper style={styles.paper}>
       <h3 style={styles.h3}>{@props.subject.name}</h3>
       {if @props.subject.metrics?.length
-        console.log '@props.subject.metrics?', @props.subject.metrics
         <List style={styles.list}>
           {for metric in @props.subject.metrics
-            <MeteorSubjectMeasurement subject={@props.subject} metric={metric} />}
+            <MeteorSubjectMeasurement key={metric.name} subject={@props.subject} metric={metric} />}
         </List>
       else
         <div style={styles.noMetric}>No metrics configured</div>}
@@ -39,4 +38,4 @@ MeteorSubjectMeasurement = React.createClass
     measurement: Measurements.findOne({forSubject: @props.subject.name, ofMetric: @props.metric.name}, {sort: lastMeasured: -1})
 
   render: ->
-    <SubjectMeasurement title={@props.metric.name} subject={@props.subject} measurement={@data.measurement} />
+    <SubjectMeasurement title={@props.metric.name} subject={@props.subject} measurement={@data.measurement} metric={@props.metric}/>

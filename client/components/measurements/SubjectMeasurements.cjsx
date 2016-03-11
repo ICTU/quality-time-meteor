@@ -15,10 +15,14 @@
       parsedCalc = JSON.parse m.calculation
       parsedStatus = JSON.parse m.status.calculation
 
+    metric = _.findWhere @props.subject.metrics,
+      name: @props.metric.name
+
     <span>
       <MeasurementListItem
         title={@props.title}
         measurement={m}
+        metric={metric}
         onTouchTap={@openDialog} />
         {if m
           <Dialog

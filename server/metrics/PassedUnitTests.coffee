@@ -1,4 +1,5 @@
-@PassedUnitTests = class PassedUnitTests
+@PassedUnitTests = class PassedUnitTests extends Metric
+  mixins: [AcceptAsTechnicalDebt]
   properties: ['passedUnitTestsCount', 'totalUnitTestsCount']
   measure: ({passedUnitTestsCount}) -> passedUnitTestsCount
   status: ({passedUnitTestsCount, totalUnitTestsCount}) ->

@@ -34,8 +34,6 @@
     problems = {}
     collectProblems @props.ast, problems
 
-    console.log problems
-
     if Object.keys(problems).length
       <span>
         <h3>Problems</h3>

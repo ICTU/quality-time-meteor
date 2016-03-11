@@ -1,3 +1,9 @@
+{ Styles: { Colors }} = mui
+
+styles =
+  atd:
+    backgroundColor: Colors.yellow100
+
 @MeasurementListItem = React.createClass
 
   onTouchTap: (e) ->
@@ -32,4 +38,5 @@
       disabled={not m?}
       onTouchTap={@onTouchTap}
       rightIconButton={@renderIconMenu m}
+      style={if @props.metric.acceptedTechnicalDebt then styles.atd}
     />

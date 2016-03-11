@@ -1,4 +1,5 @@
-class @CodeCoverage
+class @CodeCoverage extends Metric
+  mixins: [AcceptAsTechnicalDebt]
   properties: ['codeCoverage']
   constants: minimumCodeCoverage: 80
   measure: ({codeCoverage}) -> codeCoverage

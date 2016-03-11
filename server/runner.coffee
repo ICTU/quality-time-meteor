@@ -29,7 +29,8 @@ measureAndRegister = (metricType, source, subjectSource, metric) ->
     metricConstants[k] =
       default: v
       override: metric.constants?[k]
-      value: metric.constants?[k] or v
+      acceptedTechnicalDebt: metric.acceptedTechnicalDebt?[k]
+      value: metric.acceptedTechnicalDebt?[k] or metric.constants?[k] or v
   m = (measure new global[metricType.name](), metricConstants, new global[source.type](source, subjectSource))
   calculation = m.calc()
   jsonCalc = Q.toJSON calculation

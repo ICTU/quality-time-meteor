@@ -1,4 +1,5 @@
-class @LinesOfCode
+class @LinesOfCode extends Metric
+  mixins: [AcceptAsTechnicalDebt]
   properties: ['linesOfCode']
   constants: maximumLinesOfCode: 50000
   measure: ({linesOfCode}) -> linesOfCode

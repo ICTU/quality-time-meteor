@@ -1,4 +1,5 @@
-@TotalUnitTests = class TotalUnitTests
+@TotalUnitTests = class TotalUnitTests extends Metric
+  mixins: [AcceptAsTechnicalDebt]
   properties: ['totalUnitTestsCount']
   constants: minimumUnitTestCount: 0
   measure: ({totalUnitTestsCount}) -> totalUnitTestsCount
