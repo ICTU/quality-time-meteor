@@ -38,5 +38,5 @@ styles =
       disabled={not m?}
       onTouchTap={@onTouchTap}
       rightIconButton={@renderIconMenu m}
-      style={if @props.metric.acceptedTechnicalDebt then styles.atd}
+      style={unless @props.metric.acceptedTechnicalDebt is undefined then styles.atd}
     />
