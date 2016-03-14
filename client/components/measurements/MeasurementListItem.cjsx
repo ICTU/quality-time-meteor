@@ -13,14 +13,23 @@ styles =
   acceptTechnicalDebt: (m) -> =>
     Meteor.call 'acceptTechnicalDebt', m
 
+  clearTechnicalDebt: (m) -> =>
+    Meteor.call 'clearTechnicalDebt', m
+
   renderIconMenu: (m)->
-    if m?.status?.value is 'nok'
+    metric = @props.metric
+    if m?.status?.value is 'nok' or metric.acceptedTechnicalDebt
       <IconMenu
         iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
       >
+      {if m?.status?.value is 'nok'
         <MenuItem primaryText="Accept as technical debt" onTouchTap={@acceptTechnicalDebt m} />
+      }
+      {if metric?.acceptedTechnicalDebt
+        <MenuItem primaryText="Clear accepted technical debt" onTouchTap={@clearTechnicalDebt m} />
+      }
       </IconMenu>
     else <span></span>
 

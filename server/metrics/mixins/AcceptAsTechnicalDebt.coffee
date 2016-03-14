@@ -8,3 +8,11 @@
     metric.acceptedTechnicalDebt[constantName] = measurement.value
 
     Subjects.update subject._id, subject
+
+  clearTechnicalDebt: (measurement) ->
+    Subjects.update
+      name: measurement.forSubject
+      "metrics.name": measurement.ofMetric
+    ,
+      $unset:
+        "metrics.$.acceptedTechnicalDebt": 1

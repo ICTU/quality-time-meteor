@@ -7,3 +7,6 @@ Meteor.methods
 
   'acceptTechnicalDebt': (measurement) ->
     (new global[measurement.ofMetric]).acceptAsTechnicalDebt measurement
+
+  'clearTechnicalDebt': (measurement) ->
+    (new global[measurement.ofMetric]).clearTechnicalDebt measurement
