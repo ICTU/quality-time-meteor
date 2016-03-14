@@ -13,7 +13,10 @@
 
       renderConstant = ({value}) ->
         text = if value.acceptedTechnicalDebt
-          "#{value.value} (accepted technical debt, default: #{value.default})"
+          override = if value.override
+            "#{value.override}/"
+          else ''
+          "#{value.value} (accepted technical debt, default: #{override}#{value.default})"
         else if value.override
           "#{value.value} (default: #{value.default})"
         else value.value or value
