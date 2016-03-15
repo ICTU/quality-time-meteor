@@ -18,20 +18,22 @@ styles =
 
   renderIconMenu: (m)->
     metric = @props.metric
+    style = display: 'none'
     if m?.status?.value is 'nok' or metric.acceptedTechnicalDebt
-      <IconMenu
-        iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>}
-        anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-        targetOrigin={{horizontal: 'right', vertical: 'top'}}
-      >
-      {if m?.status?.value is 'nok'
-        <MenuItem primaryText="Accept as technical debt" onTouchTap={@acceptTechnicalDebt m} />
-      }
-      {if metric?.acceptedTechnicalDebt
-        <MenuItem primaryText="Clear accepted technical debt" onTouchTap={@clearTechnicalDebt m} />
-      }
-      </IconMenu>
-    else <span></span>
+      style.display = 'inline'
+    <IconMenu
+      style=style
+      iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>}
+      anchorOrigin={horizontal: 'right', vertical: 'bottom'}
+      targetOrigin={horizontal: 'right', vertical: 'top'}
+    >
+    {if m?.status?.value is 'nok'
+      <MenuItem primaryText="Accept as technical debt" onTouchTap={@acceptTechnicalDebt m} />
+    }
+    {if metric?.acceptedTechnicalDebt
+      <MenuItem primaryText="Clear accepted technical debt" onTouchTap={@clearTechnicalDebt m} />
+    }
+    </IconMenu>
 
   render: ->
     secondaryText = (m) ->
