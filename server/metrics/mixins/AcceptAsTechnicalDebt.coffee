@@ -3,7 +3,9 @@
     subject = Subjects.findOne name: measurement.forSubject
     metric = _.findWhere subject.metrics, name: measurement.ofMetric
 
-    constantName = Object.keys(@constants)[0]
+    constantKeys = Object.keys(@constants)
+    throw new Error "AcceptAsTechnicalDebt mixin allows for at most one constant" if constantKeys.length > 1
+    constantName = constantKeys[0]
     metric.acceptedTechnicalDebt = {} unless metric.acceptedTechnicalDebt
     metric.acceptedTechnicalDebt[constantName] = measurement.value
 
