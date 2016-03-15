@@ -5,5 +5,6 @@ node_js:
 install:
   - "curl https://install.meteor.com | /bin/sh"
   - "meteor update"
-#script:
+script:
+  - echo 'we need tests!'
   #- "meteor --test --once"
