@@ -60,29 +60,35 @@ measureAndRegister = (metricType, source, subjectSource, metric) ->
 
     Measurements.insert measurementObject
 
-runner = ->
-  console.log 'Running measurements'
+createJobs = ->
+  Cue.addJob 'measure', {maxAtOnce: Properties.MAX_PARALLEL_JOBS}, (task, done) ->
+    data = task.data
+    measureAndRegister data.metricType, data.source, data.subjectSource, data.metric
+    done()
 
+scheduleTasks = ->
   for subject in Subjects.find().fetch()
-    console.log 'for subject', subject.name
     for metric in subject.metrics or []
       metricType = MetricTypes.findOne name: metric.name
       source = Sources.findOne _id: metric.sourceId
       if source
-        console.log 'metric', metricType.name, ' with source', source.name
         subjectSources = _.filter subject.sources, (s) -> s.id is source._id
         if subjectSources.length > 0
           subjectSources[0].name = subject.name
-          measureAndRegister metricType, source, subjectSources[0], metric
+          Cue.addTask 'measure', {isAsync: true, unique: true},
+            metricType: metricType
+            source: source
+            subjectSource: subjectSources[0]
+            metric: metric
         else
-          console.log 'No source configuration defined in subject'
+          console.log "Scheduler -> Unable to schedule #{subject.name}::#{metric.name} because the subject doesn't have source #{source.name} configured"
       else
-        console.log 'metric', metricType.name, ' has no source configured'
-      console.log '----'
-    console.log '=================='
+        console.log "Scheduler -> Unable to schedule #{subject.name}::#{metric.name} because no source has been configured for this metric"
 
 Meteor.startup ->
-  if process.env.ENABLE_RUNNER
-    Meteor.defer runner
-    Meteor.setInterval runner, 10000
-  else console.log 'Runner disabled'
+  Cue.dropTasks()
+  if Properties.ENABLE_RUNNER
+    createJobs()
+    Meteor.defer scheduleTasks
+    Meteor.setInterval scheduleTasks, Properties.JOB_SCHEDULER_INTERVAL
+    Cue.start()
