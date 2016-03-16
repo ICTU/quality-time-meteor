@@ -9,7 +9,6 @@ class @Jira extends Source
     @results['readyUserStories'] = _.reduce issues, ((memo, r) => memo + (r.fields?[@config.storyPointField] or 0)), 0
 
   getResult: (url, jql, startAt = 0) ->
-    console.log 'getting issues from no', startAt
     try
       x = Url.resolve url, "rest/api/2/search?maxResults=50&startAt=#{startAt}&jql=#{jql}&fields=#{@config.storyPointField}"
       result = HTTP.get x, auth: "#{@config.username}:#{@config.password}"
