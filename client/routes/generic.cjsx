@@ -41,4 +41,4 @@ loggedInGroup.route '/dashboard',
     ReactLayout.render MainLayout,
       title: <T>dashboard</T>
       currentRoute: '/dashboard'
-      content: -> <DashboardPage />
+      content: -> <TreemapDashboardPage />
