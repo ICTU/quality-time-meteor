@@ -8,16 +8,20 @@
 
 
   render: ->
-    <div id='chart' />
+    <Page title={if @state?.d then @state.d.name else "Dashboard"}>
+      <Card>
+        <div id='chart' />
+      </Card>
+    </Page>
 
   componentDidMount: ->
     margin =
-      top: 20
+      top: 0
       right: 0
       bottom: 0
       left: 0
-    width = 1200
-    height = 500 - (margin.top) - (margin.bottom)
+    width = 1300
+    height = 500
     formatNumber = d3.format(',d')
     transitioning = undefined
     x = d3.scale.linear().domain([
@@ -34,12 +38,17 @@
       0
       height
     ])
-    treemap = d3.layout.treemap().children((d, depth) ->
+
+    treemap = d3.layout.treemap()
+    # treemap = treemap.mode('slice-dice')
+    treemap.children((d, depth) ->
       if depth then null else d._children
     ).sort((a, b) ->
-      a.value - (b.value)
-    ).ratio(height / width * 0.5 * (1 + Math.sqrt(5))).round(false)
-    svg = d3.select('#chart').append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.bottom + margin.top).style('margin-left', -margin.left + 'px').style('margin.right', -margin.right + 'px').append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')').style('shape-rendering', 'crispEdges')
+      if a.status and b.status
+        if a.status < b.status then 1 else -1
+      else if a.name < b.name then 1 else -1
+    ).ratio(1).round(false)
+    svg = d3.select('#chart').append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.bottom + margin.top).style('margin-left', -margin.left + 'px').style('margin.right', -margin.right + 'px').append('g').style('shape-rendering', 'crispEdges')
     grandparent = svg.append('g').attr('class', 'grandparent')
     grandparent.append('rect').attr('y', -margin.top).attr('width', width).attr 'height', margin.top
     grandparent.append('text').attr('x', 6).attr('y', 6 - (margin.top)).attr 'dy', '.75em'
@@ -50,8 +59,10 @@
       children: @data.subjects.map (s) ->
         name: s.name
         children: s.metrics.map (m) ->
+          _m = Measurements.findOne({forSubject: s.name, ofMetric: m.name}, {sort: lastMeasured: -1})
           name: m.name
           value: 1
+          status: _m?.status?.value or 'unknown'
 
 
     initialize = (root) ->
@@ -92,9 +103,11 @@
           return
       return
 
-    display = (d) ->
+    display = (d) =>
 
-      transition = (d) ->
+      transition = (d) =>
+        console.log 'transition to ', d
+        @setState d: d
         if transitioning or !d
           return
         transitioning = true
@@ -129,7 +142,8 @@
           return
         return
 
-      grandparent.datum(d.parent).on('click', transition).select('text').text name(d)
+      # grandparent.datum(d.parent).on('click', transition).select('text').text name(d)
+      grandparent.datum(d.parent).on('click', -> console.log 'click')
       g1 = svg.insert('g', '.grandparent').datum(d).attr('class', 'depth')
       g = g1.selectAll('g').data(d._children).enter().append('g')
       g.filter((d) ->
@@ -137,22 +151,25 @@
       ).classed('children', true).on 'click', transition
       g.selectAll('.child').data((d) ->
         d._children or [ d ]
-      ).enter().append('rect').attr('class', 'child').call rect
-      g.append('rect').attr('class', 'parent').call(rect).append('title').text (d) ->
-        formatNumber d.value
-      g.append('text').attr('dy', '0.75em').attr('text-anchor', 'middle').text((d) ->
+      ).enter().append('rect').attr('class', 'child')
+      .classed('ok', (d) -> d.status is 'ok')
+      .classed('nok', (d) -> d.status is 'nok')
+      .classed('unknown', (d) -> d.status is 'unknown')
+      .call rect
+      g.append('rect').attr('class', 'parent').call(rect)
+      g.append('text').text((d) ->
         d.name
       ).call text
       g
 
     text = (text) ->
+      text.attr('text-anchor', 'middle')
       text.attr('x', (d) ->
-        console.log 'd', d
         width = x(d.x + d.dx) - x(d.x)
         x(d.x) + width/2
       ).attr 'y', (d) ->
         height = y(d.y + d.dy) - y(d.y)
-        y(d.y) + height/2
+        (y(d.y) + height/2)+10 #minus half of the height of the text
       return
 
     rect = (rect) ->
@@ -166,8 +183,7 @@
         y(d.y + d.dy) - y(d.y)
       return
 
-    name = (d) ->
-      if d.parent then name(d.parent) + '.' + d.name else d.name
+    name = (d) -> d.name
 
     initialize root
     accumulate root
