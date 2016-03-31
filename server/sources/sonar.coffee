@@ -3,7 +3,7 @@ class @Sonar extends Source
     super @source, @subject
     @results = {}
 
-    result = @get_json @config.url, @config.resourceName, ['ncloc', 'coverage', 'violations', 'complexity', 'tests']
+    result = @get_json @config.url, @config.resourceName, ['ncloc', 'coverage', 'violations', 'complexity', 'tests', 'duplicated_lines_density']
     for msr in result?.json?.msr
       @results[msr.key] = msr.val
     if result.error
@@ -17,6 +17,7 @@ class @Sonar extends Source
       {json: null, error: e.message}
 
   linesOfCode: -> @result('ncloc')
+  duplication: -> @result('duplicated_lines_density')
   codeCoverage: -> @result('coverage')
   violations: -> @result('violations')
   complexity: -> @result('complexity')
