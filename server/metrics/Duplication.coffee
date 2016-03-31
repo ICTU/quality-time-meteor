@@ -11,4 +11,4 @@ class @Duplication extends Metric
 Meteor.startup ->
   MetricTypes.register
     name: 'Duplication'
-    description: 'Shows the duplication'
+    description: 'Shows the percentage of duplication'
