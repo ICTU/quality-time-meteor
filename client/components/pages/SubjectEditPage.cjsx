@@ -10,7 +10,7 @@
     allMetricTypes: MetricTypes.find({}, sort: name: 1).fetch()
 
   onSave: (doc) ->
-    Subjects.upsert _id: doc._id, doc
+    Meteor.call 'subjects/update', doc
     FlowRouter.go '/subjects'
 
   onCancel: ->
