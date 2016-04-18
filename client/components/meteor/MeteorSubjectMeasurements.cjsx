@@ -35,11 +35,11 @@ MeteorSubjectMeasurement = React.createClass
   mixins: [ReactMeteorData]
 
   addComment: (comment) ->
-    Meteor.call 'comments/add', _.extend {measurementId: @data.measurement._id}, comment
+    Meteor.call 'comments/add', _.extend {metricId: @props.metric.metricId}, comment
 
   getMeteorData: ->
     measurement = Measurements.findOne({forSubject: @props.subject.name, ofMetric: @props.metric.name}, {sort: lastMeasured: -1})
-    comments = Comments.find({measurementId: measurement._id}, {
+    comments = Comments.find({metricId: @props.metric.metricId}, {
         transform: (cmt) ->
           userEmail = Meteor.users.findOne(_id: cmt.userId).emails[0].address
           _.extend cmt, avatar: "http://www.gravatar.com/avatar/#{CryptoJS.MD5(userEmail)}"
