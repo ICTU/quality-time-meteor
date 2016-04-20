@@ -36,9 +36,11 @@ styles =
     </IconMenu>
 
   render: ->
-    secondaryText = (m) ->
+    secondaryText = (m) =>
+      x = "#{@props.commentCount} comments" if @props.commentCount
       if m and Utils.isEmpty(m) then i18n('measurement.failing')
       else if not m then i18n('measurement.noMeasurements')
+      else x
 
     m = @props.measurement
     avatar = <MeasurementAvatar measurement={m} />

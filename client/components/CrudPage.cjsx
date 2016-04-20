@@ -1,5 +1,3 @@
-{ Dialog, FlatButton, ClearFix } = mui
-
 @CrudPage = React.createClass
   displayName: 'CrudPage'
 

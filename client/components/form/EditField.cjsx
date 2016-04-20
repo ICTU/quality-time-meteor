@@ -1,11 +1,9 @@
-{ ClearFix, TextField } = mui
-
 @EditField = React.createClass
   displayName: 'EditField'
 
   render: ->
     capitalizedField = Utils.capitalize(@props.field)
-    <ClearFix>
+    <ClearFix {... @props}>
       <TextField ref={@props.field}
         style={width:'100%'}
         floatingLabelText={capitalizedField}

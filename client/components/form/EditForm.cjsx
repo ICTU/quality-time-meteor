@@ -1,5 +1,3 @@
-{ ClearFix, TextField } = mui
-
 @EditForm = React.createClass
   displayName: 'EditForm'
 
