@@ -34,9 +34,6 @@ MeteorSubjectMeasurement = React.createClass
 
   mixins: [ReactMeteorData]
 
-  addComment: (comment) ->
-    Meteor.call 'comments/add', _.extend {metricId: @props.metric.metricId}, comment
-
   getMeteorData: ->
     measurement = Measurements.findOne({forSubject: @props.subject.name, ofMetric: @props.metric.name}, {sort: lastMeasured: -1})
     comments = Comments.find({metricId: @props.metric.metricId}, {
@@ -53,5 +50,5 @@ MeteorSubjectMeasurement = React.createClass
       subject={@props.subject}
       measurement={@data.measurement}
       metric={@props.metric}
-      comments={@data.comments}
+      commentCount={@data.comments.length}
       onAddComment={@addComment}/>

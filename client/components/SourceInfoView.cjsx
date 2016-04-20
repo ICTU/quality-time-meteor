@@ -31,14 +31,11 @@
     sources = _.uniq sources
 
     if sources.length
-      <span>
-        <h3>Sources</h3>
-        <ul>
-        {for sourceId in sources
-          <li key={sourceId}><SourceInfoItem id={sourceId} subject={@props.subject} /></li>
-        }
-        </ul>
-      </span>
+      <ul>
+      {for sourceId in sources
+        <li key={sourceId}><SourceInfoItem id={sourceId} subject={@props.subject} /></li>
+      }
+      </ul>
     else
       <span />
 

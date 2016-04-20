@@ -35,27 +35,28 @@
     collectProblems @props.ast, problems
 
     if Object.keys(problems).length
-      <span>
-        <h3>Problems</h3>
-        <ul>
-        {for sourceId of problems
-          <li key={sourceId}>{problems[sourceId].name}
+      <PageElement title='Problems'>
+        <Card>
           <ul>
-            <li>No values for:</li>
+          {for sourceId of problems
+            <li key={sourceId}>{problems[sourceId].name}
             <ul>
-              {for prop in problems[sourceId].noMeasurement
-                <li key={prop}>{prop}</li>}
-            </ul>
-            {if problems[sourceId].error
-              <li>Errors:
+              <li>No values for:</li>
               <ul>
-                {for e in problems[sourceId].error
-                  <li key={e}>{e}</li>}
-              </ul></li>
-            }
-          </ul></li>
-        }
-        </ul>
-      </span>
+                {for prop in problems[sourceId].noMeasurement
+                  <li key={prop}>{prop}</li>}
+              </ul>
+              {if problems[sourceId].error
+                <li>Errors:
+                <ul>
+                  {for e in problems[sourceId].error
+                    <li key={e}>{e}</li>}
+                </ul></li>
+              }
+            </ul></li>
+          }
+          </ul>
+        </Card>
+      </PageElement>
     else
-      <span />
+      <span/>

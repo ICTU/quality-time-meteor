@@ -2,6 +2,7 @@ dashboard: Dashboard
 subjects: Subjects
 sources: Sources
 settings: Settings
+measurement: Measurement
 
 metric:
   targetValues: Metrics

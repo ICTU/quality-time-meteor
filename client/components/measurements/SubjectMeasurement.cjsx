@@ -12,7 +12,10 @@ styles =
 
 
   openDialog: (e, metric)->
-    @setState open: true
+    metric = _.findWhere @props.subject.metrics,
+      name: @props.metric.name
+    FlowRouter.go "/metrics/#{metric.metricId}/measurement/#{@props.measurement._id}"
+    # @setState open: true
 
   handleClose: ->
     @setState open: false
@@ -36,6 +39,7 @@ styles =
         title={@props.title}
         measurement={m}
         metric={metric}
+        commentCount={@props.commentCount}
         onTouchTap={@openDialog} />
         {if m
           <Dialog

@@ -2,6 +2,7 @@ dashboard: Overzichtsscherm
 subjects: Onderwerpen
 sources: Bronnen
 settings: Instellingen
+measurement: Metingen
 
 metric:
   targetValues: Metrieken
